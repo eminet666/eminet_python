@@ -114,21 +114,63 @@ def dms_en_decimal(valeur):
 
 def normaliser_coords(lon_brut, lat_brut):
     """
-    Tente de normaliser lon et lat depuis n'importe quel format.
-    Gère aussi le cas où l'utilisateur a mis lat dans lon et vice versa
-    sous forme DMS avec hémisphère (N/S → lat, E/W → lon).
+    Normalise lon et lat depuis n'importe quel format.
+
+    Cas gérés :
+      - Décimal standard          : "2.2945"  / "48.8584"
+      - Décimal virgule           : "2,2945"  / "48,8584"
+      - DMS dans les deux champs  : "48°51'N" / "2°17'E"
+      - DMS lat dans lon, lon dans lat (ordre Google Maps) :
+          lon="40°16'06.6\"N"  lat="23°26'50.3\"E"
+          → on détecte N/S vs E/W pour réaffecter correctement
+      - Un seul champ DMS rempli  : ignoré (retourne "", "")
+
     Retourne (lon_str, lat_str) normalisés ou ("", "") si échec.
     """
-    # Cas : les deux champs sont en DMS → on détermine lat/lon via hémisphère
-    hemi_lat = re.search(r'[NSns]', lat_brut)
-    hemi_lon = re.search(r'[EWew]', lon_brut)
-    hemi_lat2 = re.search(r'[NSns]', lon_brut)
-    hemi_lon2 = re.search(r'[EWew]', lat_brut)
+    def contient_ns(s): return bool(re.search(r'[NSns]', s))
+    def contient_ew(s): return bool(re.search(r'[EWew]', s))
 
-    # Si lon contient N/S et lat contient E/W → les colonnes sont inversées
-    if hemi_lat2 and hemi_lon2:
-        lat_val = dms_en_decimal(lon_brut)
-        lon_val = dms_en_decimal(lat_brut)
+    lon_a_ns = contient_ns(lon_brut)
+    lon_a_ew = contient_ew(lon_brut)
+    lat_a_ns = contient_ns(lat_brut)
+    lat_a_ew = contient_ew(lat_brut)
+
+    # Les deux champs sont en DMS avec hémisphère explicite
+    if (lon_a_ns or lon_a_ew) and (lat_a_ns or lat_a_ew):
+        # Identifier lequel est lat (N/S) et lequel est lon (E/W)
+        if lon_a_ns and lat_a_ew:
+            # Ordre inversé : lon contient la lat, lat contient la lon
+            lat_val = dms_en_decimal(lon_brut)
+            lon_val = dms_en_decimal(lat_brut)
+        elif lon_a_ew and lat_a_ns:
+            # Ordre correct
+            lon_val = dms_en_decimal(lon_brut)
+            lat_val = dms_en_decimal(lat_brut)
+        else:
+            return "", ""
+
+    # Un seul champ est en DMS, l'autre est décimal ou vide
+    elif lon_a_ns or lon_a_ew:
+        val = dms_en_decimal(lon_brut)
+        if val is None:
+            return "", ""
+        lat_try = dms_en_decimal(lat_brut)
+        if lon_a_ns:
+            lat_val, lon_val = val, lat_try
+        else:
+            lon_val, lat_val = val, lat_try
+
+    elif lat_a_ns or lat_a_ew:
+        val = dms_en_decimal(lat_brut)
+        if val is None:
+            return "", ""
+        lon_try = dms_en_decimal(lon_brut)
+        if lat_a_ns:
+            lat_val, lon_val = val, lon_try
+        else:
+            lon_val, lat_val = val, lon_try
+
+    # Aucun hémisphère : conversion décimale simple
     else:
         lon_val = dms_en_decimal(lon_brut)
         lat_val = dms_en_decimal(lat_brut)
@@ -306,8 +348,15 @@ def lire_fichier(chemin):
     contexte = {"pays": "", "region": ""}
     enc = _detecter_encodage(chemin)
 
-    with open(chemin, newline="", encoding=enc) as f:
-        lignes = list(csv.reader(f, delimiter=SEPARATEUR))
+    # Lecture brute ligne par ligne — on split sur ; sans interpréter les guillemets
+    # car les coordonnées DMS contiennent des " (secondes d'arc)
+    with open(chemin, encoding=enc) as f:
+        lignes_brutes = f.read().splitlines()
+
+    def split_ligne(ligne):
+        return [c.strip() for c in ligne.split(SEPARATEUR)]
+
+    lignes = [split_ligne(l) for l in lignes_brutes]
 
     debut = 0
     if lignes and lignes[0] and lignes[0][0].strip().lower() in ("pays", "country"):
@@ -336,28 +385,33 @@ def lire_fichier(chemin):
 
 
 def ecrire_fichier(chemin, contexte, lieux):
-    with open(chemin, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f, delimiter=SEPARATEUR)
+    # Écriture brute sans module csv pour éviter l'échappement des guillemets DMS
+    def join_ligne(valeurs):
+        return SEPARATEUR.join(str(v) for v in valeurs)
 
-        if contexte["pays"] or contexte["region"]:
-            writer.writerow(["pays", "région", "", "", "", "", "", ""])
-            writer.writerow([contexte["pays"], contexte["region"], "", "", "", "", "", ""])
-            writer.writerow(["", "", "", "", "", "", "", ""])
+    lignes = []
+    if contexte["pays"] or contexte["region"]:
+        lignes.append(join_ligne(["pays", "région", "", "", "", "", "", "", ""]))
+        lignes.append(join_ligne([contexte["pays"], contexte["region"], "", "", "", "", "", "", ""]))
+        lignes.append(join_ligne(["", "", "", "", "", "", "", "", ""]))
 
-        writer.writerow(["categorie", "nom", "adresse", "note", "description", "transport", "url", "lon", "lat"])
+    lignes.append(join_ligne(["categorie", "nom", "adresse", "note", "description", "transport", "url", "lon", "lat"]))
 
-        for lieu in lieux:
-            writer.writerow([
-                lieu.get("categorie", ""),
-                lieu.get("nom", ""),
-                lieu.get("adresse", ""),
-                lieu.get("note", ""),
-                lieu.get("description", ""),
-                lieu.get("transport", ""),
-                lieu.get("url", ""),
-                lieu.get("lon", ""),
-                lieu.get("lat", ""),
-            ])
+    for lieu in lieux:
+        lignes.append(join_ligne([
+            lieu.get("categorie", ""),
+            lieu.get("nom", ""),
+            lieu.get("adresse", ""),
+            lieu.get("note", ""),
+            lieu.get("description", ""),
+            lieu.get("transport", ""),
+            lieu.get("url", ""),
+            lieu.get("lon", ""),
+            lieu.get("lat", ""),
+        ]))
+
+    with open(chemin, "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(lignes) + "\n")
 
 
 # ─────────────────────────────────────────────────────────────

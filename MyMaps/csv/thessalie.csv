@@ -10,27 +10,26 @@ Hotel;Ladario Studios;Sarti, Sarti, 63072, Grèce;;;;;23.979299;40.097255
 Antique;Site archéologique de Dion;;3;;;https://fr.wikipedia.org/?curid=16657546;22.486250;40.170278
 Antique;Musée archéologique de Dion;;3;Orgue hydraulique ***, Statuaire **, Vie quotidienne au sous-sol;;https://fr.wikipedia.org/?curid=16657546;22.486250;40.170278
 Village;Litochoro;;;;;https://fr.wikipedia.org/?curid=1113556;22.500000;40.100000
-Eglise;New Holy Monastery of Saint Dionysios of Olympus;;1;Monastère;;https://en.wikipedia.org/?curid=12108;22.000000;39.000000
-Eglise;Old Holy Monastery of Saint Dionysios of Olympus;;3;Monastère ancien, belle vue sur Olympe;;https://en.wikipedia.org/wiki/Agios_Dionysios_Monastery,_Olympus;40.118;22.484
+Eglise;Old Holy Monastery of Saint Dionysios of Olympus;;3;Monastère ancien, belle vue sur Olympe (à proximité, un plus récent du même nom;;https://en.wikipedia.org/wiki/Agios_Dionysios_Monastery,_Olympus;22.484000;40.118000
 Plages;Pydna;;;Plage;;https://fr.wikipedia.org/?curid=242119;22.473556;40.251028
 Moyen-Age;Platamon;;1;Forteresse, plage;;https://fr.wikipedia.org/?curid=1526162;22.626667;39.991111
-Antique;Aigia;;5;Tombes royales;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_des_Tombes_royales_d%27Aigai;;
+Antique;Aigia;;5;Tombes royales;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_des_Tombes_royales_d%27Aigai;22.320333;40.488111
 Antique;Mieza;;5;Ecole d'Aristote, Tombes;;https://fr.wikipedia.org/?curid=14117093;22.122222;40.644167
 Antique;Veria;;4;Ancienne Beroia, antique et églises;;https://fr.wikipedia.org/?curid=201881;22.201944;40.520278
 Antique;Site archéologique de Pella;;4;Maisons, mosaiques;;https://fr.wikipedia.org/?curid=201856;22.519170;40.760000
-Musée;Musée archéologique de Pella;;4;Mosaiques;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_arch%C3%A9ologique_de_Pella;;
-Contemporain;Presqu'ile Kassandra;;;;;https://fr.wikipedia.org/wiki/P%C3%A9ninsule_de_Cassandra;;
+Musée;Musée archéologique de Pella;;4;Mosaiques;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_arch%C3%A9ologique_de_Pella;22.519200;40.762000
+Contemporain;Presqu'ile Kassandra;;;;;https://fr.wikipedia.org/wiki/P%C3%A9ninsule_de_Cassandra;23.450000;40.020000
 Antique;Nea Potidea, Kassandra;;2;Une tour, reste de murailles;;https://fr.wikipedia.org/?curid=6165222;23.450000;40.020000
-Antique;Olinthe, Kassandra;;3;ruine ville antique 10min marche, villa de la bonne fortune;;https://fr.wikipedia.org/wiki/Olynthe;;
-Antique;Polygyros, Kassandra;;3;musée archéologique* bouclier de Philippe, statuettes polychromes;;https://fr.wikipedia.org/wiki/Pol%C3%BDgyros;;
-Village;Arnea, Kassandra;;3;village maisons traditionnelles colorées;;https://fr.wikipedia.org/wiki/Arn%C3%A9a;;
-Antique;Stagire, Kassandra;;4;site en accès libre, cadre splendide;;https://fr.wikipedia.org/wiki/Stagire;;
-Contemporain;Sithonia;;;;;https://fr.wikipedia.org/?curid=6184980;;
-Plages;Gerakini, Sithonia;;;;;https://www.visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/338/plage-de-gerakini;"23°26'50.3""E";"40°16'06.6""N"
-Plages;Metamorphosis, Sithonia;;;;;https://visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/612/plage-de-metamorfosi;"23°26'50.3""E";"40°16'06.6""N"
-Plages;Nikiti, Sithonia;;;;;https://visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/332/plage-de-nikiti;"23°40'14.4""E";40.097778
-Village;Neo Marmaras, Sithonia;;2;Port de pêcheurs;;https://www.feelgreece.com/fr/neos-marmaras;"23°47'08.7""E";"40°05'29.0""N "
-Moyen-Age;Toroni, Sithonia;;3;longue baie avec vestiges forteresse byzantine et église paléo chrétienne;;https://www.visit-halkidiki.gr/portfolio-view/ancient-town-toroni/;"23°54'08.9""E";"39°59'07.4""N "
-Village;Porto Koufo, Sithonia;;3;port de pêche, beaux point de vue * sur le cap Drepano;;https://en.wikipedia.org/wiki/Porto_Koufo;;
-Plages;Kalamitsi, Sithonia;;4;Très belle plage;;https://www.visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/343/plage-de-kalamitsi;"23°59'27.3""E";"39°59'27.2""N "
+Antique;Olinthe, Kassandra;;3;ruine ville antique 10min marche, villa de la bonne fortune;;https://fr.wikipedia.org/wiki/Olynthe;23.354000;40.296000
+Antique;Polygyros, Kassandra;;3;musée archéologique* bouclier de Philippe, statuettes polychromes;;https://fr.wikipedia.org/wiki/Pol%C3%BDgyros;23.433333;40.366667
+Village;Arnea, Kassandra;;3;village maisons traditionnelles colorées;;https://fr.wikipedia.org/wiki/Arn%C3%A9a;23.594722;40.486667
+Antique;Stagire, Kassandra;;4;site en accès libre, cadre splendide;;https://fr.wikipedia.org/wiki/Stagire;23.753197;40.529055
+Contemporain;Sithonia;;;;;https://fr.wikipedia.org/?curid=6184980;23.868333;40.097778
+Plages;Gerakini, Sithonia;;;;;https://www.visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/338/plage-de-gerakini;23.447306;40.268500
+Plages;Metamorphosis, Sithonia;;;;;https://visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/612/plage-de-metamorfosi;23.447306;40.268500
+Plages;Nikiti, Sithonia;;;;;https://visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/332/plage-de-nikiti;23.670667;40.097778
+Village;Neo Marmaras, Sithonia;;2;Port de pêcheurs;;https://www.feelgreece.com/fr/neos-marmaras;23.785750;40.091389
+Moyen-Age;Toroni, Sithonia;;3;longue baie avec vestiges forteresse byzantine et église paléo chrétienne;;https://www.visit-halkidiki.gr/portfolio-view/ancient-town-toroni/;23.902472;39.985389
+Village;Porto Koufo, Sithonia;;3;port de pêche, beaux point de vue * sur le cap Drepano;;https://en.wikipedia.org/wiki/Porto_Koufo;23.921944;39.963611
+Plages;Kalamitsi, Sithonia;;4;Très belle plage;;https://www.visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/343/plage-de-kalamitsi;23.990917;39.990889
 Contemporain;Mont Athos;;5;;;https://fr.wikipedia.org/?curid=119043;24.328011;40.158984
