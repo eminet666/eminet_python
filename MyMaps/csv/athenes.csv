@@ -2,53 +2,53 @@ pays;région;;;;;;;
 Grèce;Athènes;;;;;;;
 ;;;;;;;;
 categorie;nom;adresse;note;description;transport;url;lon;lat
-Jardin;Jardin national d’Athènes;;;Parc ombragé idéal pour pause nature et observation.;;https://fr.wikipedia.org/wiki/Jardin_national_d%27Ath%C3%A8nes;;
-Néoclassique;Zappeion;;;Palais néoclassique jardins, événements culturels calmes.;;https://fr.wikipedia.org/wiki/Zapp%C3%A9ion wikipedia;;
-Antique;Temple de Zeus olympien;;;Colossal temple antique au coeur moderne.;;https://fr.wikipedia.org/wiki/Temple_de_Z%C3%A8us_olympien;;
-Antique;Arc d’Hadrien;;;Arc romain élégant entre époques.;;https://fr.wikipedia.org/wiki/Arc_d%27Hadrien_(Ath%C3%A8nes);;
-Musée;Musée numismatique d’Athènes;;;Monnaies rares racontant l'histoire économique grecque.;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_numismatique_d%27Ath%C3%A8nes;;
-Musée;Musée Benaki;;;Art grec byzantin à moderne, collections pointues.;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_Benaki;;
-Néoclassique;Académie d’Athènes;;;Chef-d'oeuvre architectural néoclassique imposant.;;https://fr.wikipedia.org/wiki/Acad%C3%A9mie_d%27Ath%C3%A8nes_(moderne);;
-Musée;Bibliothèque nationale de Grèce;;;Trésor livres anciens, architecture théâtrale.;;https://fr.wikipedia.org/wiki/Biblioth%C3%A8que_nationale_de_Gr%C3%A8ce;;
-Quartier;Quartier de Kolonáki;;;Chic résidentiel galeries, cafés branchés.;;https://fr.wikipedia.org/wiki/Kolonaki;;
-Eglise;Église Kapnikaréa;;;Byzantin miniature cachée rue commerçante.;;https://fr.wikipedia.org/wiki/%C3%89glise_Kapnikarea;;
-Contemporain;Parlement hellénique;;;Ex-palais royal, tombe Soldat inconnu.;;https://fr.wikipedia.org/wiki/Parlement_hell%C3%A9nique;;
-Quartier;Mets;;;Quartier arty calme, street art local.;;https://fr.wikipedia.org/wiki/Mets_(Ath%C3%A8nes);;
-Quartier;Colline d’Ardittos;;;Vue panoramique stade olympique, balade sauvage.;;https://en.wikipedia.org/wiki/Ardittos (pas de page FR);;
-Contemporain;Premier cimetière d’Athènes;;;Nécropole sculpturale romantique, tombes célèbres.;;https://fr.wikipedia.org/wiki/Premier_cimeti%C3%A8re_d%27Ath%C3%A8nes;;
-Quartier;Anafiotika;;;Cycladique insolite sous Acropole, ruelles blanches.;;https://fr.wikipedia.org/wiki/Anafiotika;;
-Quartier;Quartier de Pangrati;;;Bohème alternatif bars, street art vivant.;;https://fr.wikipedia.org/wiki/Pangrati;;
-Quartier;Rue Voukourestiou;;;Luxe discret galeries art, boutiques mode.;;https://en.wikipedia.org/wiki/Voukourestiou_Street;;
-Eglise;Église de Panagia Gorgoepikoos;;;Byzantin raffiné fresques dorées, intimiste.;;https://fr.wikipedia.org/wiki/%C3%89glise_Panagia_Gorgoepikoos;;
+Jardin;Jardin national d’Athènes;;;Parc ombragé idéal pour pause nature et observation.;;https://fr.wikipedia.org/wiki/Jardin_national_d%27Ath%C3%A8nes;23.738333;37.974167
+Néoclassique;Zappeion;;;Palais néoclassique jardins, événements culturels calmes.;;https://fr.wikipedia.org/?curid=4813838;23.736389;37.971389
+Antique;Temple de Zeus olympien;;;Colossal temple antique au coeur moderne.;;https://fr.wikipedia.org/?curid=94439;21.630000;38.637800
+Antique;Arc d’Hadrien;;;Arc romain élégant entre époques.;;https://fr.wikipedia.org/?curid=4435619;23.732000;37.970167
+Musée;Musée numismatique d’Athènes;;;Monnaies rares racontant l'histoire économique grecque.;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_numismatique_d%27Ath%C3%A8nes;23.735400;37.977800
+Musée;Musée Benaki;;;Art grec byzantin à moderne, collections pointues.;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_Benaki;23.740280;37.975830
+Néoclassique;Académie d’Athènes;;;Chef-d'oeuvre architectural néoclassique imposant.;;https://fr.wikipedia.org/?curid=1817214;23.734762;37.980424
+Musée;Bibliothèque nationale de Grèce;;;Trésor livres anciens, architecture théâtrale.;;https://fr.wikipedia.org/wiki/Biblioth%C3%A8que_nationale_de_Gr%C3%A8ce;23.692222;37.941389
+Quartier;Quartier de Kolonáki;;;Chic résidentiel galeries, cafés branchés.;;https://fr.wikipedia.org/?curid=5126238;23.740639;37.977167
+Eglise;Église Kapnikaréa;;;Byzantin miniature cachée rue commerçante.;;https://fr.wikipedia.org/?curid=14031555;23.728600;37.976300
+Contemporain;Parlement hellénique;;;Ex-palais royal, tombe Soldat inconnu.;;https://fr.wikipedia.org/?curid=778176;23.736974;37.975276
+Quartier;Mets;;;Quartier arty calme, street art local.;;https://fr.wikipedia.org/wiki/Mets_(Ath%C3%A8nes);23.736733;37.969376
+Quartier;Colline d’Ardittos;;;Vue panoramique stade olympique, balade sauvage.;;https://fr.wikipedia.org/?curid=8103414;23.740958;37.968576
+Contemporain;Premier cimetière d’Athènes;;;Nécropole sculpturale romantique, tombes célèbres.;;https://fr.wikipedia.org/wiki/Premier_cimeti%C3%A8re_d%27Ath%C3%A8nes;23.737875;37.963161
+Quartier;Anafiotika;;;Cycladique insolite sous Acropole, ruelles blanches.;;https://fr.wikipedia.org/?curid=8047332;23.725170;37.971288
+Quartier;Quartier de Pangrati;;;Bohème alternatif bars, street art vivant.;;https://fr.wikipedia.org/?curid=8048764;23.744165;37.968077
+Quartier;Rue Voukourestiou;;;Luxe discret galeries art, boutiques mode.;;https://en.wikipedia.org/wiki/Voukourestiou_Street;23.734961;37.976861
+Eglise;Église de Panagia Gorgoepikoos;;;Byzantin raffiné fresques dorées, intimiste.;;https://fr.wikipedia.org/?curid=13783196;23.729994;37.975060
 Eglise;Église d’Agia Dynami;;;Byzantin minuscule ruelle, perle oubliée.;;https://www.thisisathens.org/fr/attractions/agia-dynami-church;;
-Antique;Académie de Platon;;;Site de l'académie de Platon;;https://fr.wikipedia.org/wiki/Acad%C3%A9mie_de_Platon;;
-Antique;Source clepsydre;;;Fontaine mycénienne souterraine, hydraulique ancienne.;;https://fr.wikipedia.org/wiki/Klepsydre_(Acropole);;
-Antique;Agora romaine;;;Marché impérial romain, Tour des Vents unique.;;https://fr.wikipedia.org/wiki/Agora_romaine_(Ath%C3%A8nes) visiterathenes;;
-Antique;Bibliothèque d'Hadrien;;;Complexe culturel romain massif, restes imposants.;;https://fr.wikipedia.org/wiki/Biblioth%C3%A8que_d%27Hadrien;;
-Antique;Odéon d'Agrippa;;;Théâtre couvert romain reconstruit, acoustique antique.;;https://fr.wikipedia.org/wiki/Od%C3%A9on_d%27Agrippa;;
-Antique;Stoa d'Attale;;;Portique marchand hellénistique, musée intégré.;;https://fr.wikipedia.org/wiki/Stoa_d%27Attale;;
-Antique;Temple d'Héphaïstos;;;Dorique parfaitement préservé dans Agora antique.;;https://fr.wikipedia.org/wiki/Temple_d%27H%C3%A9pha%C3%AFstos;;
-Antique;Kéramikos;;;Nécropole antique portes fortifiées, tombes peintes.;;https://fr.wikipedia.org/wiki/C%C3%A9rama�que_(Ath%C3%A8nes);;
-Antique;Pnyx;;;Colline assemblées démocratiques, vue oratoire antique.;;https://fr.wikipedia.org/wiki/Pnyx;;
-Antique;Aréopage;;;Roche tribunal Paul apôtre, panorama Acropole.;;https://fr.wikipedia.org/wiki/Ar%C3%A9opage;;
-Antique;Theseion;;;Temple antique réutilisé église, dorique intact.;;https://fr.wikipedia.org/wiki/Th%C3%A9sion;;
-Antique;Théâtre de Dionysos;;;Berceau tragédie grecque, sièges sculptés.;;https://fr.wikipedia.org/wiki/Th%C3%A9%C3%A2tre_de_Dionysos;;
-Antique;Prison de Socrate;;;Cachot philosophique austère, mythe exécution.;;https://www.decouvrirlagrece.com/la-prison-de-socrate-a-athenes/;;
-Antique;Musée archéologique national;;;Trésors mycéniens et classiques inégalés.;Métro ligne 2/3, Victoria;https://fr.wikipedia.org/wiki/Mus%C3%A9e_arch%C3%A9ologique_national_d%27Ath%C3%A8nes;;
-Antique;Stade panathénaïque;;;Marbre blanc JO antiques recréés.;Métro ligne 2, Académie;https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque;;
-Antique;Sanctuaire d'Artémis à Brauron;;;Temple archaïque et rituels féminins.;Bus 122, Brauron (1h);https://fr.wikipedia.org/wiki/Brauron;;
-Antique;Eléusis (mystères);;;Telesterion rites secrets Déméter.;Métro ligne 3, Elefsina;https://fr.wikipedia.org/wiki/Myst%C3%A8res_d%27El%C3%A9usis;;
-Antique;Musée épigraphique;;;Inscriptions gravées lois antiques.;Métro ligne 2, Syntagma;https://fr.wikipedia.org/wiki/Mus%C3%A9e_%C3%A9pigraphique_d%27Ath%C3%A8nes;;
-Antique;Lycabette (sanctuaire antique);;;Chapelle hellénistique sommet colline.;Métro ligne 3, Evangelismos;https://fr.wikipedia.org/wiki/Mont_Lycabette;;
-Antique;Stade olympique d'Apollon;;;Course antique préservée Marathon.;Bus 720, Marathon (45min);https://fr.wikipedia.org/wiki/Stade_de_Philipp%C3%A9_II;;
-Antique;Temple Poséidon Sounion;;;Colonnes doriques coucher soleil mythique.;Bus 122, Sounion (1h30);https://fr.wikipedia.org/wiki/Temple_de_Pos%C3%A9idon_(Sounion);;
-Byzantin;Musée byzantin et chrétien;;;Icônes, fresques byzantines exceptionnelles.;Métro ligne 3, Evangelismos;https://fr.wikipedia.org/wiki/Mus%C3%A9e_byzantin_et_chr%C3%A9tien_d%27Ath%C3%A8nes rome2rio;;
-Eglise;Monastère de Kaisariani;;;Église XIe siècle mont Hymette mystique.;Bus 223/224, Kaisariani (20min);https://fr.wikipedia.org/wiki/Monast%C3%A8re_de_Kaisariani;;
-Eglise;Église des Taxiarques;;;Byzantin rural icônes rares, calme.;Bus 221, Paleo Psychiko;Pas de page dédiée;;
-Eglise;Monastère Pantanassa;;;Fresques post-byzantines colline isolée.;Bus 460, Pendeli (30min);Pas de page dédiée;;
+Antique;Académie de Platon;;;Site de l'académie de Platon;;https://fr.wikipedia.org/wiki/Acad%C3%A9mie_de_Platon;23.708060;37.992500
+Antique;Source clepsydre;;;Fontaine mycénienne souterraine, hydraulique ancienne.;;https://fr.wikipedia.org/wiki/Klepsydre_(Acropole);23.725056;37.972083
+Antique;Agora romaine;;;Marché impérial romain, Tour des Vents unique.;;https://fr.wikipedia.org/?curid=3162411;23.726110;37.974170
+Antique;Bibliothèque d'Hadrien;;;Complexe culturel romain massif, restes imposants.;;https://fr.wikipedia.org/wiki/Biblioth%C3%A8que_d%27Hadrien;23.726111;37.975556
+Antique;Odéon d'Agrippa;;;Théâtre couvert romain reconstruit, acoustique antique.;;https://fr.wikipedia.org/wiki/Od%C3%A9on_d%27Agrippa;23.723167;37.975139
+Antique;Stoa d'Attale;;;Portique marchand hellénistique, musée intégré.;;https://fr.wikipedia.org/wiki/Stoa_d%27Attale;23.724170;37.975000
+Antique;Temple d'Héphaïstos;;;Dorique parfaitement préservé dans Agora antique.;;https://fr.wikipedia.org/?curid=16690;23.721412;37.975604
+Antique;Kéramikos;;;Nécropole antique portes fortifiées, tombes peintes.;;https://fr.wikipedia.org/?curid=9528074;23.719506;37.978730
+Antique;Pnyx;;;Colline assemblées démocratiques, vue oratoire antique.;;https://fr.wikipedia.org/wiki/Pnyx;23.719444;37.971667
+Antique;Aréopage;;;Roche tribunal Paul apôtre, panorama Acropole.;;https://fr.wikipedia.org/wiki/Ar%C3%A9opage;23.723060;37.972500
+Antique;Theseion;;;Temple antique réutilisé église, dorique intact.;;https://fr.wikipedia.org/?curid=74604;23.721392;37.975617
+Antique;Théâtre de Dionysos;;;Berceau tragédie grecque, sièges sculptés.;;https://fr.wikipedia.org/wiki/Th%C3%A9%C3%A2tre_de_Dionysos;23.727800;37.970280
+Antique;Prison de Socrate;;;Cachot philosophique austère, mythe exécution.;;https://fr.wikipedia.org/?curid=7208;23.720810;37.969375
+Antique;Musée archéologique national;;;Trésors mycéniens et classiques inégalés.;Métro ligne 2/3, Victoria;https://fr.wikipedia.org/?curid=469350;14.250486;40.853378
+Antique;Stade panathénaïque;;;Marbre blanc JO antiques recréés.;Métro ligne 2, Académie;https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque;23.741111;37.968333
+Antique;Sanctuaire d'Artémis à Brauron;;;Temple archaïque et rituels féminins.;Bus 122, Brauron (1h);https://fr.wikipedia.org/wiki/Brauron;23.993610;37.926390
+Antique;Eléusis (mystères);;;Telesterion rites secrets Déméter.;Métro ligne 3, Elefsina;https://fr.wikipedia.org/?curid=61955;;
+Antique;Musée épigraphique;;;Inscriptions gravées lois antiques.;Métro ligne 2, Syntagma;https://fr.wikipedia.org/wiki/Mus%C3%A9e_%C3%A9pigraphique_d%27Ath%C3%A8nes;23.717000;37.983000
+Antique;Lycabette (sanctuaire antique);;;Chapelle hellénistique sommet colline.;Métro ligne 3, Evangelismos;https://fr.wikipedia.org/?curid=636702;23.743060;37.981940
+Antique;Stade olympique d'Apollon;;;Course antique préservée Marathon.;Bus 720, Marathon (45min);https://fr.wikipedia.org/?curid=26546;22.501000;38.483000
+Antique;Temple Poséidon Sounion;;;Colonnes doriques coucher soleil mythique.;Bus 122, Sounion (1h30);https://fr.wikipedia.org/?curid=12508787;24.024556;37.650250
+Byzantin;Musée byzantin et chrétien;;;Icônes, fresques byzantines exceptionnelles.;Métro ligne 3, Evangelismos;https://fr.wikipedia.org/?curid=546240;23.717000;37.967000
+Eglise;Monastère de Kaisariani;;;Église XIe siècle mont Hymette mystique.;Bus 223/224, Kaisariani (20min);https://fr.wikipedia.org/?curid=11497889;23.798200;37.960800
+Eglise;Église des Taxiarques;;;Byzantin rural icônes rares, calme.;Bus 221, Paleo Psychiko;https://fr.wikipedia.org/?curid=660665;22.954700;40.639800
+Eglise;Monastère Pantanassa;;;Fresques post-byzantines colline isolée.;Bus 460, Pendeli (30min);https://fr.wikipedia.org/?curid=12862053;22.369000;37.073500
 Eglise;Église Agios Ioannis Kilmennos;;;Dôme byzantin mosaïques dorées oubliées.;Métro ligne 1, KAT Hospital;Pas de page dédiée;;
-Antique;Stade panathénaïque (moderne);;;Marbre reconstruit JO 1896 mythiques.;Métro ligne 2, Stade;https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque;;
-Contemporain;Université nationale (contemporaine);;;Campus néoclassique savoir moderne.;Métro ligne 2, Panepistimiou;https://fr.wikipedia.org/wiki/Universit%C3%A9_nationale_et_capodistrienne_d%27Ath%C3%A8nes;;
-Musée;EMST (art contemporain);;;Avant-garde grecque installations choc.;Métro ligne 1, Fix;https://fr.wikipedia.org/wiki/Mus%C3%A9e_national_d%27art_contemporain_d%27Ath%C3%A8nes;;
-Musée;Musée d’art cycladique;;;Idoles blanches néolithiques épurées.;Bus 022, Kolonaki;https://fr.wikipedia.org/wiki/Mus%C3%A9e_d%27art_cycladique_d%27Ath%C3%A8nes;;
-Contemporain;Fondation Stavros Niarchos;;;Opéra/bibliothèque futuriste bord mer.;Métro ligne 1, Neo Faliro;https://fr.wikipedia.org/wiki/Centre_culturel_de_la_fondation_Stavros_Niarchos;;
+Antique;Stade panathénaïque (moderne);;;Marbre reconstruit JO 1896 mythiques.;Métro ligne 2, Stade;https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque;23.741111;37.968333
+Contemporain;Université nationale (contemporaine);;;Campus néoclassique savoir moderne.;Métro ligne 2, Panepistimiou;https://fr.wikipedia.org/wiki/Universit%C3%A9_nationale_et_capodistrienne_d%27Ath%C3%A8nes;23.778684;37.968198
+Musée;EMST (art contemporain);;;Avant-garde grecque installations choc.;Métro ligne 1, Fix;https://fr.wikipedia.org/wiki/Mus%C3%A9e_national_d%27art_contemporain_d%27Ath%C3%A8nes;23.725542;37.963140
+Musée;Musée d’art cycladique;;;Idoles blanches néolithiques épurées.;Bus 022, Kolonaki;https://fr.wikipedia.org/?curid=2834057;23.741940;37.975830
+Contemporain;Fondation Stavros Niarchos;;;Opéra/bibliothèque futuriste bord mer.;Métro ligne 1, Neo Faliro;https://fr.wikipedia.org/?curid=1586872;;
