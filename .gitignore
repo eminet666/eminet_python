@@ -1,1 +1,39 @@
-/.venv
+# ignore files
+.DS_Store
+Thumbs.db
+~*.*
+
+# ignore environments files
+
+
+# ignore files
+**/z_*.*
+**/!_*.*
+**/*.bin
+**/*.npy
+/todo.txt
+
+# ignore rep
+**/nodejs
+**/z_*
+
+# ALWAYS 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environnements virtuels
+venv/
+.venv
+env/
+ENV/
+
+# Variables d'environnement
+.env
+
+# IDE
+.vscode/
+.idea/
