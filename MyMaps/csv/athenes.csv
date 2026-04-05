@@ -2,9 +2,16 @@ pays;région;;;;;;;
 Grèce;Athènes;;;;;;;
 ;;;;;;;;
 categorie;nom;adresse;note;description;transport;url;lon;lat
+Amis;Démosthene;Zoodochou Pigis 85, Athina 114 73, Grèce;;;;https://fr.wikipedia.org/?curid=74157;23.739202;37.986655
+Musée;Memorial 1941-1944;Korai 4, Athina 105 64, Grèce;;Ancienne prison nazie;Métro ligne 2, Panepistimiou;https://vivreathenes.com/korai-4-une-ancienne-prison-nazie-a-athenes-reconvertie-en-musee.html?srsltid=AfmBOooAj4EV0wbd7sX9HX-Vel4LRbbrWrRJWjUlguVJNbIcRV_UUBzB;23.732728;37.980161
+Restaurant;H Thraka (gyros);Imittou 58, Athina 116 34, Grèce;;Bons gyros à Pancrati;Trolley 2, Pancrati;https://e-thraka.gr/;23.752460;37.969286
+Restaurant;Magerio;;;Resto dans Pancrati;Trolley 11 ou bus 209, Gefyra;;23.751598;37.964786
+Restaurant;Stani;Marikas Kotopouli 10, Athina 104 32, Grèce;;Meilleurs yaourt d'Athènes;;http://www.stani1931.com/;23.727916;37.985643
+Restaurant;Sklavenitis (supermarché);Athinas 62, Athina 105 51, Grèce;;;;https://fr.wikipedia.org/?curid=16280717;23.727986;37.983465
+Restaurant;Lefteris O Politis (est. 1951);Satovriandou 20, Athina 104 32, Grèce;;Pas de gyros mais des burgers et soutsoukis (boulettes);;https://fr.wikipedia.org/?curid=833173;23.727356;37.985708
 Jardin;Jardin national d’Athènes;;;Parc ombragé idéal pour pause nature et observation.;;https://fr.wikipedia.org/wiki/Jardin_national_d%27Ath%C3%A8nes;23.738333;37.974167
 Néoclassique;Zappeion;;;Palais néoclassique jardins, événements culturels calmes.;;https://fr.wikipedia.org/?curid=4813838;23.736389;37.971389
-Antique;Temple de Zeus olympien;;;Colossal temple antique au coeur moderne.;;https://fr.wikipedia.org/?curid=94439;21.630000;38.637800
+Antique;Temple de Zeus olympien;;;Colossal temple antique au coeur moderne.;;https://fr.wikipedia.org/wiki/Olympi%C3%A9ion_(Ath%C3%A8nes);23.733078;37.969372
 Antique;Arc d’Hadrien;;;Arc romain élégant entre époques.;;https://fr.wikipedia.org/?curid=4435619;23.732000;37.970167
 Musée;Musée numismatique d’Athènes;;;Monnaies rares racontant l'histoire économique grecque.;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_numismatique_d%27Ath%C3%A8nes;23.735400;37.977800
 Musée;Musée Benaki;;;Art grec byzantin à moderne, collections pointues.;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_Benaki;23.740280;37.975830
@@ -20,7 +27,7 @@ Quartier;Anafiotika;;;Cycladique insolite sous Acropole, ruelles blanches.;;http
 Quartier;Quartier de Pangrati;;;Bohème alternatif bars, street art vivant.;;https://fr.wikipedia.org/?curid=8048764;23.744165;37.968077
 Quartier;Rue Voukourestiou;;;Luxe discret galeries art, boutiques mode.;;https://en.wikipedia.org/wiki/Voukourestiou_Street;23.734961;37.976861
 Eglise;Église de Panagia Gorgoepikoos;;;Byzantin raffiné fresques dorées, intimiste.;;https://fr.wikipedia.org/?curid=13783196;23.729994;37.975060
-Eglise;Église d’Agia Dynami;;;Byzantin minuscule ruelle, perle oubliée.;;https://www.thisisathens.org/fr/attractions/agia-dynami-church;;
+Eglise;Église d’Agia Dynami;;;Byzantin minuscule ruelle, perle oubliée.;;https://www.thisisathens.org/fr/attractions/agia-dynami-church;23.732093;37.975422
 Antique;Académie de Platon;;;Site de l'académie de Platon;;https://fr.wikipedia.org/wiki/Acad%C3%A9mie_de_Platon;23.708060;37.992500
 Antique;Source clepsydre;;;Fontaine mycénienne souterraine, hydraulique ancienne.;;https://fr.wikipedia.org/wiki/Klepsydre_(Acropole);23.725056;37.972083
 Antique;Agora romaine;;;Marché impérial romain, Tour des Vents unique.;;https://fr.wikipedia.org/?curid=3162411;23.726110;37.974170
@@ -34,21 +41,24 @@ Antique;Aréopage;;;Roche tribunal Paul apôtre, panorama Acropole.;;https://fr.
 Antique;Theseion;;;Temple antique réutilisé église, dorique intact.;;https://fr.wikipedia.org/?curid=74604;23.721392;37.975617
 Antique;Théâtre de Dionysos;;;Berceau tragédie grecque, sièges sculptés.;;https://fr.wikipedia.org/wiki/Th%C3%A9%C3%A2tre_de_Dionysos;23.727800;37.970280
 Antique;Prison de Socrate;;;Cachot philosophique austère, mythe exécution.;;https://fr.wikipedia.org/?curid=7208;23.720810;37.969375
-Antique;Musée archéologique national;;;Trésors mycéniens et classiques inégalés.;Métro ligne 2/3, Victoria;https://fr.wikipedia.org/?curid=469350;14.250486;40.853378
+Antique;Musée archéologique national;;;Trésors mycéniens et classiques inégalés.;Métro ligne 2/3, Victoria;https://fr.wikipedia.org/wiki/Mus%C3%A9e_national_arch%C3%A9ologique_d%27Ath%C3%A8nes;23.732500;37.989170
 Antique;Stade panathénaïque;;;Marbre blanc JO antiques recréés.;Métro ligne 2, Académie;https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque;23.741111;37.968333
 Antique;Sanctuaire d'Artémis à Brauron;;;Temple archaïque et rituels féminins.;Bus 122, Brauron (1h);https://fr.wikipedia.org/wiki/Brauron;23.993610;37.926390
-Antique;Eléusis (mystères);;;Telesterion rites secrets Déméter.;Métro ligne 3, Elefsina;https://fr.wikipedia.org/?curid=61955;;
+Antique;Eléusis (mystères);;;Telesterion rites secrets Déméter.;Métro ligne 3, Elefsina;https://fr.wikipedia.org/?curid=61955;23.539425;38.042563
 Antique;Musée épigraphique;;;Inscriptions gravées lois antiques.;Métro ligne 2, Syntagma;https://fr.wikipedia.org/wiki/Mus%C3%A9e_%C3%A9pigraphique_d%27Ath%C3%A8nes;23.717000;37.983000
 Antique;Lycabette (sanctuaire antique);;;Chapelle hellénistique sommet colline.;Métro ligne 3, Evangelismos;https://fr.wikipedia.org/?curid=636702;23.743060;37.981940
 Antique;Stade olympique d'Apollon;;;Course antique préservée Marathon.;Bus 720, Marathon (45min);https://fr.wikipedia.org/?curid=26546;22.501000;38.483000
 Antique;Temple Poséidon Sounion;;;Colonnes doriques coucher soleil mythique.;Bus 122, Sounion (1h30);https://fr.wikipedia.org/?curid=12508787;24.024556;37.650250
 Byzantin;Musée byzantin et chrétien;;;Icônes, fresques byzantines exceptionnelles.;Métro ligne 3, Evangelismos;https://fr.wikipedia.org/?curid=546240;23.717000;37.967000
 Eglise;Monastère de Kaisariani;;;Église XIe siècle mont Hymette mystique.;Bus 223/224, Kaisariani (20min);https://fr.wikipedia.org/?curid=11497889;23.798200;37.960800
-Eglise;Église des Taxiarques;;;Byzantin rural icônes rares, calme.;Bus 221, Paleo Psychiko;https://fr.wikipedia.org/?curid=660665;22.954700;40.639800
-Eglise;Monastère Pantanassa;;;Fresques post-byzantines colline isolée.;Bus 460, Pendeli (30min);https://fr.wikipedia.org/?curid=12862053;22.369000;37.073500
-Eglise;Église Agios Ioannis Kilmennos;;;Dôme byzantin mosaïques dorées oubliées.;Métro ligne 1, KAT Hospital;Pas de page dédiée;;
 Antique;Stade panathénaïque (moderne);;;Marbre reconstruit JO 1896 mythiques.;Métro ligne 2, Stade;https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque;23.741111;37.968333
 Contemporain;Université nationale (contemporaine);;;Campus néoclassique savoir moderne.;Métro ligne 2, Panepistimiou;https://fr.wikipedia.org/wiki/Universit%C3%A9_nationale_et_capodistrienne_d%27Ath%C3%A8nes;23.778684;37.968198
 Musée;EMST (art contemporain);;;Avant-garde grecque installations choc.;Métro ligne 1, Fix;https://fr.wikipedia.org/wiki/Mus%C3%A9e_national_d%27art_contemporain_d%27Ath%C3%A8nes;23.725542;37.963140
 Musée;Musée d’art cycladique;;;Idoles blanches néolithiques épurées.;Bus 022, Kolonaki;https://fr.wikipedia.org/?curid=2834057;23.741940;37.975830
-Contemporain;Fondation Stavros Niarchos;;;Opéra/bibliothèque futuriste bord mer.;Métro ligne 1, Neo Faliro;https://fr.wikipedia.org/?curid=1586872;;
+Contemporain;Fondation Stavros Niarchos;;;Opéra/bibliothèque futuriste bord mer.;Métro ligne 1, Neo Faliro;https://fr.wikipedia.org/wiki/Centre_culturel_de_la_fondation_St%C3%A1vros-Ni%C3%A1rchos;23.737666;37.939700
+Cinéma;Ciné Aegli (Zappeion);Zappeion Garden, Athina 105 57, Grèce;;Plus ancien cinéma plein air (1903), jardins luxuriants.;;;23.737666;37.971450
+Cinéma;Ciné Dexameni;Plateia Dexamenis 7, Athina 106 73, Grèce;;Sur citerne Hadrien (1905), magie Kolonaki boisée.;;;23.741798;37.979366
+Cinéma;Ciné Thision;Apostolou Pavlou 7, Athina 118 51, Grèce;;Sous Acropole depuis 1935, vue Parthénon inoubliable.;;http://cine-thisio.gr/;23.720467;37.972911
+Cinéma;Ciné Vox (Exarchia);Themistokleous 82, Athina 106 81, Grèce;;Ouvert 1938, ambiance alternative quartier vibrant.;;;23.735597;37.986911
+Cinéma;Ciné Riviera (Exarchia);Valtetsiou 46, Athina 106 81, Grèce;;Frère de Vox, art et essai sur place animée.;;;23.735872;37.985697
+Contemporain;Immeuble Bleu (Exarchia);;;Moderniste 1932, admiré Le Corbusier, près Vox.;;https://en.wikipedia.org/wiki/The_Blue_Condominium_of_Exarcheia;23.735400;37.986600
