@@ -1,0 +1,25 @@
+pays;région;;;;
+France;Ile de France;;;;
+;;;;;
+categorie;nom;adresse;description;lon;lat
+Monument;Tour Eiffel;;;2.294501;48.858260
+Monument;Arc de Triomphe;;;2.295037;48.873779
+Eglise;Saint Ambroise;;;2.374726;48.861043
+Eglise;Sacré -Cœur;;;2.343015;48.886806
+Adresse;Anne;22 rue spontini, 75116;;2.278211;48.869900
+Adresse;Etienne;76 boulevard Voltaire, 75011;;2.374251;48.861117
+A faire;Marché d'Aligre;;Marché le matin - Fermé lundi;2.3743;48.8496
+A faire;Père Lachaise;;Cimetière historique;2.3950;48.8616
+Hôtels;Hôtel du Nord;;3 étoiles - Vue canal;2.3600;48.8700
+Hôtels;Hôtel Grands Boulevards;;4 étoiles - Rooftop bar;2.3490;48.8711
+Musées;Musée du Louvre;;Ouvert 9h-18h - Fermé mardi;2.3364;48.8606
+Musées;Musée d'Orsay;;Impressionnisme - Ouvert 9h30-18h;2.3266;48.8600
+Musées;Musée Picasso;;Réservation conseillée;2.3524;48.8596
+Musées;Centre Pompidou;;Art moderne - Terrasse gratuite;2.3522;48.8607
+Points de vue;Tour Eiffel;;Montez au 2ème étage minimum;2.2945;48.8584
+Points de vue;Sacré-Cœur;;Vue panoramique sur Paris;2.3431;48.8867
+Points de vue;Butte Montmartre;;Quartier des artistes;2.3387;48.8867
+Restaurants;Chez Paul;;Cuisine traditionnelle française;2.3522;48.8566
+Restaurants;Le Bouillon Chartier;;Brasserie historique - Prix doux;2.3472;48.8739
+Restaurants;Septime;;Gastronomique - Résa obligatoire;2.3791;48.8524
+Restaurants;Au Pied de Cochon;;Ouvert 24h/24;2.3453;48.8628

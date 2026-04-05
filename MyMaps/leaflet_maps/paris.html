@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ile de France, France</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 1000;
+      flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    header .count {
+      font-size: 0.75rem;
+      color: #999;
+      letter-spacing: 0.05em;
+    }
+
+    #map {
+      flex: 1;
+      z-index: 1;
+    }
+
+    /* Légende */
+    #legend {
+      position: absolute;
+      bottom: 30px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 16px;
+      min-width: 165px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+
+    #legend h3 {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+
+    .legend-item:hover { background: #f5f5f5; }
+    .legend-item.hidden { opacity: 0.3; }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-label {
+      font-size: 0.8rem;
+      color: #333;
+      flex: 1;
+    }
+
+    .legend-count {
+      font-size: 0.7rem;
+      color: #bbb;
+    }
+
+    /* Marqueurs custom */
+    .marker-pin {
+      width: 32px;
+      height: 32px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+
+    .marker-pin .marker-icon {
+      transform: rotate(45deg);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    /* Popup */
+    .leaflet-popup-content-wrapper {
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      color: #222;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .leaflet-popup-tip { background: #ffffff; }
+
+    .popup-content { padding: 4px 2px; }
+
+    .popup-cat {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .popup-nom {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 6px;
+    }
+
+    .popup-adresse {
+      font-size: 0.75rem;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .popup-desc {
+      font-size: 0.8rem;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .leaflet-popup-close-button { color: #aaa !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🗺 Ile de France, France</h1>
+  <span class="count">22 lieux</span>
+</header>
+
+<div id="map"></div>
+<div id="legend"><h3>Catégories</h3></div>
+
+<script>
+const DATA    = {
+  "Musée": [
+    {
+      "categorie": "Musée",
+      "nom": "Musée Picasso",
+      "adresse": "",
+      "description": "",
+      "lon": 2.362115,
+      "lat": 48.85987
+    }
+  ],
+  "Monument": [
+    {
+      "categorie": "Monument",
+      "nom": "Tour Eiffel",
+      "adresse": "",
+      "description": "",
+      "lon": 2.294501,
+      "lat": 48.85826
+    },
+    {
+      "categorie": "Monument",
+      "nom": "Arc de Triomphe",
+      "adresse": "",
+      "description": "",
+      "lon": 2.295037,
+      "lat": 48.873779
+    }
+  ],
+  "Eglise": [
+    {
+      "categorie": "Eglise",
+      "nom": "Saint Ambroise",
+      "adresse": "",
+      "description": "",
+      "lon": 2.374726,
+      "lat": 48.861043
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Sacré -Cœur",
+      "adresse": "",
+      "description": "",
+      "lon": 2.343015,
+      "lat": 48.886806
+    }
+  ],
+  "Adresse": [
+    {
+      "categorie": "Adresse",
+      "nom": "Anne",
+      "adresse": "22 rue spontini, 75116",
+      "description": "",
+      "lon": 2.278211,
+      "lat": 48.8699
+    },
+    {
+      "categorie": "Adresse",
+      "nom": "Etienne",
+      "adresse": "76 boulevard Voltaire, 75011",
+      "description": "",
+      "lon": 2.374251,
+      "lat": 48.861117
+    }
+  ],
+  "A faire": [
+    {
+      "categorie": "A faire",
+      "nom": "Marché d'Aligre",
+      "adresse": "",
+      "description": "Marché le matin - Fermé lundi",
+      "lon": 2.3743,
+      "lat": 48.8496
+    },
+    {
+      "categorie": "A faire",
+      "nom": "Père Lachaise",
+      "adresse": "",
+      "description": "Cimetière historique",
+      "lon": 2.395,
+      "lat": 48.8616
+    }
+  ],
+  "Hôtels": [
+    {
+      "categorie": "Hôtels",
+      "nom": "Hôtel du Nord",
+      "adresse": "",
+      "description": "3 étoiles - Vue canal",
+      "lon": 2.36,
+      "lat": 48.87
+    },
+    {
+      "categorie": "Hôtels",
+      "nom": "Hôtel Grands Boulevards",
+      "adresse": "",
+      "description": "4 étoiles - Rooftop bar",
+      "lon": 2.349,
+      "lat": 48.8711
+    }
+  ],
+  "Musées": [
+    {
+      "categorie": "Musées",
+      "nom": "Musée du Louvre",
+      "adresse": "",
+      "description": "Ouvert 9h-18h - Fermé mardi",
+      "lon": 2.3364,
+      "lat": 48.8606
+    },
+    {
+      "categorie": "Musées",
+      "nom": "Musée d'Orsay",
+      "adresse": "",
+      "description": "Impressionnisme - Ouvert 9h30-18h",
+      "lon": 2.3266,
+      "lat": 48.86
+    },
+    {
+      "categorie": "Musées",
+      "nom": "Musée Picasso",
+      "adresse": "",
+      "description": "Réservation conseillée",
+      "lon": 2.3524,
+      "lat": 48.8596
+    },
+    {
+      "categorie": "Musées",
+      "nom": "Centre Pompidou",
+      "adresse": "",
+      "description": "Art moderne - Terrasse gratuite",
+      "lon": 2.3522,
+      "lat": 48.8607
+    }
+  ],
+  "Points de vue": [
+    {
+      "categorie": "Points de vue",
+      "nom": "Tour Eiffel",
+      "adresse": "",
+      "description": "Montez au 2ème étage minimum",
+      "lon": 2.2945,
+      "lat": 48.8584
+    },
+    {
+      "categorie": "Points de vue",
+      "nom": "Sacré-Cœur",
+      "adresse": "",
+      "description": "Vue panoramique sur Paris",
+      "lon": 2.3431,
+      "lat": 48.8867
+    },
+    {
+      "categorie": "Points de vue",
+      "nom": "Butte Montmartre",
+      "adresse": "",
+      "description": "Quartier des artistes",
+      "lon": 2.3387,
+      "lat": 48.8867
+    }
+  ],
+  "Restaurants": [
+    {
+      "categorie": "Restaurants",
+      "nom": "Chez Paul",
+      "adresse": "",
+      "description": "Cuisine traditionnelle française",
+      "lon": 2.3522,
+      "lat": 48.8566
+    },
+    {
+      "categorie": "Restaurants",
+      "nom": "Le Bouillon Chartier",
+      "adresse": "",
+      "description": "Brasserie historique - Prix doux",
+      "lon": 2.3472,
+      "lat": 48.8739
+    },
+    {
+      "categorie": "Restaurants",
+      "nom": "Septime",
+      "adresse": "",
+      "description": "Gastronomique - Résa obligatoire",
+      "lon": 2.3791,
+      "lat": 48.8524
+    },
+    {
+      "categorie": "Restaurants",
+      "nom": "Au Pied de Cochon",
+      "adresse": "",
+      "description": "Ouvert 24h/24",
+      "lon": 2.3453,
+      "lat": 48.8628
+    }
+  ]
+};
+const STYLES  = {"Musée": {"couleur": "#E8462A", "icone": "🏛"}, "Monument": {"couleur": "#C0392B", "icone": "🗿"}, "Eglise": {"couleur": "#8E44AD", "icone": "⛪"}, "Adresse": {"couleur": "#7F8C8D", "icone": "📍"}, "A faire": {"couleur": "#F39C12", "icone": "📌"}, "Hôtels": {"couleur": "#2980B9", "icone": "🏨"}, "Musées": {"couleur": "#E8462A", "icone": "🏛"}, "Points de vue": {"couleur": "#27AE60", "icone": "👁"}, "Restaurants": {"couleur": "#E67E22", "icone": "🍽"}};
+const layers  = {};
+const hidden  = new Set();
+
+// Initialiser la carte
+const map = L.map('map', {
+  center: [48.865522, 2.343993],
+  zoom: 13,
+  zoomControl: true,
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  maxZoom: 19,
+}).addTo(map);
+
+// Créer les marqueurs
+function creerIcone(style) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="marker-pin" style="background:${style.couleur}">
+             <span class="marker-icon">${style.icone}</span>
+           </div>`,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -34],
+  });
+}
+
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style = STYLES[cat] || {couleur: '#95A5A6', icone: '📍'};
+  const groupe = L.layerGroup().addTo(map);
+  layers[cat] = groupe;
+
+  lieux.forEach(lieu => {
+    const icone  = creerIcone(style);
+    const marker = L.marker([lieu.lat, lieu.lon], {icon: icone});
+
+    let popupHtml = `<div class="popup-content">
+      <div class="popup-cat" style="color:${style.couleur}">${cat}</div>
+      <div class="popup-nom">${lieu.nom}</div>`;
+    if (lieu.adresse)     popupHtml += `<div class="popup-adresse">📮 ${lieu.adresse}</div>`;
+    if (lieu.description) popupHtml += `<div class="popup-desc">${lieu.description}</div>`;
+    popupHtml += `</div>`;
+
+    marker.bindPopup(popupHtml, {maxWidth: 260});
+    groupe.addLayer(marker);
+  });
+});
+
+// Légende interactive
+const legend = document.getElementById('legend');
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style = STYLES[cat] || {couleur: '#95A5A6', icone: '📍'};
+  const item  = document.createElement('div');
+  item.className = 'legend-item';
+  item.dataset.cat = cat;
+  item.innerHTML = `
+    <div class="legend-dot" style="background:${style.couleur}"></div>
+    <span class="legend-label">${style.icone} ${cat}</span>
+    <span class="legend-count">${lieux.length}</span>`;
+
+  item.addEventListener('click', () => {
+    if (hidden.has(cat)) {
+      map.addLayer(layers[cat]);
+      hidden.delete(cat);
+      item.classList.remove('hidden');
+    } else {
+      map.removeLayer(layers[cat]);
+      hidden.add(cat);
+      item.classList.add('hidden');
+    }
+  });
+
+  legend.appendChild(item);
+});
+</script>
+</body>
+</html>

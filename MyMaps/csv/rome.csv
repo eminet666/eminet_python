@@ -1,0 +1,62 @@
+pays;région;;;;;;
+Italie;Latium;;;;;;
+;;;;;;;
+categorie;nom;adresse;note;description;transport;url;lon;lat
+Hotel;;Vicolo del Bologna 20 00153;5;Trastevere Charming;;https://fr.wikipedia.org/?curid=1492;12.468949;41.891078
+Antique;Villa Adriana;;5;Villa imperiale;Metro A + bus;https://fr.wikipedia.org/?curid=4841204;12.776289;41.940784
+Renaissance;Villa d'Este;;3;Villa renaissance;Metro A + bus;https://fr.wikipedia.org/?curid=437016;12.795990;41.962967
+Antique;Ostia Antica;;5;Ville antiqueTheatre, rues antiques, mosaiques, thermes;Train Trastevere (30-35');https://fr.wikipedia.org/?curid=4902930;12.285740;41.753637
+Antique;Tarquinia;;5;Necropole de Monterozzi, musee;Train - Tarquinia 1h20;https://fr.wikipedia.org/?curid=878515;11.790556;42.239167
+Renaissance;Orvieto;;4;Duomo, fresques Luca Signorelli;Train direct - Orvieto 1h15;https://fr.wikipedia.org/?curid=525221;12.517351;41.885120
+Antique;Cerveteri;;5;Necropole de Banditaccia, centre medieval;Train -  Cerveteri-Castelvecchio + bus 1h10;https://fr.wikipedia.org/?curid=725337;12.099150;41.998332
+Renaissance;Agnani;;;Cathedrale, palais des papes;Train -  Frosinone + bus 1h15;https://fr.wikipedia.org/?curid=5814968;13.150000;41.750000
+Antique;Amphitheatre de Sutri;;;Amphithe�tre romain, necropole etrusque, eglise rupestre;Train -  Sutri-Capranica;https://fr.wikipedia.org/?curid=878513;12.229480;42.239164
+Antique;Viterbe;;;Palais des papes, quartier medieval, sources thermales;Train -  Viterbo Porta Fiorentina 1h30;https://fr.wikipedia.org/?curid=254594;11.948814;42.492952
+Antique;Navires de Nemi;Via Diana, 13, 00074 Nemi;3;Lac de Nemi, musee des navires de Caligula;Bus depuis Albano Laziale 1h;https://fr.wikipedia.org/?curid=3762401;12.701978;41.722128
+Renaissance;Villa Aldobrandini Frascati;;1;Villa Aldobrandini, centre historique, vue sur Rome;Train -  Frascati 30-40';https://fr.wikipedia.org/?curid=3912807;12.683096;41.803581
+Antique;Appia Antica;;2;Via Appia Antica, tombes antiques , catacombes chretiennes, aqueducs;Metro A - Colli Albani + bus 660;https://fr.wikipedia.org/?curid=34690;12.564302;41.807494
+Antique;Centocelle;;;Vestiges de villas romaines;Bus ATAC;https://fr.wikipedia.org/?curid=9895236;12.562566;41.874776
+Antique;Acquedotti;;3;Immense parc avec aqueducs romains spectaculaires;Metro A - Subaugusta;https://fr.wikipedia.org/?curid=12084843;12.562374;41.844839
+Quartier;Ostiense;;1;Ancien quartier industriel devenu culturel;Metro B - Piramide;https://fr.wikipedia.org/?curid=3628544;12.477881;41.857283
+Quartier;Testaccio;;1;Ancien quartier industriel devenu culturel;Metro B - Piramide;https://fr.wikipedia.org/?curid=3489740;12.476769;41.878818
+Antique;Monte Testaccio;;;Colline artificielle composee d'nciens amphores romaines cassees;Metro B - Piramide;https://fr.wikipedia.org/?curid=3489740;12.475088;41.875935
+Quartier;Pigneto;;1;Ambiance boheme, cafes et fresques murales;;https://fr.wikipedia.org/?curid=7709895;12.528181;41.888478
+Contemporain;EUR;;1;Quartier moderne des annees 1930-1940 avec architecture rationaliste;Metro B - EUR Fermi;https://fr.wikipedia.org/?curid=5367960;12.470950;41.833774
+Contemporain;Cinecitta;;3;Studios de cinema historiques;Metro B - Cinecittà;https://fr.wikipedia.org/?curid=361654;12.574408;41.849274
+Quartier;Garbatella;;;Quartier pittoresque avec architecture des annees 1920-30;Metro B - Garbatella;https://fr.wikipedia.org/?curid=5447973;12.483062;41.866338
+Antique;Caffarella;;;Parc avec ruines romaines, tombes anciennes et aqueducs;Metro A - Colli Albani;https://fr.wikipedia.org/?curid=11107670;12.520535;41.862697
+Antique;Centrale Montemartini;;;Musee d'antiques dans ancienne usine electrique;Metro B - Piramide;https://fr.wikipedia.org/?curid=4389573;12.478015;41.866547
+Contemporain;Casina delle Civette;;;Maison decoree style Art Nouveau, vitraux magnifiques;Metro B - Bologna;https://fr.wikipedia.org/?curid=3777858;12.512917;41.914307
+Contemporain;Villa Torlonia;;;Ancienne villa de la famille Torlonia construite au debut du XIX siecle.;Metro B - Bologna;https://fr.wikipedia.org/?curid=3777858;12.511624;41.913643
+Contemporain;Cimitero Acattolico;;;Balade parmi les tombes Keats, Shelley;Metro B - Piramide;https://fr.wikipedia.org/?curid=8026328;12.479444;41.876360
+Antique;Parco di Veio;;;Ancienne cite etrusque de Veio, ruines et temples;Train FL3 + bus;https://fr.wikipedia.org/?curid=268359;12.458945;41.951512
+Quartier;Quartier Nomentano;;;Architecture art nouveau et moderne du debut du XX? siecle;Metro B - Bologna;https://fr.wikipedia.org/?curid=3627607;12.519720;41.916504
+Quartier;Quartiere San Lorenzo;;;Quartier etudiant anime avec street?art, cafes et boutiques insolites;Metro B - Termini;https://en.wikipedia.org/wiki/San_Lorenzo_(Rome);12.5157444;41.8971028
+Antique;Santa Prisca;;;Temple souterrain dedie au culte de Mithra (IIIe siecle);;https://fr.wikipedia.org/?curid=6415055;12.483965;41.883069
+Antique;Porticus Octaviae;;;Vestiges romains entourant les anciennes bibliotheques et temples;;https://fr.wikipedia.org/?curid=156077;12.478889;41.893056
+Antique;Domus Aurea;;;Villa de Neron;;https://fr.wikipedia.org/?curid=450713;12.495111;41.891262
+Antique;Forum Boarium;;;Pour les amateurs de Rome antique authentique;;https://fr.wikipedia.org/?curid=992644;12.480876;41.888821
+Antique;Temple d'Hercule Victor;;;Temple rond en marbre du Ier siecle av. J.-C;;https://fr.wikipedia.org/?curid=689885;12.480768;41.888739
+Renaissance;Palazzo Altemps;;;Musee avec statues antiques et renaissance decorative;;https://fr.wikipedia.org/?curid=3789428;12.473099;41.901218
+Renaissance;Palazzo Barberini;;;Section secondaire;;https://fr.wikipedia.org/?curid=2723921;12.490135;41.903473
+Renaissance;Villa Farnesina;;;Fresques de Raphael et precurseurs de la Renaissance italienne;;https://fr.wikipedia.org/?curid=1545042;12.467333;41.893628
+Renaissance;Santa Maria in Trastevere;;;Voir Chapelle laterales;;https://fr.wikipedia.org/?curid=6321534;12.469501;41.889423
+Antique;Temple de Portunus;;;La magie vient surtout de l'clairage nocturne qui le rend presque irreel.;;https://fr.wikipedia.org/?curid=1481861;12.480908;41.889237
+Antique;Mura Serviane;;;Vestiges des mura de Rome du IVe siecle av. J.-C.;;https://fr.wikipedia.org/?curid=1301676;12.494382;41.906223
+Antique;Mausolee de Romulus;;;Fresques et structures antiques dans le cryptoportique;;https://fr.wikipedia.org/?curid=80630;12.518489;41.855127
+Renaissance;Palazzo Spada;;;La cour baroque a une perspective forcee unique, oeuvre de Borromini;;https://fr.wikipedia.org/?curid=3783225;12.472225;41.893919
+Renaissance;Oratorio dei Filippini;;;Fresques baroques incroyables dans un petit oratoire;;https://fr.wikipedia.org/?curid=3917658;12.468813;41.898687
+Renaissance;Palazzo Colonna;;;Cours interieures;;https://fr.wikipedia.org/?curid=11999369;12.483960;41.897835
+Renaissance;San Luigi dei Francesi;;;Caravage et fresques secondaires superbes;;https://fr.wikipedia.org/?curid=762928;12.474543;41.899588
+Renaissance;San Lorenzo in Lucina;;;Petit jardin et fresques dans une cour interieure;;https://fr.wikipedia.org/?curid=5470134;12.478725;41.903214
+Renaissance;San Giovanni in Laterano;;;Sections secondaires : calme, fresques et mosaiques peu vues;;https://fr.wikipedia.org/?curid=10670218;12.505587;41.885849
+Renaissance;Santa Maria in Cosmedin;;;Premiere eglise grecque, mosaiques;;https://fr.wikipedia.org/?curid=4796821;12.481599;41.888229
+Renaissance;Palazzo Valentini;;;Cryptes romaines +  experience multi immersive;;https://fr.wikipedia.org/?curid=12338235;12.484285;41.896444
+Renaissance;Palazzo Sacchetti;;;Fresques baroques sur cours interieures;;https://fr.wikipedia.org/?curid=10909517;12.465598;41.898645
+Renaissance;Palazzo Venezia;;;sections secondaires - galeries laterales avec fresques;;https://fr.wikipedia.org/?curid=3112011;12.481801;41.896069
+Renaissance;Sant'Onofrio;;;Cloitre avec fresques Renaissance, petit jardin tranquille;;https://fr.wikipedia.org/?curid=868460;13.743207;41.709700
+Renaissance;Santa Maria della Pace;;;Magnifique fresque de Raphael;;https://fr.wikipedia.org/?curid=5814309;12.483637;41.921872
+Renaissance;San Salvatore in Lauro;;;Chapelles laterales avec fresques Renaissance;;https://fr.wikipedia.org/?curid=7256957;12.469568;41.900744
+Renaissance;Santa Maria in Traspontina;;;Fresques baroques cachees derriere l'autel principal;;https://fr.wikipedia.org/?curid=5454095;12.462222;41.902778
+Contemporain;Castel Gandolfo;;;Residence Papale;Train;https://fr.wikipedia.org/?curid=119376;12.648877;41.742522
+Renaissance;Palazzo Poli;;;;;https://fr.wikipedia.org/?curid=7781862;12.483356;41.901199

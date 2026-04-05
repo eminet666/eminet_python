@@ -1,0 +1,58 @@
+pays;région;;;;
+Italie;Latium;;;;
+;;;;;
+categorie;nom;adresse;description;lon;lat
+Hotel;;Vicolo del Bologna 20 00153;;12.468949;41.891078
+Antique;Navires de Nemi;Via Diana, 13, 00074 Nemi;;12.701978;41.722128
+Antique;Villa Adriana;;Metro A + bus;12.776289;41.940784
+Renaissance;Villa d'Este;;Metro A + bus;12.795990;41.962967
+Train;Ostia Antica;;;12.285740;41.753637
+Antique;Tarquina;;;11.7905555;42.2391667
+Renaissance;Orvieto;;;12.517351;41.885120
+Antique;Cerveteri;;;12.099150;41.998332
+Renaissance;Agnani;;;13.15;41.75
+Antique;Amphitheatre Sutri;;;12.229480;42.239164
+Antique;Viterbe;;;11.948814;42.492952
+Renaissance;Villa Aldobrandini Frascati;;;12.683096;41.803581
+Antique;Appia Antica;;;12.564302;41.807494
+Antique;Centocelle;;;12.562566;41.874776
+Antique;Acquedotti;;Metro A _ Subaugusta;12.562374;41.844839
+Quartier;Ostiense;;Metro B _ Piramide;12.477881;41.857283
+Quartier;Testaccio;;Metro B _ Piramide;12.476769;41.878818
+Quartier;Pigneto;;;12.528181;41.888478
+Contemporain;EUR;;Metro B _ EUR Fermi;12.470950;41.833774
+Contemporain;Cinecittà;;Metro B _ Cinecitta;12.574408;41.849274
+Quartier;Garbatella;;Metro B _ Garbatella;12.483062;41.866338
+Antique;Caffarella;;Metro A _ Colli Albani;12.520535;41.862697
+Antique;Centrale Montemartini;;Metro B _ Piramide;12.478015;41.866547
+Contemporain;Casina delle Civette;;Ligne B _ Bologna / Policlinico;12.512917;41.914307
+Contemporain;Cimitero Acattolico;;Metro B _ Piramide;12.479444;41.876360
+Antique;Parco di Veio;;Train FL3+bus;12.458945;41.951512
+Contemporain;Quartier Nomentano;;Metro B _ Piramide;12.519720;41.916504
+Contemporain;Quartier San Lorenzo;;Metro B _ Termini / Policlinico;12.548734;41.543287
+Antique;Santa Prisca;;;12.483965;41.883069
+Antique;Porticus Octaviae;;;12.4788888;41.8930556
+Antique;Domus Aurea;;;12.495111;41.891262
+Antique;Forum Boarium;;;12.480876;41.888821
+Antique;Temple d’Hercule Victor;;;12.480768;41.888739
+Renaissance;Palazzo Altemps;;;12.473099;41.901218
+Renaissance;Palazzo Barberini;;;12.490135;41.903473
+Renaissance;Villa Farnesina;;;12.467333;41.893628
+Renaissance;Santa Maria in Trastevere;;;12.469501;41.889423
+Antique;Temple de Portunus;;;12.480908;41.889237
+Antique;Mura Serviane;;;12.494382;41.906223
+Antique;Mausolée de Romulus;;;12.518489;41.855127
+Renaissance;Palazzo Spada;;;12.472225;41.893919
+Renaissance;Oratorio dei Filippini;;;12.468813;41.898687
+Renaissance;Palazzo Colonna;;;12.483960;41.897835
+Renaissance;San Luigi dei Francesi;;;12.474543;41.899588
+Renaissance;San Lorenzo in Lucina;;;12.478725;41.903214
+Renaissance;San Giovanni in Laterano;;;12.505587;41.885849
+Renaissance;Santa Maria in Cosmedin;;;12.481599;41.888229
+Renaissance;Palazzo Valentini;;;12.484285;41.896444
+Renaissance;Palazzo Sacchetti;;;12.465598;41.898645
+Renaissance;Palazzo Venezia;;;12.481801;41.896069
+Renaissance;Sant’Onofrio;;;13.743207;41.709700
+Renaissance;Santa Maria della Pace;;;12.483637;41.921872
+Renaissance;San Salvatore in Lauro;;;12.469568;41.900744
+Renaissance;Santa Maria in Traspontina;;;12.4622222;41.9027778

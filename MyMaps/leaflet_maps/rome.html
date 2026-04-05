@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latium, Italie</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    header {
+      background: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 1000;
+      flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    header .count {
+      font-size: 0.75rem;
+      color: #999;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Carte ──────────────────────────────────────────────── */
+    #map { flex: 1; z-index: 1; }
+
+    /* ── Marqueurs ──────────────────────────────────────────── */
+    .marker-pin {
+      width: 32px;
+      height: 32px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .marker-pin .marker-icon {
+      transform: rotate(45deg);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    /* ── Légende DESKTOP ────────────────────────────────────── */
+    #legend {
+      position: absolute;
+      bottom: 30px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 16px;
+      min-width: 165px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+
+    #legend h3 {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .legend-item:hover { background: #f5f5f5; }
+    .legend-item.hidden { opacity: 0.3; }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-label { font-size: 0.8rem; color: #333; flex: 1; }
+    .legend-count  { font-size: 0.7rem; color: #bbb; }
+
+    /* Bouton légende mobile — caché sur desktop */
+    #legend-toggle { display: none; }
+
+    /* ── Popup DESKTOP ──────────────────────────────────────── */
+    .leaflet-popup-content-wrapper {
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      color: #222;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .leaflet-popup-tip       { background: #ffffff; }
+    .leaflet-popup-close-button { color: #aaa !important; }
+
+    /* ── Bottom sheet MOBILE (caché par défaut) ─────────────── */
+    #bottom-sheet {
+      display: none; /* activé en JS sur mobile */
+    }
+
+    /* ── Contenu popup / bottom-sheet (partagé) ─────────────── */
+    .popup-content  { padding: 4px 2px; }
+    .popup-cat      { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+    .popup-nom      { font-size: 1rem; font-weight: 600; color: #111; margin-bottom: 4px; }
+    .popup-note     { font-size: 0.85rem; color: #f0a500; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .popup-adresse  { font-size: 0.75rem; color: #888; margin-bottom: 4px; }
+    .popup-transport{ font-size: 0.75rem; color: #5d8aa8; margin-bottom: 4px; }
+    .popup-desc     { font-size: 0.8rem; color: #555; line-height: 1.4; }
+    .popup-url      { font-size: 0.75rem; margin-top: 6px; }
+    .popup-url a    { color: #2980B9; text-decoration: none; font-weight: 500; }
+    .popup-url a:hover { text-decoration: underline; }
+
+    /* ════════════════════════════════════════════════════════
+       MOBILE  (écrans ≤ 768px)
+       ════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* Header plus compact */
+      header { padding: 8px 14px; }
+      header h1 { font-size: 0.85rem; }
+
+      /* Marqueurs plus grands pour le doigt */
+      .marker-pin {
+        width: 42px;
+        height: 42px;
+        border-width: 3px;
+      }
+      .marker-pin .marker-icon { font-size: 18px; }
+
+      /* Légende cachée par défaut, ouvrable */
+      #legend {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        border-radius: 16px 16px 0 0;
+        padding: 16px 20px 24px;
+        min-width: unset;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      #legend.open { transform: translateY(0); }
+
+      #legend h3 {
+        font-size: 0.7rem;
+        text-align: center;
+        margin-bottom: 14px;
+      }
+
+      /* Drag handle au dessus de la légende */
+      #legend::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 14px;
+      }
+
+      .legend-item  { padding: 8px 6px; }
+      .legend-label { font-size: 0.9rem; }
+      .legend-count { font-size: 0.8rem; }
+      .legend-dot   { width: 12px; height: 12px; }
+
+      /* Bouton flottant pour ouvrir la légende */
+      #legend-toggle {
+        display: flex;
+        position: absolute;
+        bottom: 24px;
+        right: 16px;
+        z-index: 1001;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: box-shadow 0.15s;
+      }
+      #legend-toggle:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+      /* Masquer popup Leaflet natif sur mobile */
+      .leaflet-popup { display: none !important; }
+
+      /* Bottom sheet à la place */
+      #bottom-sheet {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1002;
+        background: #ffffff;
+        border-radius: 16px 16px 0 0;
+        padding: 20px 20px 32px;
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 55vh;
+        overflow-y: auto;
+      }
+      #bottom-sheet.open { transform: translateY(0); }
+
+      #bottom-sheet::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 16px;
+      }
+
+      #bottom-sheet .popup-nom     { font-size: 1.15rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-cat     { font-size: 0.7rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-note    { font-size: 1rem; margin-bottom: 8px; }
+      #bottom-sheet .popup-adresse { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-transport { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-desc    { font-size: 0.9rem; line-height: 1.5; }
+      #bottom-sheet .popup-url     { font-size: 0.9rem; margin-top: 12px; }
+      #bottom-sheet .popup-url a   { font-size: 1rem; padding: 8px 0; display: inline-block; }
+
+      /* Bouton fermer le bottom sheet */
+      #sheet-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: #f5f5f5;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🗺 Latium, Italie</h1>
+  <span class="count">58 lieux</span>
+</header>
+
+<div id="map"></div>
+
+<!-- Légende (desktop : flottante / mobile : bottom sheet) -->
+<div id="legend"><h3>Catégories</h3></div>
+
+<!-- Bouton mobile pour ouvrir la légende -->
+<button id="legend-toggle" title="Catégories">🗂</button>
+
+<!-- Bottom sheet mobile -->
+<div id="bottom-sheet">
+  <button id="sheet-close">✕</button>
+  <div id="sheet-content"></div>
+</div>
+
+<script>
+const DATA    = {
+  "Hotel": [
+    {
+      "categorie": "Hotel",
+      "nom": "",
+      "adresse": "Vicolo del Bologna 20 00153",
+      "note": "5",
+      "description": "Trastevere Charming",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=1492",
+      "lon": 12.468949,
+      "lat": 41.891078
+    }
+  ],
+  "Antique": [
+    {
+      "categorie": "Antique",
+      "nom": "Villa Adriana",
+      "adresse": "",
+      "note": "5",
+      "description": "Villa imperiale",
+      "transport": "Metro A + bus",
+      "url": "https://fr.wikipedia.org/?curid=4841204",
+      "lon": 12.776289,
+      "lat": 41.940784
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Ostia Antica",
+      "adresse": "",
+      "note": "5",
+      "description": "Ville antiqueTheatre, rues antiques, mosaiques, thermes",
+      "transport": "Train Trastevere (30-35')",
+      "url": "https://fr.wikipedia.org/?curid=4902930",
+      "lon": 12.28574,
+      "lat": 41.753637
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Tarquinia",
+      "adresse": "",
+      "note": "5",
+      "description": "Necropole de Monterozzi, musee",
+      "transport": "Train - Tarquinia 1h20",
+      "url": "https://fr.wikipedia.org/?curid=878515",
+      "lon": 11.790556,
+      "lat": 42.239167
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Cerveteri",
+      "adresse": "",
+      "note": "5",
+      "description": "Necropole de Banditaccia, centre medieval",
+      "transport": "Train -  Cerveteri-Castelvecchio + bus 1h10",
+      "url": "https://fr.wikipedia.org/?curid=725337",
+      "lon": 12.09915,
+      "lat": 41.998332
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Amphitheatre de Sutri",
+      "adresse": "",
+      "note": "",
+      "description": "Amphithe�tre romain, necropole etrusque, eglise rupestre",
+      "transport": "Train -  Sutri-Capranica",
+      "url": "https://fr.wikipedia.org/?curid=878513",
+      "lon": 12.22948,
+      "lat": 42.239164
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Viterbe",
+      "adresse": "",
+      "note": "",
+      "description": "Palais des papes, quartier medieval, sources thermales",
+      "transport": "Train -  Viterbo Porta Fiorentina 1h30",
+      "url": "https://fr.wikipedia.org/?curid=254594",
+      "lon": 11.948814,
+      "lat": 42.492952
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Navires de Nemi",
+      "adresse": "Via Diana, 13, 00074 Nemi",
+      "note": "3",
+      "description": "Lac de Nemi, musee des navires de Caligula",
+      "transport": "Bus depuis Albano Laziale 1h",
+      "url": "https://fr.wikipedia.org/?curid=3762401",
+      "lon": 12.701978,
+      "lat": 41.722128
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Appia Antica",
+      "adresse": "",
+      "note": "2",
+      "description": "Via Appia Antica, tombes antiques , catacombes chretiennes, aqueducs",
+      "transport": "Metro A - Colli Albani + bus 660",
+      "url": "https://fr.wikipedia.org/?curid=34690",
+      "lon": 12.564302,
+      "lat": 41.807494
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Centocelle",
+      "adresse": "",
+      "note": "",
+      "description": "Vestiges de villas romaines",
+      "transport": "Bus ATAC",
+      "url": "https://fr.wikipedia.org/?curid=9895236",
+      "lon": 12.562566,
+      "lat": 41.874776
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Acquedotti",
+      "adresse": "",
+      "note": "3",
+      "description": "Immense parc avec aqueducs romains spectaculaires",
+      "transport": "Metro A - Subaugusta",
+      "url": "https://fr.wikipedia.org/?curid=12084843",
+      "lon": 12.562374,
+      "lat": 41.844839
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Monte Testaccio",
+      "adresse": "",
+      "note": "",
+      "description": "Colline artificielle composee d'nciens amphores romaines cassees",
+      "transport": "Metro B - Piramide",
+      "url": "https://fr.wikipedia.org/?curid=3489740",
+      "lon": 12.475088,
+      "lat": 41.875935
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Caffarella",
+      "adresse": "",
+      "note": "",
+      "description": "Parc avec ruines romaines, tombes anciennes et aqueducs",
+      "transport": "Metro A - Colli Albani",
+      "url": "https://fr.wikipedia.org/?curid=11107670",
+      "lon": 12.520535,
+      "lat": 41.862697
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Centrale Montemartini",
+      "adresse": "",
+      "note": "",
+      "description": "Musee d'antiques dans ancienne usine electrique",
+      "transport": "Metro B - Piramide",
+      "url": "https://fr.wikipedia.org/?curid=4389573",
+      "lon": 12.478015,
+      "lat": 41.866547
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Parco di Veio",
+      "adresse": "",
+      "note": "",
+      "description": "Ancienne cite etrusque de Veio, ruines et temples",
+      "transport": "Train FL3 + bus",
+      "url": "https://fr.wikipedia.org/?curid=268359",
+      "lon": 12.458945,
+      "lat": 41.951512
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Santa Prisca",
+      "adresse": "",
+      "note": "",
+      "description": "Temple souterrain dedie au culte de Mithra (IIIe siecle)",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=6415055",
+      "lon": 12.483965,
+      "lat": 41.883069
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Porticus Octaviae",
+      "adresse": "",
+      "note": "",
+      "description": "Vestiges romains entourant les anciennes bibliotheques et temples",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=156077",
+      "lon": 12.478889,
+      "lat": 41.893056
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Domus Aurea",
+      "adresse": "",
+      "note": "",
+      "description": "Villa de Neron",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=450713",
+      "lon": 12.495111,
+      "lat": 41.891262
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Forum Boarium",
+      "adresse": "",
+      "note": "",
+      "description": "Pour les amateurs de Rome antique authentique",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=992644",
+      "lon": 12.480876,
+      "lat": 41.888821
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Temple d'Hercule Victor",
+      "adresse": "",
+      "note": "",
+      "description": "Temple rond en marbre du Ier siecle av. J.-C",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=689885",
+      "lon": 12.480768,
+      "lat": 41.888739
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Temple de Portunus",
+      "adresse": "",
+      "note": "",
+      "description": "La magie vient surtout de l'clairage nocturne qui le rend presque irreel.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=1481861",
+      "lon": 12.480908,
+      "lat": 41.889237
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Mura Serviane",
+      "adresse": "",
+      "note": "",
+      "description": "Vestiges des mura de Rome du IVe siecle av. J.-C.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=1301676",
+      "lon": 12.494382,
+      "lat": 41.906223
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Mausolee de Romulus",
+      "adresse": "",
+      "note": "",
+      "description": "Fresques et structures antiques dans le cryptoportique",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=80630",
+      "lon": 12.518489,
+      "lat": 41.855127
+    }
+  ],
+  "Renaissance": [
+    {
+      "categorie": "Renaissance",
+      "nom": "Villa d'Este",
+      "adresse": "",
+      "note": "3",
+      "description": "Villa renaissance",
+      "transport": "Metro A + bus",
+      "url": "https://fr.wikipedia.org/?curid=437016",
+      "lon": 12.79599,
+      "lat": 41.962967
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Orvieto",
+      "adresse": "",
+      "note": "4",
+      "description": "Duomo, fresques Luca Signorelli",
+      "transport": "Train direct - Orvieto 1h15",
+      "url": "https://fr.wikipedia.org/?curid=525221",
+      "lon": 12.517351,
+      "lat": 41.88512
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Agnani",
+      "adresse": "",
+      "note": "",
+      "description": "Cathedrale, palais des papes",
+      "transport": "Train -  Frosinone + bus 1h15",
+      "url": "https://fr.wikipedia.org/?curid=5814968",
+      "lon": 13.15,
+      "lat": 41.75
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Villa Aldobrandini Frascati",
+      "adresse": "",
+      "note": "1",
+      "description": "Villa Aldobrandini, centre historique, vue sur Rome",
+      "transport": "Train -  Frascati 30-40'",
+      "url": "https://fr.wikipedia.org/?curid=3912807",
+      "lon": 12.683096,
+      "lat": 41.803581
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Palazzo Altemps",
+      "adresse": "",
+      "note": "",
+      "description": "Musee avec statues antiques et renaissance decorative",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=3789428",
+      "lon": 12.473099,
+      "lat": 41.901218
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Palazzo Barberini",
+      "adresse": "",
+      "note": "",
+      "description": "Section secondaire",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=2723921",
+      "lon": 12.490135,
+      "lat": 41.903473
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Villa Farnesina",
+      "adresse": "",
+      "note": "",
+      "description": "Fresques de Raphael et precurseurs de la Renaissance italienne",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=1545042",
+      "lon": 12.467333,
+      "lat": 41.893628
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Santa Maria in Trastevere",
+      "adresse": "",
+      "note": "",
+      "description": "Voir Chapelle laterales",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=6321534",
+      "lon": 12.469501,
+      "lat": 41.889423
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Palazzo Spada",
+      "adresse": "",
+      "note": "",
+      "description": "La cour baroque a une perspective forcee unique, oeuvre de Borromini",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=3783225",
+      "lon": 12.472225,
+      "lat": 41.893919
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Oratorio dei Filippini",
+      "adresse": "",
+      "note": "",
+      "description": "Fresques baroques incroyables dans un petit oratoire",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=3917658",
+      "lon": 12.468813,
+      "lat": 41.898687
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Palazzo Colonna",
+      "adresse": "",
+      "note": "",
+      "description": "Cours interieures",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=11999369",
+      "lon": 12.48396,
+      "lat": 41.897835
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "San Luigi dei Francesi",
+      "adresse": "",
+      "note": "",
+      "description": "Caravage et fresques secondaires superbes",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=762928",
+      "lon": 12.474543,
+      "lat": 41.899588
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "San Lorenzo in Lucina",
+      "adresse": "",
+      "note": "",
+      "description": "Petit jardin et fresques dans une cour interieure",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=5470134",
+      "lon": 12.478725,
+      "lat": 41.903214
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "San Giovanni in Laterano",
+      "adresse": "",
+      "note": "",
+      "description": "Sections secondaires : calme, fresques et mosaiques peu vues",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=10670218",
+      "lon": 12.505587,
+      "lat": 41.885849
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Santa Maria in Cosmedin",
+      "adresse": "",
+      "note": "",
+      "description": "Premiere eglise grecque, mosaiques",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=4796821",
+      "lon": 12.481599,
+      "lat": 41.888229
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Palazzo Valentini",
+      "adresse": "",
+      "note": "",
+      "description": "Cryptes romaines +  experience multi immersive",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=12338235",
+      "lon": 12.484285,
+      "lat": 41.896444
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Palazzo Sacchetti",
+      "adresse": "",
+      "note": "",
+      "description": "Fresques baroques sur cours interieures",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=10909517",
+      "lon": 12.465598,
+      "lat": 41.898645
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Palazzo Venezia",
+      "adresse": "",
+      "note": "",
+      "description": "sections secondaires - galeries laterales avec fresques",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=3112011",
+      "lon": 12.481801,
+      "lat": 41.896069
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Sant'Onofrio",
+      "adresse": "",
+      "note": "",
+      "description": "Cloitre avec fresques Renaissance, petit jardin tranquille",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=868460",
+      "lon": 13.743207,
+      "lat": 41.7097
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Santa Maria della Pace",
+      "adresse": "",
+      "note": "",
+      "description": "Magnifique fresque de Raphael",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=5814309",
+      "lon": 12.483637,
+      "lat": 41.921872
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "San Salvatore in Lauro",
+      "adresse": "",
+      "note": "",
+      "description": "Chapelles laterales avec fresques Renaissance",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=7256957",
+      "lon": 12.469568,
+      "lat": 41.900744
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Santa Maria in Traspontina",
+      "adresse": "",
+      "note": "",
+      "description": "Fresques baroques cachees derriere l'autel principal",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=5454095",
+      "lon": 12.462222,
+      "lat": 41.902778
+    },
+    {
+      "categorie": "Renaissance",
+      "nom": "Palazzo Poli",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=7781862",
+      "lon": 12.483356,
+      "lat": 41.901199
+    }
+  ],
+  "Quartier": [
+    {
+      "categorie": "Quartier",
+      "nom": "Ostiense",
+      "adresse": "",
+      "note": "1",
+      "description": "Ancien quartier industriel devenu culturel",
+      "transport": "Metro B - Piramide",
+      "url": "https://fr.wikipedia.org/?curid=3628544",
+      "lon": 12.477881,
+      "lat": 41.857283
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Testaccio",
+      "adresse": "",
+      "note": "1",
+      "description": "Ancien quartier industriel devenu culturel",
+      "transport": "Metro B - Piramide",
+      "url": "https://fr.wikipedia.org/?curid=3489740",
+      "lon": 12.476769,
+      "lat": 41.878818
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Pigneto",
+      "adresse": "",
+      "note": "1",
+      "description": "Ambiance boheme, cafes et fresques murales",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=7709895",
+      "lon": 12.528181,
+      "lat": 41.888478
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Garbatella",
+      "adresse": "",
+      "note": "",
+      "description": "Quartier pittoresque avec architecture des annees 1920-30",
+      "transport": "Metro B - Garbatella",
+      "url": "https://fr.wikipedia.org/?curid=5447973",
+      "lon": 12.483062,
+      "lat": 41.866338
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Quartier Nomentano",
+      "adresse": "",
+      "note": "",
+      "description": "Architecture art nouveau et moderne du debut du XX? siecle",
+      "transport": "Metro B - Bologna",
+      "url": "https://fr.wikipedia.org/?curid=3627607",
+      "lon": 12.51972,
+      "lat": 41.916504
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Quartiere San Lorenzo",
+      "adresse": "",
+      "note": "",
+      "description": "Quartier etudiant anime avec street?art, cafes et boutiques insolites",
+      "transport": "Metro B - Termini",
+      "url": "https://en.wikipedia.org/wiki/San_Lorenzo_(Rome)",
+      "lon": 12.5157444,
+      "lat": 41.8971028
+    }
+  ],
+  "Contemporain": [
+    {
+      "categorie": "Contemporain",
+      "nom": "EUR",
+      "adresse": "",
+      "note": "1",
+      "description": "Quartier moderne des annees 1930-1940 avec architecture rationaliste",
+      "transport": "Metro B - EUR Fermi",
+      "url": "https://fr.wikipedia.org/?curid=5367960",
+      "lon": 12.47095,
+      "lat": 41.833774
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Cinecitta",
+      "adresse": "",
+      "note": "3",
+      "description": "Studios de cinema historiques",
+      "transport": "Metro B - Cinecittà",
+      "url": "https://fr.wikipedia.org/?curid=361654",
+      "lon": 12.574408,
+      "lat": 41.849274
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Casina delle Civette",
+      "adresse": "",
+      "note": "",
+      "description": "Maison decoree style Art Nouveau, vitraux magnifiques",
+      "transport": "Metro B - Bologna",
+      "url": "https://fr.wikipedia.org/?curid=3777858",
+      "lon": 12.512917,
+      "lat": 41.914307
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Villa Torlonia",
+      "adresse": "",
+      "note": "",
+      "description": "Ancienne villa de la famille Torlonia construite au debut du XIX siecle.",
+      "transport": "Metro B - Bologna",
+      "url": "https://fr.wikipedia.org/?curid=3777858",
+      "lon": 12.511624,
+      "lat": 41.913643
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Cimitero Acattolico",
+      "adresse": "",
+      "note": "",
+      "description": "Balade parmi les tombes Keats, Shelley",
+      "transport": "Metro B - Piramide",
+      "url": "https://fr.wikipedia.org/?curid=8026328",
+      "lon": 12.479444,
+      "lat": 41.87636
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Castel Gandolfo",
+      "adresse": "",
+      "note": "",
+      "description": "Residence Papale",
+      "transport": "Train",
+      "url": "https://fr.wikipedia.org/?curid=119376",
+      "lon": 12.648877,
+      "lat": 41.742522
+    }
+  ]
+};
+const STYLES  = {"Hotel": {"couleur": "#2980B9", "icone": "🏨"}, "Antique": {"couleur": "#A0522D", "icone": "🏺"}, "Renaissance": {"couleur": "#8B6914", "icone": "🎨"}, "Quartier": {"couleur": "#16A085", "icone": "🚶"}, "Contemporain": {"couleur": "#2C3E50", "icone": "🏙"}};
+const layers  = {};
+const hidden  = new Set();
+const isMobile = () => window.innerWidth <= 768;
+
+// ── Carte ────────────────────────────────────────────────────
+const map = L.map('map', {
+  center: [41.899572, 12.508989],
+  zoom: 13,
+  zoomControl: true,
+  tap: true,
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  maxZoom: 19,
+}).addTo(map);
+
+// ── Icônes ───────────────────────────────────────────────────
+function creerIcone(style) {
+  const sz = isMobile() ? 42 : 32;
+  const fs = isMobile() ? 18 : 14;
+  return L.divIcon({
+    className: '',
+    html: `<div class="marker-pin" style="background:${style.couleur};width:${sz}px;height:${sz}px">
+             <span class="marker-icon" style="font-size:${fs}px">${style.icone}</span>
+           </div>`,
+    iconSize:    [sz, sz],
+    iconAnchor:  [sz/2, sz],
+    popupAnchor: [0, -(sz+4)],
+  });
+}
+
+// ── Contenu popup ─────────────────────────────────────────────
+function buildPopupHtml(lieu, cat, style) {
+  let html = `<div class="popup-content">
+    <div class="popup-cat" style="color:${style.couleur}">${cat}</div>
+    <div class="popup-nom">${lieu.nom}</div>`;
+  if (lieu.note) {
+    const n = Math.min(5, Math.max(1, parseInt(lieu.note) || 0));
+    html += `<div class="popup-note">${'★'.repeat(n) + '☆'.repeat(5-n)}</div>`;
+  }
+  if (lieu.adresse)     html += `<div class="popup-adresse">📮 ${lieu.adresse}</div>`;
+  if (lieu.transport)   html += `<div class="popup-transport">🚇 ${lieu.transport}</div>`;
+  if (lieu.description) html += `<div class="popup-desc">${lieu.description}</div>`;
+  if (lieu.url)         html += `<div class="popup-url"><a href="${lieu.url}" target="_blank">🔗 Site</a></div>`;
+  html += `</div>`;
+  return html;
+}
+
+// ── Bottom sheet mobile ───────────────────────────────────────
+const sheet        = document.getElementById('bottom-sheet');
+const sheetContent = document.getElementById('sheet-content');
+const sheetClose   = document.getElementById('sheet-close');
+
+function openSheet(html) {
+  sheetContent.innerHTML = html;
+  sheet.classList.add('open');
+  // Fermer la légende si ouverte
+  document.getElementById('legend').classList.remove('open');
+}
+
+sheetClose.addEventListener('click', () => sheet.classList.remove('open'));
+map.on('click', () => sheet.classList.remove('open'));
+
+// ── Marqueurs ────────────────────────────────────────────────
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style  = STYLES[cat] || {couleur: '#95A5A6', icone: '📍'};
+  const groupe = L.layerGroup().addTo(map);
+  layers[cat]  = groupe;
+
+  lieux.forEach(lieu => {
+    const marker = L.marker([lieu.lat, lieu.lon], {icon: creerIcone(style)});
+
+    marker.on('click', () => {
+      if (isMobile()) {
+        openSheet(buildPopupHtml(lieu, cat, style));
+      } else {
+        marker.bindPopup(buildPopupHtml(lieu, cat, style), {maxWidth: 260}).openPopup();
+      }
+    });
+
+    groupe.addLayer(marker);
+  });
+});
+
+// ── Légende interactive ───────────────────────────────────────
+const legend = document.getElementById('legend');
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style = STYLES[cat] || {couleur: '#95A5A6', icone: '📍'};
+  const item  = document.createElement('div');
+  item.className   = 'legend-item';
+  item.dataset.cat = cat;
+  item.innerHTML   = `
+    <div class="legend-dot" style="background:${style.couleur}"></div>
+    <span class="legend-label">${style.icone} ${cat}</span>
+    <span class="legend-count">${lieux.length}</span>`;
+
+  item.addEventListener('click', () => {
+    if (hidden.has(cat)) {
+      map.addLayer(layers[cat]);
+      hidden.delete(cat);
+      item.classList.remove('hidden');
+    } else {
+      map.removeLayer(layers[cat]);
+      hidden.add(cat);
+      item.classList.add('hidden');
+    }
+  });
+  legend.appendChild(item);
+});
+
+// ── Bouton légende mobile ─────────────────────────────────────
+document.getElementById('legend-toggle').addEventListener('click', () => {
+  sheet.classList.remove('open');
+  legend.classList.toggle('open');
+});
+
+// Fermer légende si clic sur la carte
+map.on('click', () => legend.classList.remove('open'));
+</script>
+</body>
+</html>
