@@ -5,14 +5,15 @@ Complète automatiquement les coordonnées GPS et les URLs Wikipedia
 d'un fichier CSV via Nominatim et l'API Wikipedia — 100% gratuit, sans clé API.
 
 Priorité de géocodage pour chaque ligne :
-  1. lon + lat déjà remplis  →  ignoré (coordonnées conservées)
-  2. colonne "adresse" remplie  →  géocodage par adresse
-  3. sinon  →  géocodage par nom du lieu + contexte pays/région
+  1. lon + lat déjà remplis        → ignoré (coordonnées conservées)
+  2. url Wikipedia déjà renseignée → extraction des coords depuis Wikipedia
+  3. recherche Wikipedia           → si page trouvée, extraction des coords
+  4. sinon                         → géocodage Nominatim (par adresse ou par nom)
 
 Recherche Wikipedia (optionnelle) :
   - Si la colonne "url" est vide, cherche une page Wikipedia (FR puis EN)
-  - Si une URL est déjà présente, elle est conservée
-  - Désactivable avec --no-wiki
+  - Si une URL est déjà présente, elle est conservée et utilisée pour les coords
+  - Désactivable avec --no-wiki (repasse en Nominatim pur)
 
 Format CSV (séparateur ";") :
     Ligne 1 : pays;région
@@ -25,14 +26,15 @@ Usage :
     python geocode.py paris.csv               → traite le fichier indiqué
     python geocode.py a.csv b.csv             → traite plusieurs fichiers
     python geocode.py paris.csv --force       → re-géocode même les lieux déjà remplis
-    python geocode.py paris.csv --no-wiki     → désactive la recherche Wikipedia
-    python geocode.py paris.csv --wiki-en     → cherche en anglais en priorité
+    python geocode.py paris.csv --no-wiki     → Nominatim uniquement, sans Wikipedia
+    python geocode.py paris.csv --wiki-en     → cherche Wikipedia en anglais en priorité
 """
 
 import csv
 import sys
 import time
 import os
+import re
 import urllib.request
 import urllib.parse
 import json
@@ -47,13 +49,95 @@ DELAI_SECONDES = 1.1
 SEPARATEUR     = ";"
 
 # Catégories pour lesquelles on ne cherche pas Wikipedia
-# (adresses personnelles, restaurants peu connus...)
 CATEGORIES_SANS_WIKI = {"adresse"}
 
 
 # ─────────────────────────────────────────────────────────────
-# Géocodage Nominatim
+# Conversion DMS → décimal
 # ─────────────────────────────────────────────────────────────
+
+def dms_en_decimal(valeur):
+    """
+    Convertit une coordonnée GPS en degrés-minutes-secondes (DMS) en décimal.
+    Accepte les formats :
+      40°16'06.6"N    →  40.268500
+      23°26'50.3"E    →  23.447306
+      40°16'06.6"S    → -40.268500
+      40 16 06.6 N    (variante avec espaces)
+      40:16:06.6N     (variante avec deux-points)
+    Retourne le float décimal, ou None si non reconnu.
+    """
+    if not valeur:
+        return None
+
+    # Déjà un décimal ?
+    try:
+        return float(valeur.replace(",", "."))
+    except ValueError:
+        pass
+
+    # Regex DMS souple : degrés, minutes, secondes, hémisphère
+    pattern = r"""
+        ^\s*
+        (\d+(?:[.,]\d+)?)           # degrés (entier ou décimal)
+        [°:\s]+                      # séparateur
+        (\d+(?:[.,]\d+)?)           # minutes
+        ['\s]+                       # séparateur
+        (\d+(?:[.,]\d+)?)           # secondes
+        ["\s]*                       # séparateur optionnel
+        ([NSEWnsew])                 # hémisphère
+        \s*$
+    """
+    m = re.match(pattern, valeur.strip(), re.VERBOSE)
+    if not m:
+        # Essai sans secondes : 40°16'N
+        pattern2 = r"^\s*(\d+(?:[.,]\d+)?)[°:\s]+(\d+(?:[.,]\d+)?)['\s]*([NSEWnsew])\s*$"
+        m2 = re.match(pattern2, valeur.strip())
+        if m2:
+            d, mn, hemi = m2.groups()
+            decimal = float(d.replace(",", ".")) + float(mn.replace(",", ".")) / 60
+            if hemi.upper() in ("S", "W"):
+                decimal = -decimal
+            return round(decimal, 6)
+        return None
+
+    d, mn, sec, hemi = m.groups()
+    decimal = (
+        float(d.replace(",", "."))
+        + float(mn.replace(",", ".")) / 60
+        + float(sec.replace(",", ".")) / 3600
+    )
+    if hemi.upper() in ("S", "W"):
+        decimal = -decimal
+    return round(decimal, 6)
+
+
+def normaliser_coords(lon_brut, lat_brut):
+    """
+    Tente de normaliser lon et lat depuis n'importe quel format.
+    Gère aussi le cas où l'utilisateur a mis lat dans lon et vice versa
+    sous forme DMS avec hémisphère (N/S → lat, E/W → lon).
+    Retourne (lon_str, lat_str) normalisés ou ("", "") si échec.
+    """
+    # Cas : les deux champs sont en DMS → on détermine lat/lon via hémisphère
+    hemi_lat = re.search(r'[NSns]', lat_brut)
+    hemi_lon = re.search(r'[EWew]', lon_brut)
+    hemi_lat2 = re.search(r'[NSns]', lon_brut)
+    hemi_lon2 = re.search(r'[EWew]', lat_brut)
+
+    # Si lon contient N/S et lat contient E/W → les colonnes sont inversées
+    if hemi_lat2 and hemi_lon2:
+        lat_val = dms_en_decimal(lon_brut)
+        lon_val = dms_en_decimal(lat_brut)
+    else:
+        lon_val = dms_en_decimal(lon_brut)
+        lat_val = dms_en_decimal(lat_brut)
+
+    if lon_val is not None and lat_val is not None:
+        return f"{lon_val:.6f}", f"{lat_val:.6f}"
+    return "", ""
+
+
 
 def _requete_nominatim(query):
     params = urllib.parse.urlencode({"q": query, "format": "json", "limit": 1, "addressdetails": 0})
@@ -64,7 +148,7 @@ def _requete_nominatim(query):
             if data:
                 return float(data[0]["lon"]), float(data[0]["lat"])
     except Exception as e:
-        print(f"\n    ⚠️  Erreur réseau : {e}", end="")
+        print(f"\n    ⚠️  Erreur Nominatim : {e}", end="")
     return None
 
 
@@ -84,10 +168,80 @@ def geocoder_par_adresse(adresse, pays="", region=""):
 
 
 # ─────────────────────────────────────────────────────────────
-# Recherche Wikipedia
+# Wikipedia — recherche + extraction de coordonnées
 # ─────────────────────────────────────────────────────────────
 
-def _requete_wikipedia(nom, pays, lang):
+def _extraire_pageid_depuis_url(url):
+    """
+    Extrait le pageid ou le titre depuis une URL Wikipedia.
+    Supporte :
+      https://fr.wikipedia.org/?curid=12345
+      https://fr.wikipedia.org/wiki/Tour_Eiffel
+      https://en.wikipedia.org/wiki/Colosseum
+    """
+    # Format curid
+    m = re.search(r'curid=(\d+)', url)
+    if m:
+        return ("id", m.group(1), _extraire_lang_depuis_url(url))
+
+    # Format /wiki/Titre
+    m = re.search(r'wikipedia\.org/wiki/(.+)', url)
+    if m:
+        titre = urllib.parse.unquote(m.group(1))
+        return ("titre", titre, _extraire_lang_depuis_url(url))
+
+    return None
+
+
+def _extraire_lang_depuis_url(url):
+    """Extrait le code langue depuis une URL Wikipedia (fr, en, it...)"""
+    m = re.match(r'https?://([a-z]{2})\.wikipedia\.org', url)
+    return m.group(1) if m else "fr"
+
+
+def coords_depuis_wikipedia_url(url):
+    """
+    Extrait les coordonnées GPS depuis une URL Wikipedia existante.
+    Utilise l'API prop=coordinates de MediaWiki.
+    Retourne (lon, lat) ou None.
+    """
+    info = _extraire_pageid_depuis_url(url)
+    if not info:
+        return None
+
+    mode, valeur, lang = info
+    api_url = WIKIPEDIA_API.format(lang=lang)
+
+    if mode == "id":
+        params = urllib.parse.urlencode({
+            "action":    "query",
+            "prop":      "coordinates",
+            "pageids":   valeur,
+            "format":    "json",
+        })
+    else:
+        params = urllib.parse.urlencode({
+            "action":    "query",
+            "prop":      "coordinates",
+            "titles":    valeur,
+            "format":    "json",
+        })
+
+    req = urllib.request.Request(f"{api_url}?{params}", headers={"User-Agent": USER_AGENT})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode())
+            pages = data.get("query", {}).get("pages", {})
+            for page in pages.values():
+                coords = page.get("coordinates", [])
+                if coords:
+                    return float(coords[0]["lon"]), float(coords[0]["lat"])
+    except Exception as e:
+        print(f"\n    ⚠️  Erreur Wikipedia coords : {e}", end="")
+    return None
+
+
+def _requete_wikipedia_recherche(nom, pays, lang):
     """Cherche une page Wikipedia et retourne son URL ou None."""
     query = f"{nom} {pays}".strip()
     params = urllib.parse.urlencode({
@@ -109,23 +263,23 @@ def _requete_wikipedia(nom, pays, lang):
                 pageid = results[0]["pageid"]
                 return f"https://{lang}.wikipedia.org/?curid={pageid}"
     except Exception as e:
-        print(f"\n    ⚠️  Erreur Wikipedia : {e}", end="")
+        print(f"\n    ⚠️  Erreur Wikipedia recherche : {e}", end="")
     return None
 
 
 def chercher_wikipedia(nom, pays="", lang_prioritaire="fr"):
     """
-    Cherche d'abord dans la langue prioritaire, puis dans l'autre.
-    Retourne l'URL Wikipedia ou None.
+    Cherche une page Wikipedia (FR puis EN en fallback).
+    Retourne (url, lang) ou (None, None).
     """
     lang_secondaire = "en" if lang_prioritaire == "fr" else "fr"
 
-    url = _requete_wikipedia(nom, pays, lang_prioritaire)
+    url = _requete_wikipedia_recherche(nom, pays, lang_prioritaire)
     time.sleep(DELAI_SECONDES)
     if url:
         return url, lang_prioritaire
 
-    url = _requete_wikipedia(nom, pays, lang_secondaire)
+    url = _requete_wikipedia_recherche(nom, pays, lang_secondaire)
     time.sleep(DELAI_SECONDES)
     if url:
         return url, lang_secondaire
@@ -221,13 +375,16 @@ def traiter_fichier(chemin, force=False, avec_wiki=True, lang_wiki="fr"):
         print(f"   📍 Contexte : {ctx}")
     if avec_wiki:
         print(f"   🌐 Wikipedia : activé (langue prioritaire : {lang_wiki})")
+    print()
 
-    geo_trouves  = 0
-    geo_ignores  = 0
-    geo_echecs   = []
-    wiki_trouves = 0
-    wiki_ignores = 0
-    wiki_echecs  = []
+    geo_trouves   = 0
+    geo_nominatim = 0
+    geo_wiki      = 0
+    geo_ignores   = 0
+    geo_echecs    = []
+    wiki_trouves  = 0
+    wiki_ignores  = 0
+    wiki_echecs   = []
 
     for lieu in lieux:
         nom       = lieu.get("nom", "").strip()
@@ -240,77 +397,130 @@ def traiter_fichier(chemin, force=False, avec_wiki=True, lang_wiki="fr"):
         if not nom and not adresse:
             continue
 
-        # ── Géocodage ────────────────────────────────────────────
-        if lon and lat and not force:
-            print(f"   ⏭️  {nom} — coordonnées déjà présentes")
-            geo_ignores += 1
-        else:
-            if adresse:
-                print(f"   📮 {nom} ({adresse})...", end=" ", flush=True)
-                resultat = geocoder_par_adresse(adresse, pays=pays, region=region)
-            else:
-                print(f"   🔍 {nom}...", end=" ", flush=True)
-                resultat = geocoder_par_nom(nom, pays=pays, region=region)
+        # ── Conversion DMS → décimal si nécessaire ───────────────
+        if lon or lat:
+            lon_conv, lat_conv = normaliser_coords(lon, lat)
+            if lon_conv and lat_conv and (lon_conv != lon or lat_conv != lat):
+                print(f"   🔄 {nom} — DMS converti : {lon} / {lat} → {lon_conv} / {lat_conv}")
+                lieu["lon"] = lon_conv
+                lieu["lat"] = lat_conv
+                lon, lat = lon_conv, lat_conv
 
+        # ── Cas 1 : coordonnées déjà présentes ───────────────────
+        if lon and lat and not force:
+            print(f"   ⏭️  {nom} — coords déjà remplis")
+            geo_ignores += 1
+            # Chercher Wikipedia quand même si url vide
+            if avec_wiki and not url and categorie.lower() not in CATEGORIES_SANS_WIKI:
+                print(f"   🌐 {nom}...", end=" ", flush=True)
+                wiki_url, lang_trouve = chercher_wikipedia(nom, pays=pays, lang_prioritaire=lang_wiki)
+                if wiki_url:
+                    lieu["url"] = wiki_url
+                    print(f"✅  Wikipedia {lang_trouve.upper()}")
+                    wiki_trouves += 1
+                else:
+                    print("— pas de page Wikipedia")
+                    wiki_echecs.append(nom)
+            elif url:
+                wiki_ignores += 1
+            continue
+
+        coordonnees = None
+        source      = None
+
+        # ── Cas 2 : URL Wikipedia déjà renseignée ────────────────
+        if url and "wikipedia.org" in url and avec_wiki:
+            print(f"   📖 {nom} — coords depuis Wikipedia...", end=" ", flush=True)
+            coordonnees = coords_depuis_wikipedia_url(url)
+            time.sleep(DELAI_SECONDES)
+            if coordonnees:
+                source = "Wikipedia (URL existante)"
+                wiki_ignores += 1  # URL déjà présente, pas de nouvelle recherche
+
+        # ── Cas 3 : recherche Wikipedia → coords ─────────────────
+        if coordonnees is None and avec_wiki and categorie.lower() not in CATEGORIES_SANS_WIKI:
+            print(f"   🌐 {nom}...", end=" ", flush=True)
+            wiki_url, lang_trouve = chercher_wikipedia(nom, pays=pays, lang_prioritaire=lang_wiki)
+
+            if wiki_url:
+                lieu["url"] = wiki_url
+                wiki_trouves += 1
+                print(f"✅  Wikipedia {lang_trouve.upper()} — extraction coords...", end=" ", flush=True)
+                coordonnees = coords_depuis_wikipedia_url(wiki_url)
+                time.sleep(DELAI_SECONDES)
+                if coordonnees:
+                    source = f"Wikipedia {lang_trouve.upper()}"
+                else:
+                    print(f"pas de coords Wiki...", end=" ", flush=True)
+            else:
+                print("— pas de page Wikipedia", end="")
+                wiki_echecs.append(nom)
+                print()
+
+        # ── Cas 4 : fallback Nominatim ────────────────────────────
+        if coordonnees is None:
+            if source is None:  # Pas encore affiché de ligne
+                if adresse:
+                    print(f"   📮 {nom} ({adresse})...", end=" ", flush=True)
+                else:
+                    print(f"   🔍 {nom}...", end=" ", flush=True)
+
+            if adresse:
+                coordonnees = geocoder_par_adresse(adresse, pays=pays, region=region)
+            else:
+                coordonnees = geocoder_par_nom(nom, pays=pays, region=region)
             time.sleep(DELAI_SECONDES)
 
-            if resultat:
-                lieu["lon"] = f"{resultat[0]:.6f}"
-                lieu["lat"] = f"{resultat[1]:.6f}"
-                print(f"✅  ({lieu['lat']}, {lieu['lon']})")
-                geo_trouves += 1
-            else:
-                print("❌ Non trouvé")
-                geo_echecs.append((categorie, nom, adresse))
+            if coordonnees:
+                source = "Nominatim"
+                geo_nominatim += 1
 
-        # ── Recherche Wikipedia ───────────────────────────────────
-        if not avec_wiki:
-            continue
-        if categorie.lower() in CATEGORIES_SANS_WIKI:
-            continue
-        if url and not force:
-            print(f"   🌐 {nom} — URL déjà présente")
-            wiki_ignores += 1
-            continue
-
-        print(f"   🌐 {nom}...", end=" ", flush=True)
-        wiki_url, lang_trouve = chercher_wikipedia(nom, pays=pays, lang_prioritaire=lang_wiki)
-
-        if wiki_url:
-            lieu["url"] = wiki_url
-            print(f"✅  Wikipedia {lang_trouve.upper()}")
-            wiki_trouves += 1
+        # ── Enregistrement ────────────────────────────────────────
+        if coordonnees:
+            lieu["lon"] = f"{coordonnees[0]:.6f}"
+            lieu["lat"] = f"{coordonnees[1]:.6f}"
+            print(f"✅  ({lieu['lat']}, {lieu['lon']})  [{source}]")
+            geo_trouves += 1
+            if "Wikipedia" in source:
+                geo_wiki += 1
         else:
-            print("— pas de page Wikipedia")
-            wiki_echecs.append(nom)
+            print("❌ Non trouvé")
+            geo_echecs.append((categorie, nom, adresse))
 
     ecrire_fichier(chemin, contexte, lieux)
 
     # ── Résumé ───────────────────────────────────────────────────
     print(f"\n📊 Résumé :")
-    print(f"   📍 Géocodage   : {geo_trouves} trouvés, {geo_ignores} déjà remplis", end="")
-    print(f", {len(geo_echecs)} échecs" if geo_echecs else "")
+    print(f"   📍 Géocodés        : {geo_trouves}")
+    if geo_wiki:
+        print(f"      └ via Wikipedia : {geo_wiki}")
+    if geo_nominatim:
+        print(f"      └ via Nominatim : {geo_nominatim}")
+    print(f"   ⏭️  Déjà remplis   : {geo_ignores}")
     if avec_wiki:
-        print(f"   🌐 Wikipedia   : {wiki_trouves} trouvés, {wiki_ignores} déjà remplis", end="")
+        print(f"   🌐 URLs Wikipedia  : {wiki_trouves} trouvées, {wiki_ignores} déjà présentes", end="")
         print(f", {len(wiki_echecs)} sans page" if wiki_echecs else "")
     if geo_echecs:
         print(f"\n   ❌ Lieux non géocodés :")
         for cat, n, adr in geo_echecs:
             print(f"      • [{cat}] {n}{' — ' + adr if adr else ''}")
+        print(f"\n   💡 Conseils :")
+        print(f"      - Vérifie l'orthographe")
+        print(f"      - Renseigne l'adresse dans la colonne adresse")
+        print(f"      - Saisis les coordonnées manuellement (clic droit Google Maps)")
     if wiki_echecs:
-        print(f"\n   ℹ️  Lieux sans page Wikipedia :")
-        for n in wiki_echecs:
-            print(f"      • {n}")
+        print(f"\n   ℹ️  Sans page Wikipedia : {', '.join(wiki_echecs[:5])}", end="")
+        print(f"... (+{len(wiki_echecs)-5})" if len(wiki_echecs) > 5 else "")
     print(f"\n   💾 Fichier mis à jour : {chemin}")
 
 
 def main():
-    args        = sys.argv[1:]
-    force       = "--force"   in args
-    sans_wiki   = "--no-wiki" in args
-    lang_en     = "--wiki-en" in args
-    fichiers    = [a for a in args if not a.startswith("--")]
-    lang_wiki   = "en" if lang_en else "fr"
+    args      = sys.argv[1:]
+    force     = "--force"   in args
+    sans_wiki = "--no-wiki" in args
+    lang_en   = "--wiki-en" in args
+    fichiers  = [a for a in args if not a.startswith("--")]
+    lang_wiki = "en" if lang_en else "fr"
 
     if not fichiers:
         fichiers = ["lieux.csv"]

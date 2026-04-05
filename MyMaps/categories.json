@@ -18,7 +18,9 @@
   "Shopping":      {"couleur": "#D35400", "icone": "🛍"},
   "Antique":       {"couleur": "#A0522D", "icone": "🏺"},
   "Renaissance":   {"couleur": "#8B6914", "icone": "🎨"},
+  "Moyen-Age":     {"couleur": "#148B69", "icone": "🎨"},
   "Contemporain":  {"couleur": "#2C3E50", "icone": "🏙"},
+  "Village":       {"couleur": "#502C3E", "icone": "🏙"},
   "Quartier":      {"couleur": "#16A085", "icone": "🚶"},
   "Train":         {"couleur": "#7D3C98", "icone": "🚂"}
 }
