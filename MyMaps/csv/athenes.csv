@@ -9,7 +9,15 @@ Restaurant;Magerio;;;Resto dans Pancrati;Trolley 11 ou bus 209, Gefyra;;23.75159
 Restaurant;Stani;Marikas Kotopouli 10, Athina 104 32, Grèce;;Meilleurs yaourt d'Athènes;;http://www.stani1931.com/;23.727916;37.985643
 Restaurant;Sklavenitis (supermarché);Athinas 62, Athina 105 51, Grèce;;;;https://fr.wikipedia.org/?curid=16280717;23.727986;37.983465
 Restaurant;Lefteris O Politis (est. 1951);Satovriandou 20, Athina 104 32, Grèce;;Pas de gyros mais des burgers et soutsoukis (boulettes);;https://fr.wikipedia.org/?curid=833173;23.727356;37.985708
+Restaurant;Zacharoplasteio Lido;Chremonidou 35, Athina 116 33, Grèce;;Les meilleurs tsourekis (brioches de pâques);trolley 2-11, Filolaou ou bus 209, Frynis;;23.750277;37.966022
+Restaurant;Oinopantopoleui to eidikon;Psaron 38, Pireas 185 46, Grèce;;Epicerie taverne typique .... presque un musée;;;23.633864;37.953779
+Restaurant;O Yorgos Souvlaki;Gounari 18 Νikita gonia, Pirée 18531 Grèce;;Super souvlakis au Pirée;;https://fr.wikipedia.org/?curid=5242721;23.644334;37.946509
+Restaurant;Patisserie Kristakis;Sokratous 59, Athina 104 31, Grèce;;Loukoumades (beignets ua miel);;;23.726568;37.984192
+Restaurant;Bougatsa Sabbas;Tzortz 10, Athina 106 77, Grèce;;Bougatsa;;;23.731754;37.985987
+Restaurant;Remoútsiko Taverna;Leof. Agiou Dimitriou 120, Ag. Dimitrios 173 41, Grèce;;Taverne typique;Métro Ligne 2, Aghios Dimitrios;;23.730717;37.940418
 Jardin;Jardin national d’Athènes;;;Parc ombragé idéal pour pause nature et observation.;;https://fr.wikipedia.org/wiki/Jardin_national_d%27Ath%C3%A8nes;23.738333;37.974167
+Quartier;Kypséli;;;Quartier authentique au nord du musée national;;https://fr.wikipedia.org/wiki/Kyps%C3%A9li_(Ath%C3%A8nes);23.741523;38.002966
+Quartier;Exarchia;;;Quartier authentique à côté de Polytechnique;;https://fr.wikipedia.org/wiki/Ex%C3%A1rcheia;23.734722;37.986111
 Néoclassique;Zappeion;;;Palais néoclassique jardins, événements culturels calmes.;;https://fr.wikipedia.org/?curid=4813838;23.736389;37.971389
 Antique;Temple de Zeus olympien;;;Colossal temple antique au coeur moderne.;;https://fr.wikipedia.org/wiki/Olympi%C3%A9ion_(Ath%C3%A8nes);23.733078;37.969372
 Antique;Arc d’Hadrien;;;Arc romain élégant entre époques.;;https://fr.wikipedia.org/?curid=4435619;23.732000;37.970167
@@ -61,4 +69,16 @@ Cinéma;Ciné Dexameni;Plateia Dexamenis 7, Athina 106 73, Grèce;;Sur citerne H
 Cinéma;Ciné Thision;Apostolou Pavlou 7, Athina 118 51, Grèce;;Sous Acropole depuis 1935, vue Parthénon inoubliable.;;http://cine-thisio.gr/;23.720467;37.972911
 Cinéma;Ciné Vox (Exarchia);Themistokleous 82, Athina 106 81, Grèce;;Ouvert 1938, ambiance alternative quartier vibrant.;;;23.735597;37.986911
 Cinéma;Ciné Riviera (Exarchia);Valtetsiou 46, Athina 106 81, Grèce;;Frère de Vox, art et essai sur place animée.;;;23.735872;37.985697
+Eglise;Monastère Daphni;;;Monastère connu notamment pour ses mosaïques;Métro ligne 3, terminus Aghia Marina, 7' à pieds;https://fr.wikipedia.org/wiki/Monast%C3%A8re_de_Daphn%C3%AD;23.635833;38.013056
 Contemporain;Immeuble Bleu (Exarchia);;;Moderniste 1932, admiré Le Corbusier, près Vox.;;https://en.wikipedia.org/wiki/The_Blue_Condominium_of_Exarcheia;23.735400;37.986600
+Contemporain;Port de Zea (Moukiari);;;Arsenal antique trières, yachts modernes.;Métro ligne 1, Firaeus (sortie Zea);https://fr.wikipedia.org/wiki/Port_de_Zea;23.646128;37.938270
+Antique;Musée archéologique du Pirée;;;Bronzes antiques, hermès portuaire rares.;Métro ligne 1, Firaeus;https://fr.wikipedia.org/wiki/Mus%C3%A9e_arch%C3%A9ologique_du_Pir%C3%A9e;23.644444;37.937222
+Antique;Musée maritime hellénique;;;Modèles navires 3000 ans histoire maritime.;Métro ligne 1, Firaeus + bus 843;https://fr.wikipedia.org/wiki/Mus%C3%A9e_maritime_hell%C3%A9nique;23.645917;37.932500
+Contemporain;Port de Mikrolimano (Turcolimano);;;Pêcheurs tavernes, vue baie charmante.;Métro ligne 1, Firaeus + 25min marche;https://fr.wikipedia.org/wiki/Mikrolimano;23.659541;37.938595
+Byzantin;Église Agia Triada (Mikrolimano);;;Byzantin ottoman, icônes maritimes.;Métro ligne 1, Firaeus + tram C1;https://www.thisisathens.org/fr/attractions/agia-triada-russian-orthodox-eglise;23.645054;37.944422
+Quartier;Quartier Kastella;;;Collines néoclassiques, vues mer oubliées.;Métro 1 Firaeus + 20min montée;https://fr.wikipedia.org/wiki/Kast%C3%A9lla_(Le_Pir%C3%A9e);23.655967;37.939489
+Contemporain;Marché municipal du Pirée;;;Halles bruyantes poissons frais, épices.;Métro 1 Firaeus (sortie marché);https://fr.wikipedia.org/wiki/March%C3%A9_municipal_du_Pir%C3%A9e;23.645160;37.944610
+Antique;Mur de Thémistocle (Piraiki);section visible rue Erysichthonos 29, près porte Pirée;;Remparts antiques Vème s. le long rochers.;Métro 1 Firaeus + 15min côte;https://fr.wikipedia.org/wiki/Mur_de_Th%C3%A9mistocle;23.6498° E;37.9412° N
+Contemporain;Place Terpsitheas;intersection rue Iroon Polytechniou / 2is Merarchias;;Antiquités éparses cafés marins locaux.;Métro 1 Firaeus + 10min;https://en.wikipedia.org/wiki/Archaeological_site_of_Terpsithea_Square;23.6445° E;37.9365° N
+Contemporain;Bakalotavernes (ruelles Piraiki);ruelles autour Akti Themistokleous, Piraiki;;Tavernes traditionnelles rebetiko, ambiance 50s.;Métro 1 Firaeus + 15min;;23.6520° E;37.9450° N
+Byzantin;Église Agios Spyridon;;;Byzantin caché quartier ouvrier coloré.;Métro 1 Firaeus + 12min;https://fr.wikipedia.org/?curid=14545928;22.433333;40.200000

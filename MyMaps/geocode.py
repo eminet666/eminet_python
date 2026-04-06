@@ -482,8 +482,8 @@ def traiter_fichier(chemin, force=False, avec_wiki=True, lang_wiki="fr"):
         coordonnees = None
         source      = None
 
-        # ── Cas 2 : URL Wikipedia déjà renseignée ────────────────
-        if url and "wikipedia.org" in url and avec_wiki:
+        # ── Cas 2 : URL Wikipedia déjà renseignée → coords si vides ─
+        if url and "wikipedia.org" in url and avec_wiki and not lon and not lat:
             print(f"   📖 {nom} — coords depuis Wikipedia...", end=" ", flush=True)
             coordonnees = coords_depuis_wikipedia_url(url)
             time.sleep(DELAI_SECONDES)

@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athènes, Grèce</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    header {
+      background: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 1000;
+      flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    header .count {
+      font-size: 0.75rem;
+      color: #999;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Carte ──────────────────────────────────────────────── */
+    #map { flex: 1; z-index: 1; }
+
+    /* ── Marqueurs ──────────────────────────────────────────── */
+    .marker-pin {
+      width: 32px;
+      height: 32px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .marker-pin .marker-icon {
+      transform: rotate(45deg);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    /* ── Légende DESKTOP ────────────────────────────────────── */
+    #legend {
+      position: absolute;
+      bottom: 30px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 16px;
+      min-width: 165px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+
+    #legend h3 {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .legend-item:hover { background: #f5f5f5; }
+    .legend-item.hidden { opacity: 0.3; }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-label { font-size: 0.8rem; color: #333; flex: 1; }
+    .legend-count  { font-size: 0.7rem; color: #bbb; }
+
+    /* Bouton légende mobile — caché sur desktop */
+    #legend-toggle { display: none; }
+
+    /* ── Popup DESKTOP ──────────────────────────────────────── */
+    .leaflet-popup-content-wrapper {
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      color: #222;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .leaflet-popup-tip       { background: #ffffff; }
+    .leaflet-popup-close-button { color: #aaa !important; }
+
+    /* ── Bottom sheet MOBILE (caché par défaut) ─────────────── */
+    #bottom-sheet {
+      display: none; /* activé en JS sur mobile */
+    }
+
+    /* ── Contenu popup / bottom-sheet (partagé) ─────────────── */
+    .popup-content  { padding: 4px 2px; }
+    .popup-cat      { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+    .popup-nom      { font-size: 1rem; font-weight: 600; color: #111; margin-bottom: 4px; }
+    .popup-note     { font-size: 0.85rem; color: #f0a500; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .popup-adresse  { font-size: 0.75rem; color: #888; margin-bottom: 4px; }
+    .popup-transport{ font-size: 0.75rem; color: #5d8aa8; margin-bottom: 4px; }
+    .popup-desc     { font-size: 0.8rem; color: #555; line-height: 1.4; }
+    .popup-url      { font-size: 0.75rem; margin-top: 6px; }
+    .popup-url a    { color: #2980B9; text-decoration: none; font-weight: 500; }
+    .popup-url a:hover { text-decoration: underline; }
+
+    /* ════════════════════════════════════════════════════════
+       MOBILE  (écrans ≤ 768px)
+       ════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* Header plus compact */
+      header { padding: 8px 14px; }
+      header h1 { font-size: 0.85rem; }
+
+      /* Marqueurs plus grands pour le doigt */
+      .marker-pin {
+        width: 42px;
+        height: 42px;
+        border-width: 3px;
+      }
+      .marker-pin .marker-icon { font-size: 18px; }
+
+      /* Légende cachée par défaut, ouvrable */
+      #legend {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        border-radius: 16px 16px 0 0;
+        padding: 16px 20px 24px;
+        min-width: unset;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      #legend.open { transform: translateY(0); }
+
+      #legend h3 {
+        font-size: 0.7rem;
+        text-align: center;
+        margin-bottom: 14px;
+      }
+
+      /* Drag handle au dessus de la légende */
+      #legend::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 14px;
+      }
+
+      .legend-item  { padding: 8px 6px; }
+      .legend-label { font-size: 0.9rem; }
+      .legend-count { font-size: 0.8rem; }
+      .legend-dot   { width: 12px; height: 12px; }
+
+      /* Bouton flottant pour ouvrir la légende */
+      #legend-toggle {
+        display: flex;
+        position: absolute;
+        bottom: 24px;
+        right: 16px;
+        z-index: 1001;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: box-shadow 0.15s;
+      }
+      #legend-toggle:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+      /* Masquer popup Leaflet natif sur mobile */
+      .leaflet-popup { display: none !important; }
+
+      /* Bottom sheet à la place */
+      #bottom-sheet {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1002;
+        background: #ffffff;
+        border-radius: 16px 16px 0 0;
+        padding: 20px 20px 32px;
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 55vh;
+        overflow-y: auto;
+      }
+      #bottom-sheet.open { transform: translateY(0); }
+
+      #bottom-sheet::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 16px;
+      }
+
+      #bottom-sheet .popup-nom     { font-size: 1.15rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-cat     { font-size: 0.7rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-note    { font-size: 1rem; margin-bottom: 8px; }
+      #bottom-sheet .popup-adresse { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-transport { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-desc    { font-size: 0.9rem; line-height: 1.5; }
+      #bottom-sheet .popup-url     { font-size: 0.9rem; margin-top: 12px; }
+      #bottom-sheet .popup-url a   { font-size: 1rem; padding: 8px 0; display: inline-block; }
+
+      /* Bouton fermer le bottom sheet */
+      #sheet-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: #f5f5f5;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🗺 Athènes, Grèce</h1>
+  <span class="count">77 lieux</span>
+</header>
+
+<div id="map"></div>
+
+<!-- Légende (desktop : flottante / mobile : bottom sheet) -->
+<div id="legend"><h3>Catégories</h3></div>
+
+<!-- Bouton mobile pour ouvrir la légende -->
+<button id="legend-toggle" title="Catégories">🗂</button>
+
+<!-- Bottom sheet mobile -->
+<div id="bottom-sheet">
+  <button id="sheet-close">✕</button>
+  <div id="sheet-content"></div>
+</div>
+
+<script>
+const DATA    = {
+  "Amis": [
+    {
+      "categorie": "Amis",
+      "nom": "Démosthene",
+      "adresse": "Zoodochou Pigis 85, Athina 114 73, Grèce",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=74157",
+      "lon": 23.739202,
+      "lat": 37.986655
+    }
+  ],
+  "Musée": [
+    {
+      "categorie": "Musée",
+      "nom": "Memorial 1941-1944",
+      "adresse": "Korai 4, Athina 105 64, Grèce",
+      "note": "",
+      "description": "Ancienne prison nazie",
+      "transport": "Métro ligne 2, Panepistimiou",
+      "url": "https://vivreathenes.com/korai-4-une-ancienne-prison-nazie-a-athenes-reconvertie-en-musee.html?srsltid=AfmBOooAj4EV0wbd7sX9HX-Vel4LRbbrWrRJWjUlguVJNbIcRV_UUBzB",
+      "lon": 23.732728,
+      "lat": 37.980161
+    },
+    {
+      "categorie": "Musée",
+      "nom": "Musée numismatique d’Athènes",
+      "adresse": "",
+      "note": "",
+      "description": "Monnaies rares racontant l'histoire économique grecque.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Mus%C3%A9e_numismatique_d%27Ath%C3%A8nes",
+      "lon": 23.7354,
+      "lat": 37.9778
+    },
+    {
+      "categorie": "Musée",
+      "nom": "Musée Benaki",
+      "adresse": "",
+      "note": "",
+      "description": "Art grec byzantin à moderne, collections pointues.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Mus%C3%A9e_Benaki",
+      "lon": 23.74028,
+      "lat": 37.97583
+    },
+    {
+      "categorie": "Musée",
+      "nom": "Bibliothèque nationale de Grèce",
+      "adresse": "",
+      "note": "",
+      "description": "Trésor livres anciens, architecture théâtrale.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Biblioth%C3%A8que_nationale_de_Gr%C3%A8ce",
+      "lon": 23.692222,
+      "lat": 37.941389
+    },
+    {
+      "categorie": "Musée",
+      "nom": "EMST (art contemporain)",
+      "adresse": "",
+      "note": "",
+      "description": "Avant-garde grecque installations choc.",
+      "transport": "Métro ligne 1, Fix",
+      "url": "https://fr.wikipedia.org/wiki/Mus%C3%A9e_national_d%27art_contemporain_d%27Ath%C3%A8nes",
+      "lon": 23.725542,
+      "lat": 37.96314
+    },
+    {
+      "categorie": "Musée",
+      "nom": "Musée d’art cycladique",
+      "adresse": "",
+      "note": "",
+      "description": "Idoles blanches néolithiques épurées.",
+      "transport": "Bus 022, Kolonaki",
+      "url": "https://fr.wikipedia.org/?curid=2834057",
+      "lon": 23.74194,
+      "lat": 37.97583
+    }
+  ],
+  "Restaurant": [
+    {
+      "categorie": "Restaurant",
+      "nom": "H Thraka (gyros)",
+      "adresse": "Imittou 58, Athina 116 34, Grèce",
+      "note": "",
+      "description": "Bons gyros à Pancrati",
+      "transport": "Trolley 2, Pancrati",
+      "url": "https://e-thraka.gr/",
+      "lon": 23.75246,
+      "lat": 37.969286
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Magerio",
+      "adresse": "",
+      "note": "",
+      "description": "Resto dans Pancrati",
+      "transport": "Trolley 11 ou bus 209, Gefyra",
+      "url": "",
+      "lon": 23.751598,
+      "lat": 37.964786
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Stani",
+      "adresse": "Marikas Kotopouli 10, Athina 104 32, Grèce",
+      "note": "",
+      "description": "Meilleurs yaourt d'Athènes",
+      "transport": "",
+      "url": "http://www.stani1931.com/",
+      "lon": 23.727916,
+      "lat": 37.985643
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Sklavenitis (supermarché)",
+      "adresse": "Athinas 62, Athina 105 51, Grèce",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=16280717",
+      "lon": 23.727986,
+      "lat": 37.983465
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Lefteris O Politis (est. 1951)",
+      "adresse": "Satovriandou 20, Athina 104 32, Grèce",
+      "note": "",
+      "description": "Pas de gyros mais des burgers et soutsoukis (boulettes)",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=833173",
+      "lon": 23.727356,
+      "lat": 37.985708
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Zacharoplasteio Lido",
+      "adresse": "Chremonidou 35, Athina 116 33, Grèce",
+      "note": "",
+      "description": "Les meilleurs tsourekis (brioches de pâques)",
+      "transport": "trolley 2-11, Filolaou ou bus 209, Frynis",
+      "url": "",
+      "lon": 23.750277,
+      "lat": 37.966022
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Oinopantopoleui to eidikon",
+      "adresse": "Psaron 38, Pireas 185 46, Grèce",
+      "note": "",
+      "description": "Epicerie taverne typique .... presque un musée",
+      "transport": "",
+      "url": "",
+      "lon": 23.633864,
+      "lat": 37.953779
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "O Yorgos Souvlaki",
+      "adresse": "Gounari 18 Νikita gonia, Pirée 18531 Grèce",
+      "note": "",
+      "description": "Super souvlakis au Pirée",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=5242721",
+      "lon": 23.644334,
+      "lat": 37.946509
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Patisserie Kristakis",
+      "adresse": "Sokratous 59, Athina 104 31, Grèce",
+      "note": "",
+      "description": "Loukoumades (beignets ua miel)",
+      "transport": "",
+      "url": "",
+      "lon": 23.726568,
+      "lat": 37.984192
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Bougatsa Sabbas",
+      "adresse": "Tzortz 10, Athina 106 77, Grèce",
+      "note": "",
+      "description": "Bougatsa",
+      "transport": "",
+      "url": "",
+      "lon": 23.731754,
+      "lat": 37.985987
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Remoútsiko Taverna",
+      "adresse": "Leof. Agiou Dimitriou 120, Ag. Dimitrios 173 41, Grèce",
+      "note": "",
+      "description": "Taverne typique",
+      "transport": "Métro Ligne 2, Aghios Dimitrios",
+      "url": "",
+      "lon": 23.730717,
+      "lat": 37.940418
+    }
+  ],
+  "Jardin": [
+    {
+      "categorie": "Jardin",
+      "nom": "Jardin national d’Athènes",
+      "adresse": "",
+      "note": "",
+      "description": "Parc ombragé idéal pour pause nature et observation.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Jardin_national_d%27Ath%C3%A8nes",
+      "lon": 23.738333,
+      "lat": 37.974167
+    }
+  ],
+  "Quartier": [
+    {
+      "categorie": "Quartier",
+      "nom": "Kypséli",
+      "adresse": "",
+      "note": "",
+      "description": "Quartier authentique au nord du musée national",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Kyps%C3%A9li_(Ath%C3%A8nes)",
+      "lon": 23.741523,
+      "lat": 38.002966
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Exarchia",
+      "adresse": "",
+      "note": "",
+      "description": "Quartier authentique à côté de Polytechnique",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Ex%C3%A1rcheia",
+      "lon": 23.734722,
+      "lat": 37.986111
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Quartier de Kolonáki",
+      "adresse": "",
+      "note": "",
+      "description": "Chic résidentiel galeries, cafés branchés.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=5126238",
+      "lon": 23.740639,
+      "lat": 37.977167
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Mets",
+      "adresse": "",
+      "note": "",
+      "description": "Quartier arty calme, street art local.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Mets_(Ath%C3%A8nes)",
+      "lon": 23.736733,
+      "lat": 37.969376
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Colline d’Ardittos",
+      "adresse": "",
+      "note": "",
+      "description": "Vue panoramique stade olympique, balade sauvage.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=8103414",
+      "lon": 23.740958,
+      "lat": 37.968576
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Anafiotika",
+      "adresse": "",
+      "note": "",
+      "description": "Cycladique insolite sous Acropole, ruelles blanches.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=8047332",
+      "lon": 23.72517,
+      "lat": 37.971288
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Quartier de Pangrati",
+      "adresse": "",
+      "note": "",
+      "description": "Bohème alternatif bars, street art vivant.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=8048764",
+      "lon": 23.744165,
+      "lat": 37.968077
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Rue Voukourestiou",
+      "adresse": "",
+      "note": "",
+      "description": "Luxe discret galeries art, boutiques mode.",
+      "transport": "",
+      "url": "https://en.wikipedia.org/wiki/Voukourestiou_Street",
+      "lon": 23.734961,
+      "lat": 37.976861
+    },
+    {
+      "categorie": "Quartier",
+      "nom": "Quartier Kastella",
+      "adresse": "",
+      "note": "",
+      "description": "Collines néoclassiques, vues mer oubliées.",
+      "transport": "Métro 1 Firaeus + 20min montée",
+      "url": "https://fr.wikipedia.org/wiki/Kast%C3%A9lla_(Le_Pir%C3%A9e)",
+      "lon": 23.655967,
+      "lat": 37.939489
+    }
+  ],
+  "Néoclassique": [
+    {
+      "categorie": "Néoclassique",
+      "nom": "Zappeion",
+      "adresse": "",
+      "note": "",
+      "description": "Palais néoclassique jardins, événements culturels calmes.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=4813838",
+      "lon": 23.736389,
+      "lat": 37.971389
+    },
+    {
+      "categorie": "Néoclassique",
+      "nom": "Académie d’Athènes",
+      "adresse": "",
+      "note": "",
+      "description": "Chef-d'oeuvre architectural néoclassique imposant.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=1817214",
+      "lon": 23.734762,
+      "lat": 37.980424
+    }
+  ],
+  "Antique": [
+    {
+      "categorie": "Antique",
+      "nom": "Temple de Zeus olympien",
+      "adresse": "",
+      "note": "",
+      "description": "Colossal temple antique au coeur moderne.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Olympi%C3%A9ion_(Ath%C3%A8nes)",
+      "lon": 23.733078,
+      "lat": 37.969372
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Arc d’Hadrien",
+      "adresse": "",
+      "note": "",
+      "description": "Arc romain élégant entre époques.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=4435619",
+      "lon": 23.732,
+      "lat": 37.970167
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Académie de Platon",
+      "adresse": "",
+      "note": "",
+      "description": "Site de l'académie de Platon",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Acad%C3%A9mie_de_Platon",
+      "lon": 23.70806,
+      "lat": 37.9925
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Source clepsydre",
+      "adresse": "",
+      "note": "",
+      "description": "Fontaine mycénienne souterraine, hydraulique ancienne.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Klepsydre_(Acropole)",
+      "lon": 23.725056,
+      "lat": 37.972083
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Agora romaine",
+      "adresse": "",
+      "note": "",
+      "description": "Marché impérial romain, Tour des Vents unique.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=3162411",
+      "lon": 23.72611,
+      "lat": 37.97417
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Bibliothèque d'Hadrien",
+      "adresse": "",
+      "note": "",
+      "description": "Complexe culturel romain massif, restes imposants.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Biblioth%C3%A8que_d%27Hadrien",
+      "lon": 23.726111,
+      "lat": 37.975556
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Odéon d'Agrippa",
+      "adresse": "",
+      "note": "",
+      "description": "Théâtre couvert romain reconstruit, acoustique antique.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Od%C3%A9on_d%27Agrippa",
+      "lon": 23.723167,
+      "lat": 37.975139
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Stoa d'Attale",
+      "adresse": "",
+      "note": "",
+      "description": "Portique marchand hellénistique, musée intégré.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Stoa_d%27Attale",
+      "lon": 23.72417,
+      "lat": 37.975
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Temple d'Héphaïstos",
+      "adresse": "",
+      "note": "",
+      "description": "Dorique parfaitement préservé dans Agora antique.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=16690",
+      "lon": 23.721412,
+      "lat": 37.975604
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Kéramikos",
+      "adresse": "",
+      "note": "",
+      "description": "Nécropole antique portes fortifiées, tombes peintes.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=9528074",
+      "lon": 23.719506,
+      "lat": 37.97873
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Pnyx",
+      "adresse": "",
+      "note": "",
+      "description": "Colline assemblées démocratiques, vue oratoire antique.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Pnyx",
+      "lon": 23.719444,
+      "lat": 37.971667
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Aréopage",
+      "adresse": "",
+      "note": "",
+      "description": "Roche tribunal Paul apôtre, panorama Acropole.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Ar%C3%A9opage",
+      "lon": 23.72306,
+      "lat": 37.9725
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Theseion",
+      "adresse": "",
+      "note": "",
+      "description": "Temple antique réutilisé église, dorique intact.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=74604",
+      "lon": 23.721392,
+      "lat": 37.975617
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Théâtre de Dionysos",
+      "adresse": "",
+      "note": "",
+      "description": "Berceau tragédie grecque, sièges sculptés.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Th%C3%A9%C3%A2tre_de_Dionysos",
+      "lon": 23.7278,
+      "lat": 37.97028
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Prison de Socrate",
+      "adresse": "",
+      "note": "",
+      "description": "Cachot philosophique austère, mythe exécution.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=7208",
+      "lon": 23.72081,
+      "lat": 37.969375
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Musée archéologique national",
+      "adresse": "",
+      "note": "",
+      "description": "Trésors mycéniens et classiques inégalés.",
+      "transport": "Métro ligne 2/3, Victoria",
+      "url": "https://fr.wikipedia.org/wiki/Mus%C3%A9e_national_arch%C3%A9ologique_d%27Ath%C3%A8nes",
+      "lon": 23.7325,
+      "lat": 37.98917
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Stade panathénaïque",
+      "adresse": "",
+      "note": "",
+      "description": "Marbre blanc JO antiques recréés.",
+      "transport": "Métro ligne 2, Académie",
+      "url": "https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque",
+      "lon": 23.741111,
+      "lat": 37.968333
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Sanctuaire d'Artémis à Brauron",
+      "adresse": "",
+      "note": "",
+      "description": "Temple archaïque et rituels féminins.",
+      "transport": "Bus 122, Brauron (1h)",
+      "url": "https://fr.wikipedia.org/wiki/Brauron",
+      "lon": 23.99361,
+      "lat": 37.92639
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Eléusis (mystères)",
+      "adresse": "",
+      "note": "",
+      "description": "Telesterion rites secrets Déméter.",
+      "transport": "Métro ligne 3, Elefsina",
+      "url": "https://fr.wikipedia.org/?curid=61955",
+      "lon": 23.539425,
+      "lat": 38.042563
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Musée épigraphique",
+      "adresse": "",
+      "note": "",
+      "description": "Inscriptions gravées lois antiques.",
+      "transport": "Métro ligne 2, Syntagma",
+      "url": "https://fr.wikipedia.org/wiki/Mus%C3%A9e_%C3%A9pigraphique_d%27Ath%C3%A8nes",
+      "lon": 23.717,
+      "lat": 37.983
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Lycabette (sanctuaire antique)",
+      "adresse": "",
+      "note": "",
+      "description": "Chapelle hellénistique sommet colline.",
+      "transport": "Métro ligne 3, Evangelismos",
+      "url": "https://fr.wikipedia.org/?curid=636702",
+      "lon": 23.74306,
+      "lat": 37.98194
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Stade olympique d'Apollon",
+      "adresse": "",
+      "note": "",
+      "description": "Course antique préservée Marathon.",
+      "transport": "Bus 720, Marathon (45min)",
+      "url": "https://fr.wikipedia.org/?curid=26546",
+      "lon": 22.501,
+      "lat": 38.483
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Temple Poséidon Sounion",
+      "adresse": "",
+      "note": "",
+      "description": "Colonnes doriques coucher soleil mythique.",
+      "transport": "Bus 122, Sounion (1h30)",
+      "url": "https://fr.wikipedia.org/?curid=12508787",
+      "lon": 24.024556,
+      "lat": 37.65025
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Stade panathénaïque (moderne)",
+      "adresse": "",
+      "note": "",
+      "description": "Marbre reconstruit JO 1896 mythiques.",
+      "transport": "Métro ligne 2, Stade",
+      "url": "https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque",
+      "lon": 23.741111,
+      "lat": 37.968333
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Musée archéologique du Pirée",
+      "adresse": "",
+      "note": "",
+      "description": "Bronzes antiques, hermès portuaire rares.",
+      "transport": "Métro ligne 1, Firaeus",
+      "url": "https://fr.wikipedia.org/wiki/Mus%C3%A9e_arch%C3%A9ologique_du_Pir%C3%A9e",
+      "lon": 23.644444,
+      "lat": 37.937222
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Musée maritime hellénique",
+      "adresse": "",
+      "note": "",
+      "description": "Modèles navires 3000 ans histoire maritime.",
+      "transport": "Métro ligne 1, Firaeus + bus 843",
+      "url": "https://fr.wikipedia.org/wiki/Mus%C3%A9e_maritime_hell%C3%A9nique",
+      "lon": 23.645917,
+      "lat": 37.9325
+    }
+  ],
+  "Eglise": [
+    {
+      "categorie": "Eglise",
+      "nom": "Église Kapnikaréa",
+      "adresse": "",
+      "note": "",
+      "description": "Byzantin miniature cachée rue commerçante.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=14031555",
+      "lon": 23.7286,
+      "lat": 37.9763
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Église de Panagia Gorgoepikoos",
+      "adresse": "",
+      "note": "",
+      "description": "Byzantin raffiné fresques dorées, intimiste.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=13783196",
+      "lon": 23.729994,
+      "lat": 37.97506
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Église d’Agia Dynami",
+      "adresse": "",
+      "note": "",
+      "description": "Byzantin minuscule ruelle, perle oubliée.",
+      "transport": "",
+      "url": "https://www.thisisathens.org/fr/attractions/agia-dynami-church",
+      "lon": 23.732093,
+      "lat": 37.975422
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Monastère de Kaisariani",
+      "adresse": "",
+      "note": "",
+      "description": "Église XIe siècle mont Hymette mystique.",
+      "transport": "Bus 223/224, Kaisariani (20min)",
+      "url": "https://fr.wikipedia.org/?curid=11497889",
+      "lon": 23.7982,
+      "lat": 37.9608
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Monastère Daphni",
+      "adresse": "",
+      "note": "",
+      "description": "Monastère connu notamment pour ses mosaïques",
+      "transport": "Métro ligne 3, terminus Aghia Marina, 7' à pieds",
+      "url": "https://fr.wikipedia.org/wiki/Monast%C3%A8re_de_Daphn%C3%AD",
+      "lon": 23.635833,
+      "lat": 38.013056
+    }
+  ],
+  "Contemporain": [
+    {
+      "categorie": "Contemporain",
+      "nom": "Parlement hellénique",
+      "adresse": "",
+      "note": "",
+      "description": "Ex-palais royal, tombe Soldat inconnu.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=778176",
+      "lon": 23.736974,
+      "lat": 37.975276
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Premier cimetière d’Athènes",
+      "adresse": "",
+      "note": "",
+      "description": "Nécropole sculpturale romantique, tombes célèbres.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Premier_cimeti%C3%A8re_d%27Ath%C3%A8nes",
+      "lon": 23.737875,
+      "lat": 37.963161
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Université nationale (contemporaine)",
+      "adresse": "",
+      "note": "",
+      "description": "Campus néoclassique savoir moderne.",
+      "transport": "Métro ligne 2, Panepistimiou",
+      "url": "https://fr.wikipedia.org/wiki/Universit%C3%A9_nationale_et_capodistrienne_d%27Ath%C3%A8nes",
+      "lon": 23.778684,
+      "lat": 37.968198
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Fondation Stavros Niarchos",
+      "adresse": "",
+      "note": "",
+      "description": "Opéra/bibliothèque futuriste bord mer.",
+      "transport": "Métro ligne 1, Neo Faliro",
+      "url": "https://fr.wikipedia.org/wiki/Centre_culturel_de_la_fondation_St%C3%A1vros-Ni%C3%A1rchos",
+      "lon": 23.737666,
+      "lat": 37.9397
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Immeuble Bleu (Exarchia)",
+      "adresse": "",
+      "note": "",
+      "description": "Moderniste 1932, admiré Le Corbusier, près Vox.",
+      "transport": "",
+      "url": "https://en.wikipedia.org/wiki/The_Blue_Condominium_of_Exarcheia",
+      "lon": 23.7354,
+      "lat": 37.9866
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Port de Zea (Moukiari)",
+      "adresse": "",
+      "note": "",
+      "description": "Arsenal antique trières, yachts modernes.",
+      "transport": "Métro ligne 1, Firaeus (sortie Zea)",
+      "url": "https://fr.wikipedia.org/wiki/Port_de_Zea",
+      "lon": 23.646128,
+      "lat": 37.93827
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Port de Mikrolimano (Turcolimano)",
+      "adresse": "",
+      "note": "",
+      "description": "Pêcheurs tavernes, vue baie charmante.",
+      "transport": "Métro ligne 1, Firaeus + 25min marche",
+      "url": "https://fr.wikipedia.org/wiki/Mikrolimano",
+      "lon": 23.659541,
+      "lat": 37.938595
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Marché municipal du Pirée",
+      "adresse": "",
+      "note": "",
+      "description": "Halles bruyantes poissons frais, épices.",
+      "transport": "Métro 1 Firaeus (sortie marché)",
+      "url": "https://fr.wikipedia.org/wiki/March%C3%A9_municipal_du_Pir%C3%A9e",
+      "lon": 23.64516,
+      "lat": 37.94461
+    }
+  ],
+  "Byzantin": [
+    {
+      "categorie": "Byzantin",
+      "nom": "Musée byzantin et chrétien",
+      "adresse": "",
+      "note": "",
+      "description": "Icônes, fresques byzantines exceptionnelles.",
+      "transport": "Métro ligne 3, Evangelismos",
+      "url": "https://fr.wikipedia.org/?curid=546240",
+      "lon": 23.717,
+      "lat": 37.967
+    },
+    {
+      "categorie": "Byzantin",
+      "nom": "Église Agia Triada (Mikrolimano)",
+      "adresse": "",
+      "note": "",
+      "description": "Byzantin ottoman, icônes maritimes.",
+      "transport": "Métro ligne 1, Firaeus + tram C1",
+      "url": "https://www.thisisathens.org/fr/attractions/agia-triada-russian-orthodox-eglise",
+      "lon": 23.645054,
+      "lat": 37.944422
+    },
+    {
+      "categorie": "Byzantin",
+      "nom": "Église Agios Spyridon",
+      "adresse": "",
+      "note": "",
+      "description": "Byzantin caché quartier ouvrier coloré.",
+      "transport": "Métro 1 Firaeus + 12min",
+      "url": "https://fr.wikipedia.org/?curid=14545928",
+      "lon": 22.433333,
+      "lat": 40.2
+    }
+  ],
+  "Cinéma": [
+    {
+      "categorie": "Cinéma",
+      "nom": "Ciné Aegli (Zappeion)",
+      "adresse": "Zappeion Garden, Athina 105 57, Grèce",
+      "note": "",
+      "description": "Plus ancien cinéma plein air (1903), jardins luxuriants.",
+      "transport": "",
+      "url": "",
+      "lon": 23.737666,
+      "lat": 37.97145
+    },
+    {
+      "categorie": "Cinéma",
+      "nom": "Ciné Dexameni",
+      "adresse": "Plateia Dexamenis 7, Athina 106 73, Grèce",
+      "note": "",
+      "description": "Sur citerne Hadrien (1905), magie Kolonaki boisée.",
+      "transport": "",
+      "url": "",
+      "lon": 23.741798,
+      "lat": 37.979366
+    },
+    {
+      "categorie": "Cinéma",
+      "nom": "Ciné Thision",
+      "adresse": "Apostolou Pavlou 7, Athina 118 51, Grèce",
+      "note": "",
+      "description": "Sous Acropole depuis 1935, vue Parthénon inoubliable.",
+      "transport": "",
+      "url": "http://cine-thisio.gr/",
+      "lon": 23.720467,
+      "lat": 37.972911
+    },
+    {
+      "categorie": "Cinéma",
+      "nom": "Ciné Vox (Exarchia)",
+      "adresse": "Themistokleous 82, Athina 106 81, Grèce",
+      "note": "",
+      "description": "Ouvert 1938, ambiance alternative quartier vibrant.",
+      "transport": "",
+      "url": "",
+      "lon": 23.735597,
+      "lat": 37.986911
+    },
+    {
+      "categorie": "Cinéma",
+      "nom": "Ciné Riviera (Exarchia)",
+      "adresse": "Valtetsiou 46, Athina 106 81, Grèce",
+      "note": "",
+      "description": "Frère de Vox, art et essai sur place animée.",
+      "transport": "",
+      "url": "",
+      "lon": 23.735872,
+      "lat": 37.985697
+    }
+  ]
+};
+const STYLES  = {"Amis": {"couleur": "#95A5A6", "icone": "📍"}, "Musée": {"couleur": "#E8462A", "icone": "🏛"}, "Restaurant": {"couleur": "#E67E22", "icone": "🍽"}, "Jardin": {"couleur": "#52A835", "icone": "🌿"}, "Quartier": {"couleur": "#16A085", "icone": "🚶"}, "Néoclassique": {"couleur": "#5B8DB8", "icone": "🏛"}, "Antique": {"couleur": "#A0522D", "icone": "🏺"}, "Eglise": {"couleur": "#8E44AD", "icone": "⛪"}, "Contemporain": {"couleur": "#2C3E50", "icone": "🏙"}, "Byzantin": {"couleur": "#8B1A8B", "icone": "✝️"}, "Cinéma": {"couleur": "#E91E8C", "icone": "🎬"}};
+const layers  = {};
+const hidden  = new Set();
+const isMobile = () => window.innerWidth <= 768;
+
+// ── Carte ────────────────────────────────────────────────────
+const map = L.map('map', {
+  center: [38.002542, 23.693770],
+  zoom: 13,
+  zoomControl: true,
+  tap: true,
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  maxZoom: 19,
+}).addTo(map);
+
+// ── Icônes ───────────────────────────────────────────────────
+function creerIcone(style) {
+  const sz = isMobile() ? 42 : 32;
+  const fs = isMobile() ? 18 : 14;
+  return L.divIcon({
+    className: '',
+    html: `<div class="marker-pin" style="background:${style.couleur};width:${sz}px;height:${sz}px">
+             <span class="marker-icon" style="font-size:${fs}px">${style.icone}</span>
+           </div>`,
+    iconSize:    [sz, sz],
+    iconAnchor:  [sz/2, sz],
+    popupAnchor: [0, -(sz+4)],
+  });
+}
+
+// ── Contenu popup ─────────────────────────────────────────────
+function buildPopupHtml(lieu, cat, style) {
+  let html = `<div class="popup-content">
+    <div class="popup-cat" style="color:${style.couleur}">${cat}</div>
+    <div class="popup-nom">${lieu.nom}</div>`;
+  if (lieu.note) {
+    const n = Math.min(5, Math.max(1, parseInt(lieu.note) || 0));
+    html += `<div class="popup-note">${'★'.repeat(n) + '☆'.repeat(5-n)}</div>`;
+  }
+  if (lieu.adresse)     html += `<div class="popup-adresse">📮 ${lieu.adresse}</div>`;
+  if (lieu.transport)   html += `<div class="popup-transport">🚇 ${lieu.transport}</div>`;
+  if (lieu.description) html += `<div class="popup-desc">${lieu.description}</div>`;
+  if (lieu.url)         html += `<div class="popup-url"><a href="${lieu.url}" target="_blank">🔗 Site</a></div>`;
+  html += `</div>`;
+  return html;
+}
+
+// ── Bottom sheet mobile ───────────────────────────────────────
+const sheet        = document.getElementById('bottom-sheet');
+const sheetContent = document.getElementById('sheet-content');
+const sheetClose   = document.getElementById('sheet-close');
+
+function openSheet(html) {
+  sheetContent.innerHTML = html;
+  sheet.classList.add('open');
+  // Fermer la légende si ouverte
+  document.getElementById('legend').classList.remove('open');
+}
+
+sheetClose.addEventListener('click', () => sheet.classList.remove('open'));
+map.on('click', () => sheet.classList.remove('open'));
+
+// ── Marqueurs ────────────────────────────────────────────────
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style  = STYLES[cat] || {couleur: '#95A5A6', icone: '📍'};
+  const groupe = L.layerGroup().addTo(map);
+  layers[cat]  = groupe;
+
+  lieux.forEach(lieu => {
+    const marker = L.marker([lieu.lat, lieu.lon], {icon: creerIcone(style)});
+
+    marker.on('click', () => {
+      if (isMobile()) {
+        openSheet(buildPopupHtml(lieu, cat, style));
+      } else {
+        marker.bindPopup(buildPopupHtml(lieu, cat, style), {maxWidth: 260}).openPopup();
+      }
+    });
+
+    groupe.addLayer(marker);
+  });
+});
+
+// ── Légende interactive ───────────────────────────────────────
+const legend = document.getElementById('legend');
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style = STYLES[cat] || {couleur: '#95A5A6', icone: '📍'};
+  const item  = document.createElement('div');
+  item.className   = 'legend-item';
+  item.dataset.cat = cat;
+  item.innerHTML   = `
+    <div class="legend-dot" style="background:${style.couleur}"></div>
+    <span class="legend-label">${style.icone} ${cat}</span>
+    <span class="legend-count">${lieux.length}</span>`;
+
+  item.addEventListener('click', () => {
+    if (hidden.has(cat)) {
+      map.addLayer(layers[cat]);
+      hidden.delete(cat);
+      item.classList.remove('hidden');
+    } else {
+      map.removeLayer(layers[cat]);
+      hidden.add(cat);
+      item.classList.add('hidden');
+    }
+  });
+  legend.appendChild(item);
+});
+
+// ── Bouton légende mobile ─────────────────────────────────────
+document.getElementById('legend-toggle').addEventListener('click', () => {
+  sheet.classList.remove('open');
+  legend.classList.toggle('open');
+});
+
+// Fermer légende si clic sur la carte
+map.on('click', () => legend.classList.remove('open'));
+</script>
+</body>
+</html>
