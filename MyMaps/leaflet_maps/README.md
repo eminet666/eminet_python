@@ -1,5 +1,5 @@
 ## MyMaps
-* [Rome](./rome.html)
-* [Athènes](./)
+* [Athènes](./athenes.html)
 * [Thessalonique](./thessalonique.html)
 * [Thessalie](./thessalie.html)
+* [Rome](./rome.html)
