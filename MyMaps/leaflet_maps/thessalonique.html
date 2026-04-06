@@ -283,7 +283,7 @@
 
 <header>
   <h1>🗺 Thessalonique, Grèce</h1>
-  <span class="count">27 lieux</span>
+  <span class="count">28 lieux</span>
 </header>
 
 <div id="map"></div>
@@ -376,7 +376,7 @@ const DATA    = {
       "nom": "Eglise Aghios Dimitrios, Thessalonique",
       "adresse": "",
       "note": "4",
-      "description": "Mosaïques, crypte, ciboire",
+      "description": "Mosaïques, ciboire, crypte en sous sol",
       "transport": "",
       "url": "https://fr.wikipedia.org/wiki/Basilique_Saint-Dimitri_de_Thessalonique",
       "lon": 22.947858,
@@ -612,16 +612,29 @@ const DATA    = {
       "lon": 22.935447,
       "lat": 40.633028
     }
+  ],
+  "Paysage": [
+    {
+      "categorie": "Paysage",
+      "nom": "le « banc de Kallipetra »",
+      "adresse": "",
+      "note": "",
+      "description": "Superbe paysage, point de vue élevé, à 8km de Véria",
+      "transport": "",
+      "url": "https://discoververia.gr/kalipetras-pagkaki/",
+      "lon": 22.221871,
+      "lat": 40.464875
+    }
   ]
 };
-const STYLES  = {"Hotel": {"couleur": "#2980B9", "icone": "🏨"}, "Eglise": {"couleur": "#8E44AD", "icone": "⛪"}, "Antique": {"couleur": "#A0522D", "icone": "🏺"}, "Ottoman": {"couleur": "#95A5A6", "icone": "📍"}, "Contemporain": {"couleur": "#2C3E50", "icone": "🏙"}, "Renaissance": {"couleur": "#8B6914", "icone": "🎨"}, "Musée": {"couleur": "#E8462A", "icone": "🏛"}};
+const STYLES  = {"Hotel": {"couleur": "#2980B9", "icone": "🏨"}, "Eglise": {"couleur": "#8E44AD", "icone": "⛪"}, "Antique": {"couleur": "#A0522D", "icone": "🏺"}, "Ottoman": {"couleur": "#95A5A6", "icone": "📍"}, "Contemporain": {"couleur": "#2C3E50", "icone": "🏙"}, "Renaissance": {"couleur": "#8B6914", "icone": "🎨"}, "Musée": {"couleur": "#E8462A", "icone": "🏛"}, "Paysage": {"couleur": "#95A5A6", "icone": "📍"}};
 const layers  = {};
 const hidden  = new Set();
 const isMobile = () => window.innerWidth <= 768;
 
 // ── Carte ────────────────────────────────────────────────────
 const map = L.map('map', {
-  center: [40.633717, 22.948691],
+  center: [40.627687, 22.922733],
   zoom: 13,
   zoomControl: true,
   tap: true,
