@@ -1,0 +1,50 @@
+pays;région;;;;;;;
+Grèce;Thessalonique;;;;;;;
+;;;;;;;;
+categorie;nom;adresse;note;description;transport;url;lon;lat
+Hotel;Leiland #colony_White_Tower_Suite;8 Dimitrios Gounaris, Thessalonique, 54621, Grèce;;;;;22.954650;40.586996
+Eglise;Eglise Aghia Sophia;;4;mosaïques **, vierge à l'enfant **, fresques *, chapiteaux corinthiens feuilles retournées *;;https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Sophie_de_Thessalonique;22.947094;40.632844
+Antique;Palais de Galère;;3;mosaïques *, salle octogone * gratuit;;https://fr.wikipedia.org/?curid=8517061;22.949315;40.630335
+Antique;Arc de Galère;;3;;;https://fr.wikipedia.org/?curid=576201;22.949315;40.630335
+Antique;Rotonde Aghios Giorgios;;5;coupole à mosaïques;;https://www.divento.com/fr/home/23131-la-rotonde-thessalonique.html;22.952876;40.633525
+Eglise;Basilique Aghios panteleimon;;2;;;https://fr.wikipedia.org/wiki/%C3%89glise_Saint-Pantal%C3%A9on_de_Thessalonique;22.951207;40.633111
+Eglise;Basilique Theotokos Acheropietos;;3;;;https://fr.wikipedia.org/wiki/%C3%89glise_de_l%27Acheiropoi%C3%A8tos;22.947995;40.634935
+Eglise;Ladadika;;3;Près du port quartier anciennes huileries;;https://fr.wikipedia.org/?curid=99719;22.950000;40.633333
+Antique;Agora;;3;Avec Odéon;;https://fr.wikipedia.org/?curid=74569;22.941413;40.636408
+Eglise;Eglise Panaghia ton Chalkeon, Thessalonique;;3;Fresques;;https://fr.wikipedia.org/wiki/%C3%89glise_de_la_Panag%C3%ADa_Chalk%C3%A9on;22.943658;40.636782
+Eglise;Eglise Aghios Dimitrios, Thessalonique;;4;Mosaïques, ciboire, crypte en sous sol;;https://fr.wikipedia.org/wiki/Basilique_Saint-Dimitri_de_Thessalonique;22.947858;40.638822
+Eglise;Eglise Aghioi Apostoli, , Thessalonique;;3;Mosaiques, peintures;;https://fr.wikipedia.org/wiki/%C3%89glise_des_Saints-Ap%C3%B4tres_de_Thessalonique;22.937547;40.642839
+Ottoman;Mosquée Hamza Bey;;1;;;https://fr.wikipedia.org/?curid=14398411;22.941700;40.637400
+Ottoman;Bezesten;;1;En face du marché central très animé;;https://fr.wikipedia.org/?curid=99719;22.950000;40.633333
+Ottoman;Yahudi Hammam;;1;Marche aux fleurs;;https://fr.wikipedia.org/?curid=99719;22.950000;40.633333
+Ottoman;Bey Hammam;;1;;;https://fr.wikipedia.org/?curid=658895;22.945300;40.635700
+Ottoman;Mosquée Alaca Imaret, Thessalonique;;1;;;https://fr.wikipedia.org/wiki/Mosqu%C3%A9e_Ishak-Pacha;22.949600;40.639200
+Eglise;Eglise Aghia Ekaterini, Thessalonique;;2;Art de la renaissance paléologue;;https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Catherine_de_Thessalonique;22.944304;40.643150
+Eglise;Eglise Profitis, Thessalonique;;3;Belle déco extérieure peintures murales;;https://fr.wikipedia.org/wiki/%C3%89glise_du_Proph%C3%A8te-%C3%89lie_de_Thessalonique;22.948583;40.640917
+Eglise;Eglise Hosios David;;4;Mosaïque et fresques du VIe siècle ! Unique à Thessalonique;;https://fr.wikipedia.org/?curid=8523623;22.952278;40.641806
+Eglise;Acropole, Thessalonique;;;Tour Andronic, quartier de maisons ottomanes, citadelle egyptario, porte Anne Paleologue, tour de la chaîne, tour d'Hormisdas;;https://fr.wikipedia.org/wiki/Heptapyrgion;22.962000;40.644000
+Eglise;Eglise Aghios Nicolaos Orphanos, Thessalonique;;5;Un des bijoux architecturaux de la ville, fresques;;https://fr.wikipedia.org/wiki/%C3%89glise_Saint-Nicolas-l%27Orphelin_de_Thessalonique;22.955989;40.637756
+Contemporain;Maison Ataturk, Thessalonique;;1;;;https://fr.wikipedia.org/?curid=14373160;22.954306;40.635750
+Renaissance;Tour blanche;;3;Belle vue de la terrasse;;https://fr.wikipedia.org/?curid=1719664;22.948333;40.626389
+Musée;Musée archéologique, Thessalonique;;4;Médaillon Athena, figurines terre cuite, ...;;https://fr.wikipedia.org/?curid=658252;22.953889;40.625000
+Musée;Musée de la civilisation byzantine, Thessalonique;;4;Collection art paléo chrétien et icônes;;https://fr.wikipedia.org/?curid=99719;22.950000;40.633333
+Musée;Musée de la photo, Thessalonique;;3;Pour un des lus beaux panorama sur la ville  au bar;;https://fr.wikipedia.org/wiki/Mus%C3%A9e_de_la_Photographie_de_Thessalonique;22.935447;40.633028
+Paysage;le « banc de Kallipetra »;;;Superbe paysage, point de vue élevé, à 8km de Véria;;https://discoververia.gr/kalipetras-pagkaki/;22.221871;40.464875
+;Argofageio;Leof. Georgikis Scholis 30;;Taverne traditionnelle : boureki, salades, viandes grillées copieuses.;;;22.9475° E;40.6361° N
+;Kanoula;Tsimiski 9;;Meze grecs frais, portions généreuses, ambiance locale.;;https://fr.wikipedia.org/?curid=2690022;22.9452° E;40.6338° N
+;Ouzeri To Yenti;Egnatia 154 (près Château);;Ouzo + meze authentiques, tzatiki excellent, vue animée.;;;22.9508° E;40.6275° N
+;John Deli Kebab;Vasileos Irakleiou 35;;Dönér maison pita frais, meilleur kebab local ~4.5€.;;https://fr.wikipedia.org/?curid=10762186;22.9440° E;40.6290° N
+;Savvikos;Egnatia 48;;Souvlaki/gyros rapides, qualité pro, street food top.;;https://fr.wikipedia.org/?curid=15548048;22.9448° E;40.6345° N
+;Chatzis;Mitropoleos 19;;Pâtisserie orientale : kataifi, baklava frais <5€.;;https://fr.wikipedia.org/?curid=8056689;22.9470° E;40.6330° N
+;Trigona Elenedis;Gounari 4;;Trigona elenitika croustillants crème, spécialité locale.;;;22.9485° E;40.6312° N
+;Stáfylos Gi;Egnatia 30;;Tavernes meze grillades, rapport qualité/prix imbattable.;;;22.9440° E;40.6340° N
+;Pezouli;Dim. Gounari 11;;Pizza bois street food, desserts top 5-10€.;;;22.9490° E;40.6315° N
+;Kati Ap' Ola;Leof. Vasileos Georgiou 22;;Meze grecs variés, grillades fraîches 10-15€.;;https://en.wikipedia.org/?curid=28244469;22.9435° E;40.6378° N
+;Stafilos Gi;Apostolou Pavlou 24;;Tavernes meze copieux, ambiance familiale.;;;22.9418° E;40.6352° N
+;To Mikraki;Proxenou Koromila 2;;Plats maison grecs, portions généreuses 10-15€.;;;22.9472° E;40.6321° N
+;Mourga;Ladadika quartier;;Fruits de mer meze frais, très copieux.;;;22.9440° E;40.6380° N
+;Ouzeri Agora;Kapodistriou 5;;Ouzo + meze traditionnels, budget mid.;;https://en.wikipedia.org/?curid=12108;22.9480° E;40.6305° N
+;Nea Diagonios;Kalamaria (près port);;Gyros/souvlaki meilleur rapport qualité/prix.;;https://en.wikipedia.org/?curid=40471;22.9700° E;40.6120° N
+;Takadum;Centre-ville;;Meze méditerranéens, plan imbattable local.;;;22.9450° E;40.6340° N
+;Bougatsa Giannis;Egnatia (marché);;Bougatsa feuilletée sucrée <5€ matin/dîner.;;https://en.wikipedia.org/?curid=40471;22.9460° E;40.6335° N
+;Diagonios 1977;Près centre;;Kebabs/saucisses tradition grecques authentiques.;;;22.9420° E;40.6350° N

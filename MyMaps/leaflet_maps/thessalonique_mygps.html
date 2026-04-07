@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thessalonique, Grèce</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    header {
+      background: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 1000;
+      flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    header .count {
+      font-size: 0.75rem;
+      color: #999;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Carte ──────────────────────────────────────────────── */
+    #map { flex: 1; z-index: 1; }
+
+    /* ── Bouton GPS ─────────────────────────────────────────── */
+    #gps-toggle {
+      position: absolute;
+      bottom: 30px;
+      left: 10px;
+      z-index: 1000;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    #gps-toggle:hover  { box-shadow: 0 3px 12px rgba(0,0,0,0.2); }
+    #gps-toggle.active { background: #e8f5e9; border-color: #27AE60; }
+    #gps-toggle.error  { background: #fdecea; border-color: #e74c3c; }
+
+    /* ── Marqueurs ──────────────────────────────────────────── */
+    .marker-pin {
+      width: 32px;
+      height: 32px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .marker-pin .marker-icon {
+      transform: rotate(45deg);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    /* ── Légende DESKTOP ────────────────────────────────────── */
+    #legend {
+      position: absolute;
+      bottom: 30px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 16px;
+      min-width: 165px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+
+    #legend h3 {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .legend-item:hover { background: #f5f5f5; }
+    .legend-item.hidden { opacity: 0.3; }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-label { font-size: 0.8rem; color: #333; flex: 1; }
+    .legend-count  { font-size: 0.7rem; color: #bbb; }
+
+    /* Bouton légende mobile — caché sur desktop */
+    #legend-toggle { display: none; }
+
+    /* ── Popup DESKTOP ──────────────────────────────────────── */
+    .leaflet-popup-content-wrapper {
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      color: #222;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .leaflet-popup-tip       { background: #ffffff; }
+    .leaflet-popup-close-button { color: #aaa !important; }
+
+    /* ── Bottom sheet MOBILE (caché par défaut) ─────────────── */
+    #bottom-sheet {
+      display: none; /* activé en JS sur mobile */
+    }
+
+    /* ── Contenu popup / bottom-sheet (partagé) ─────────────── */
+    .popup-content  { padding: 4px 2px; }
+    .popup-cat      { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+    .popup-nom      { font-size: 1rem; font-weight: 600; color: #111; margin-bottom: 4px; }
+    .popup-note     { font-size: 0.85rem; color: #f0a500; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .popup-adresse  { font-size: 0.75rem; color: #888; margin-bottom: 4px; }
+    .popup-transport{ font-size: 0.75rem; color: #5d8aa8; margin-bottom: 4px; }
+    .popup-desc     { font-size: 0.8rem; color: #555; line-height: 1.4; }
+    .popup-url      { font-size: 0.75rem; margin-top: 6px; }
+    .popup-url a    { color: #2980B9; text-decoration: none; font-weight: 500; }
+    .popup-url a:hover { text-decoration: underline; }
+
+    /* ════════════════════════════════════════════════════════
+       MOBILE  (écrans ≤ 768px)
+       ════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* Header plus compact */
+      header { padding: 8px 14px; }
+      header h1 { font-size: 0.85rem; }
+
+      /* Marqueurs plus grands pour le doigt */
+      .marker-pin {
+        width: 42px;
+        height: 42px;
+        border-width: 3px;
+      }
+      .marker-pin .marker-icon { font-size: 18px; }
+
+      /* Légende cachée par défaut, ouvrable */
+      #legend {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        border-radius: 16px 16px 0 0;
+        padding: 16px 20px 24px;
+        min-width: unset;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      #legend.open { transform: translateY(0); }
+
+      #legend h3 {
+        font-size: 0.7rem;
+        text-align: center;
+        margin-bottom: 14px;
+      }
+
+      /* Drag handle au dessus de la légende */
+      #legend::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 14px;
+      }
+
+      .legend-item  { padding: 8px 6px; }
+      .legend-label { font-size: 0.9rem; }
+      .legend-count { font-size: 0.8rem; }
+      .legend-dot   { width: 12px; height: 12px; }
+
+      /* Bouton flottant pour ouvrir la légende */
+      #legend-toggle {
+        display: flex;
+        position: absolute;
+        bottom: 24px;
+        right: 16px;
+        z-index: 1001;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: box-shadow 0.15s;
+      }
+      #legend-toggle:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+      /* Bouton GPS mobile — empilé au-dessus du bouton légende */
+      #gps-toggle {
+        position: absolute;
+        bottom: 84px;
+        left: unset;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        font-size: 1.3rem;
+        z-index: 1001;
+      }
+
+
+      .leaflet-popup { display: none !important; }
+
+      /* Bottom sheet à la place */
+      #bottom-sheet {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1002;
+        background: #ffffff;
+        border-radius: 16px 16px 0 0;
+        padding: 20px 20px 32px;
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 55vh;
+        overflow-y: auto;
+      }
+      #bottom-sheet.open { transform: translateY(0); }
+
+      #bottom-sheet::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 16px;
+      }
+
+      #bottom-sheet .popup-nom     { font-size: 1.15rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-cat     { font-size: 0.7rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-note    { font-size: 1rem; margin-bottom: 8px; }
+      #bottom-sheet .popup-adresse { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-transport { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-desc    { font-size: 0.9rem; line-height: 1.5; }
+      #bottom-sheet .popup-url     { font-size: 0.9rem; margin-top: 12px; }
+      #bottom-sheet .popup-url a   { font-size: 1rem; padding: 8px 0; display: inline-block; }
+
+      /* Bouton fermer le bottom sheet */
+      #sheet-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: #f5f5f5;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🗺 Thessalonique, Grèce</h1>
+  <span class="count">28 lieux</span>
+</header>
+
+<div id="map"></div>
+
+<!-- Bouton GPS -->
+<button id="gps-toggle" title="Ma position">📍</button>
+
+<!-- Légende (desktop : flottante / mobile : bottom sheet) -->
+<div id="legend"><h3>Catégories</h3></div>
+
+<!-- Bouton mobile pour ouvrir la légende -->
+<button id="legend-toggle" title="Catégories">🗂</button>
+
+<!-- Bottom sheet mobile -->
+<div id="bottom-sheet">
+  <button id="sheet-close">✕</button>
+  <div id="sheet-content"></div>
+</div>
+
+<script>
+const DATA    = {
+  "Hotel": [
+    {
+      "categorie": "Hotel",
+      "nom": "Leiland #colony_White_Tower_Suite",
+      "adresse": "8 Dimitrios Gounaris, Thessalonique, 54621, Grèce",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "lon": 22.95465,
+      "lat": 40.586996
+    }
+  ],
+  "Eglise": [
+    {
+      "categorie": "Eglise",
+      "nom": "Eglise Aghia Sophia",
+      "adresse": "",
+      "note": "4",
+      "description": "mosaïques **, vierge à l'enfant **, fresques *, chapiteaux corinthiens feuilles retournées *",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Sophie_de_Thessalonique",
+      "lon": 22.947094,
+      "lat": 40.632844
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Basilique Aghios panteleimon",
+      "adresse": "",
+      "note": "2",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89glise_Saint-Pantal%C3%A9on_de_Thessalonique",
+      "lon": 22.951207,
+      "lat": 40.633111
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Basilique Theotokos Acheropietos",
+      "adresse": "",
+      "note": "3",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89glise_de_l%27Acheiropoi%C3%A8tos",
+      "lon": 22.947995,
+      "lat": 40.634935
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Ladadika",
+      "adresse": "",
+      "note": "3",
+      "description": "Près du port quartier anciennes huileries",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=99719",
+      "lon": 22.95,
+      "lat": 40.633333
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Eglise Panaghia ton Chalkeon, Thessalonique",
+      "adresse": "",
+      "note": "3",
+      "description": "Fresques",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89glise_de_la_Panag%C3%ADa_Chalk%C3%A9on",
+      "lon": 22.943658,
+      "lat": 40.636782
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Eglise Aghios Dimitrios, Thessalonique",
+      "adresse": "",
+      "note": "4",
+      "description": "Mosaïques, ciboire, crypte en sous sol",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Basilique_Saint-Dimitri_de_Thessalonique",
+      "lon": 22.947858,
+      "lat": 40.638822
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Eglise Aghioi Apostoli, , Thessalonique",
+      "adresse": "",
+      "note": "3",
+      "description": "Mosaiques, peintures",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89glise_des_Saints-Ap%C3%B4tres_de_Thessalonique",
+      "lon": 22.937547,
+      "lat": 40.642839
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Eglise Aghia Ekaterini, Thessalonique",
+      "adresse": "",
+      "note": "2",
+      "description": "Art de la renaissance paléologue",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Catherine_de_Thessalonique",
+      "lon": 22.944304,
+      "lat": 40.64315
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Eglise Profitis, Thessalonique",
+      "adresse": "",
+      "note": "3",
+      "description": "Belle déco extérieure peintures murales",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89glise_du_Proph%C3%A8te-%C3%89lie_de_Thessalonique",
+      "lon": 22.948583,
+      "lat": 40.640917
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Eglise Hosios David",
+      "adresse": "",
+      "note": "4",
+      "description": "Mosaïque et fresques du VIe siècle ! Unique à Thessalonique",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=8523623",
+      "lon": 22.952278,
+      "lat": 40.641806
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Acropole, Thessalonique",
+      "adresse": "",
+      "note": "",
+      "description": "Tour Andronic, quartier de maisons ottomanes, citadelle egyptario, porte Anne Paleologue, tour de la chaîne, tour d'Hormisdas",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Heptapyrgion",
+      "lon": 22.962,
+      "lat": 40.644
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Eglise Aghios Nicolaos Orphanos, Thessalonique",
+      "adresse": "",
+      "note": "5",
+      "description": "Un des bijoux architecturaux de la ville, fresques",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89glise_Saint-Nicolas-l%27Orphelin_de_Thessalonique",
+      "lon": 22.955989,
+      "lat": 40.637756
+    }
+  ],
+  "Antique": [
+    {
+      "categorie": "Antique",
+      "nom": "Palais de Galère",
+      "adresse": "",
+      "note": "3",
+      "description": "mosaïques *, salle octogone * gratuit",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=8517061",
+      "lon": 22.949315,
+      "lat": 40.630335
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Arc de Galère",
+      "adresse": "",
+      "note": "3",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=576201",
+      "lon": 22.949315,
+      "lat": 40.630335
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Rotonde Aghios Giorgios",
+      "adresse": "",
+      "note": "5",
+      "description": "coupole à mosaïques",
+      "transport": "",
+      "url": "https://www.divento.com/fr/home/23131-la-rotonde-thessalonique.html",
+      "lon": 22.952876,
+      "lat": 40.633525
+    },
+    {
+      "categorie": "Antique",
+      "nom": "Agora",
+      "adresse": "",
+      "note": "3",
+      "description": "Avec Odéon",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=74569",
+      "lon": 22.941413,
+      "lat": 40.636408
+    }
+  ],
+  "Ottoman": [
+    {
+      "categorie": "Ottoman",
+      "nom": "Mosquée Hamza Bey",
+      "adresse": "",
+      "note": "1",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=14398411",
+      "lon": 22.9417,
+      "lat": 40.6374
+    },
+    {
+      "categorie": "Ottoman",
+      "nom": "Bezesten",
+      "adresse": "",
+      "note": "1",
+      "description": "En face du marché central très animé",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=99719",
+      "lon": 22.95,
+      "lat": 40.633333
+    },
+    {
+      "categorie": "Ottoman",
+      "nom": "Yahudi Hammam",
+      "adresse": "",
+      "note": "1",
+      "description": "Marche aux fleurs",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=99719",
+      "lon": 22.95,
+      "lat": 40.633333
+    },
+    {
+      "categorie": "Ottoman",
+      "nom": "Bey Hammam",
+      "adresse": "",
+      "note": "1",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=658895",
+      "lon": 22.9453,
+      "lat": 40.6357
+    },
+    {
+      "categorie": "Ottoman",
+      "nom": "Mosquée Alaca Imaret, Thessalonique",
+      "adresse": "",
+      "note": "1",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Mosqu%C3%A9e_Ishak-Pacha",
+      "lon": 22.9496,
+      "lat": 40.6392
+    }
+  ],
+  "Contemporain": [
+    {
+      "categorie": "Contemporain",
+      "nom": "Maison Ataturk, Thessalonique",
+      "adresse": "",
+      "note": "1",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=14373160",
+      "lon": 22.954306,
+      "lat": 40.63575
+    }
+  ],
+  "Renaissance": [
+    {
+      "categorie": "Renaissance",
+      "nom": "Tour blanche",
+      "adresse": "",
+      "note": "3",
+      "description": "Belle vue de la terrasse",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=1719664",
+      "lon": 22.948333,
+      "lat": 40.626389
+    }
+  ],
+  "Musée": [
+    {
+      "categorie": "Musée",
+      "nom": "Musée archéologique, Thessalonique",
+      "adresse": "",
+      "note": "4",
+      "description": "Médaillon Athena, figurines terre cuite, ...",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=658252",
+      "lon": 22.953889,
+      "lat": 40.625
+    },
+    {
+      "categorie": "Musée",
+      "nom": "Musée de la civilisation byzantine, Thessalonique",
+      "adresse": "",
+      "note": "4",
+      "description": "Collection art paléo chrétien et icônes",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=99719",
+      "lon": 22.95,
+      "lat": 40.633333
+    },
+    {
+      "categorie": "Musée",
+      "nom": "Musée de la photo, Thessalonique",
+      "adresse": "",
+      "note": "3",
+      "description": "Pour un des lus beaux panorama sur la ville  au bar",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Mus%C3%A9e_de_la_Photographie_de_Thessalonique",
+      "lon": 22.935447,
+      "lat": 40.633028
+    }
+  ],
+  "Paysage": [
+    {
+      "categorie": "Paysage",
+      "nom": "le « banc de Kallipetra »",
+      "adresse": "",
+      "note": "",
+      "description": "Superbe paysage, point de vue élevé, à 8km de Véria",
+      "transport": "",
+      "url": "https://discoververia.gr/kalipetras-pagkaki/",
+      "lon": 22.221871,
+      "lat": 40.464875
+    }
+  ]
+};
+const STYLES  = {"Hotel": {"couleur": "#2980B9", "icone": "🏨"}, "Eglise": {"couleur": "#8E44AD", "icone": "⛪"}, "Antique": {"couleur": "#A0522D", "icone": "🏺"}, "Ottoman": {"couleur": "#95A5A6", "icone": "📍"}, "Contemporain": {"couleur": "#2C3E50", "icone": "🏙"}, "Renaissance": {"couleur": "#8B6914", "icone": "🎨"}, "Musée": {"couleur": "#E8462A", "icone": "🏛"}, "Paysage": {"couleur": "#95A5A6", "icone": "📍"}};
+const layers  = {};
+const hidden  = new Set();
+const isMobile = () => window.innerWidth <= 768;
+
+// ── Carte ────────────────────────────────────────────────────
+const map = L.map('map', {
+  center: [40.627687, 22.922733],
+  zoom: 13,
+  zoomControl: true,
+  tap: true,
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  maxZoom: 19,
+}).addTo(map);
+
+// ── Icônes ───────────────────────────────────────────────────
+function creerIcone(style) {
+  const sz = isMobile() ? 42 : 32;
+  const fs = isMobile() ? 18 : 14;
+  return L.divIcon({
+    className: '',
+    html: `<div class="marker-pin" style="background:${style.couleur};width:${sz}px;height:${sz}px">
+             <span class="marker-icon" style="font-size:${fs}px">${style.icone}</span>
+           </div>`,
+    iconSize:    [sz, sz],
+    iconAnchor:  [sz/2, sz],
+    popupAnchor: [0, -(sz+4)],
+  });
+}
+
+// ── Contenu popup ─────────────────────────────────────────────
+function buildPopupHtml(lieu, cat, style) {
+  let html = `<div class="popup-content">
+    <div class="popup-cat" style="color:${style.couleur}">${cat}</div>
+    <div class="popup-nom">${lieu.nom}</div>`;
+  if (lieu.note) {
+    const n = Math.min(5, Math.max(1, parseInt(lieu.note) || 0));
+    html += `<div class="popup-note">${'★'.repeat(n) + '☆'.repeat(5-n)}</div>`;
+  }
+  if (lieu.adresse)     html += `<div class="popup-adresse">📮 ${lieu.adresse}</div>`;
+  if (lieu.transport)   html += `<div class="popup-transport">🚇 ${lieu.transport}</div>`;
+  if (lieu.description) html += `<div class="popup-desc">${lieu.description}</div>`;
+  if (lieu.url)         html += `<div class="popup-url"><a href="${lieu.url}" target="_blank">🔗 Site</a></div>`;
+  html += `</div>`;
+  return html;
+}
+
+// ── Bottom sheet mobile ───────────────────────────────────────
+const sheet        = document.getElementById('bottom-sheet');
+const sheetContent = document.getElementById('sheet-content');
+const sheetClose   = document.getElementById('sheet-close');
+
+function openSheet(html) {
+  sheetContent.innerHTML = html;
+  sheet.classList.add('open');
+  // Fermer la légende si ouverte
+  document.getElementById('legend').classList.remove('open');
+}
+
+sheetClose.addEventListener('click', () => sheet.classList.remove('open'));
+map.on('click', () => sheet.classList.remove('open'));
+
+// ── Marqueurs ────────────────────────────────────────────────
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style  = STYLES[cat] || {couleur: '#95A5A6', icone: '📍'};
+  const groupe = L.layerGroup().addTo(map);
+  layers[cat]  = groupe;
+
+  lieux.forEach(lieu => {
+    const marker = L.marker([lieu.lat, lieu.lon], {icon: creerIcone(style)});
+
+    marker.on('click', () => {
+      if (isMobile()) {
+        openSheet(buildPopupHtml(lieu, cat, style));
+      } else {
+        marker.bindPopup(buildPopupHtml(lieu, cat, style), {maxWidth: 260}).openPopup();
+      }
+    });
+
+    groupe.addLayer(marker);
+  });
+});
+
+// ── Légende interactive ───────────────────────────────────────
+const legend = document.getElementById('legend');
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style = STYLES[cat] || {couleur: '#95A5A6', icone: '📍'};
+  const item  = document.createElement('div');
+  item.className   = 'legend-item';
+  item.dataset.cat = cat;
+  item.innerHTML   = `
+    <div class="legend-dot" style="background:${style.couleur}"></div>
+    <span class="legend-label">${style.icone} ${cat}</span>
+    <span class="legend-count">${lieux.length}</span>`;
+
+  item.addEventListener('click', () => {
+    if (hidden.has(cat)) {
+      map.addLayer(layers[cat]);
+      hidden.delete(cat);
+      item.classList.remove('hidden');
+    } else {
+      map.removeLayer(layers[cat]);
+      hidden.add(cat);
+      item.classList.add('hidden');
+    }
+  });
+  legend.appendChild(item);
+});
+
+// ── Géolocalisation ──────────────────────────────────────────
+const gpsBtn      = document.getElementById('gps-toggle');
+let   gpsActif    = false;
+let   gpsWatchId  = null;
+let   gpsMarker   = null;
+let   gpsCercle   = null;
+
+function stopperGPS() {
+  if (gpsWatchId !== null) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+  }
+  if (gpsMarker)  { map.removeLayer(gpsMarker);  gpsMarker  = null; }
+  if (gpsCercle)  { map.removeLayer(gpsCercle);  gpsCercle  = null; }
+  gpsActif = false;
+  gpsBtn.classList.remove('active', 'error');
+  gpsBtn.title = 'Ma position';
+  gpsBtn.textContent = '📍';
+}
+
+function mettreAJourPosition(pos) {
+  const lat = pos.coords.latitude;
+  const lon = pos.coords.longitude;
+  const acc = pos.coords.accuracy;
+
+  // Icône position personnalisée
+  const iconePos = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:16px; height:16px; border-radius:50%;
+      background:#2980B9; border:3px solid #fff;
+      box-shadow:0 0 0 2px #2980B9;
+    "></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  });
+
+  if (gpsMarker) {
+    gpsMarker.setLatLng([lat, lon]);
+    gpsCercle.setLatLng([lat, lon]).setRadius(acc);
+  } else {
+    gpsMarker = L.marker([lat, lon], {icon: iconePos, zIndexOffset: 9999})
+      .bindPopup(`📍 Vous êtes ici<br><small>Précision : ${Math.round(acc)} m</small>`)
+      .addTo(map);
+    gpsCercle = L.circle([lat, lon], {
+      radius: acc,
+      color: '#2980B9',
+      fillColor: '#2980B9',
+      fillOpacity: 0.08,
+      weight: 1,
+    }).addTo(map);
+    map.setView([lat, lon], 15);
+  }
+}
+
+function erreurGPS(err) {
+  gpsBtn.classList.remove('active');
+  gpsBtn.classList.add('error');
+  gpsBtn.title = err.code === 1 ? 'Accès refusé' : 'Position indisponible';
+  gpsBtn.textContent = '⚠️';
+  setTimeout(() => {
+    gpsBtn.classList.remove('error');
+    gpsBtn.textContent = '📍';
+  }, 3000);
+}
+
+gpsBtn.addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    alert("La géolocalisation n'est pas supportée par ce navigateur.");
+    return;
+  }
+  if (gpsActif) {
+    stopperGPS();
+  } else {
+    gpsActif = true;
+    gpsBtn.classList.add('active');
+    gpsBtn.title = 'Désactiver GPS';
+    gpsBtn.textContent = '🔵';
+    gpsWatchId = navigator.geolocation.watchPosition(
+      mettreAJourPosition,
+      erreurGPS,
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
+    );
+  }
+});
+
+// ── Bouton légende mobile ─────────────────────────────────────
+document.getElementById('legend-toggle').addEventListener('click', () => {
+  sheet.classList.remove('open');
+  legend.classList.toggle('open');
+});
+
+// Fermer légende si clic sur la carte
+map.on('click', () => legend.classList.remove('open'));
+</script>
+</body>
+</html>

@@ -203,29 +203,6 @@ def generer_html(lieux, titre="Mon Voyage", categories=None):
     /* ── Carte ──────────────────────────────────────────────── */
     #map {{ flex: 1; z-index: 1; }}
 
-    /* ── Bouton GPS ─────────────────────────────────────────── */
-    #gps-toggle {{
-      position: absolute;
-      bottom: 30px;
-      left: 10px;
-      z-index: 1000;
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
-      background: #ffffff;
-      border: 1px solid #ddd;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, box-shadow 0.2s;
-    }}
-    #gps-toggle:hover  {{ box-shadow: 0 3px 12px rgba(0,0,0,0.2); }}
-    #gps-toggle.active {{ background: #e8f5e9; border-color: #27AE60; }}
-    #gps-toggle.error  {{ background: #fdecea; border-color: #e74c3c; }}
-
     /* ── Marqueurs ──────────────────────────────────────────── */
     .marker-pin {{
       width: 32px;
@@ -394,21 +371,7 @@ def generer_html(lieux, titre="Mon Voyage", categories=None):
       }}
       #legend-toggle:hover {{ box-shadow: 0 4px 16px rgba(0,0,0,0.2); }}
 
-      /* Bouton GPS mobile — empilé au-dessus du bouton légende */
-      #gps-toggle {{
-        position: absolute;
-        bottom: 84px;
-        left: unset;
-        right: 16px;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-        font-size: 1.3rem;
-        z-index: 1001;
-      }}
-
-
+      /* Masquer popup Leaflet natif sur mobile */
       .leaflet-popup {{ display: none !important; }}
 
       /* Bottom sheet à la place */
@@ -477,9 +440,6 @@ def generer_html(lieux, titre="Mon Voyage", categories=None):
 </header>
 
 <div id="map"></div>
-
-<!-- Bouton GPS -->
-<button id="gps-toggle" title="Ma position">📍</button>
 
 <!-- Légende (desktop : flottante / mobile : bottom sheet) -->
 <div id="legend"><h3>Catégories</h3></div>
@@ -605,92 +565,6 @@ Object.entries(DATA).forEach(([cat, lieux]) => {{
     }}
   }});
   legend.appendChild(item);
-}});
-
-// ── Géolocalisation ──────────────────────────────────────────
-const gpsBtn      = document.getElementById('gps-toggle');
-let   gpsActif    = false;
-let   gpsWatchId  = null;
-let   gpsMarker   = null;
-let   gpsCercle   = null;
-
-function stopperGPS() {{
-  if (gpsWatchId !== null) {{
-    navigator.geolocation.clearWatch(gpsWatchId);
-    gpsWatchId = null;
-  }}
-  if (gpsMarker)  {{ map.removeLayer(gpsMarker);  gpsMarker  = null; }}
-  if (gpsCercle)  {{ map.removeLayer(gpsCercle);  gpsCercle  = null; }}
-  gpsActif = false;
-  gpsBtn.classList.remove('active', 'error');
-  gpsBtn.title = 'Ma position';
-  gpsBtn.textContent = '📍';
-}}
-
-function mettreAJourPosition(pos) {{
-  const lat = pos.coords.latitude;
-  const lon = pos.coords.longitude;
-  const acc = pos.coords.accuracy;
-
-  // Icône position personnalisée
-  const iconePos = L.divIcon({{
-    className: '',
-    html: `<div style="
-      width:16px; height:16px; border-radius:50%;
-      background:#2980B9; border:3px solid #fff;
-      box-shadow:0 0 0 2px #2980B9;
-    "></div>`,
-    iconSize: [16, 16],
-    iconAnchor: [8, 8],
-  }});
-
-  if (gpsMarker) {{
-    gpsMarker.setLatLng([lat, lon]);
-    gpsCercle.setLatLng([lat, lon]).setRadius(acc);
-  }} else {{
-    gpsMarker = L.marker([lat, lon], {{icon: iconePos, zIndexOffset: 9999}})
-      .bindPopup(`📍 Vous êtes ici<br><small>Précision : ${{Math.round(acc)}} m</small>`)
-      .addTo(map);
-    gpsCercle = L.circle([lat, lon], {{
-      radius: acc,
-      color: '#2980B9',
-      fillColor: '#2980B9',
-      fillOpacity: 0.08,
-      weight: 1,
-    }}).addTo(map);
-    map.setView([lat, lon], 15);
-  }}
-}}
-
-function erreurGPS(err) {{
-  gpsBtn.classList.remove('active');
-  gpsBtn.classList.add('error');
-  gpsBtn.title = err.code === 1 ? 'Accès refusé' : 'Position indisponible';
-  gpsBtn.textContent = '⚠️';
-  setTimeout(() => {{
-    gpsBtn.classList.remove('error');
-    gpsBtn.textContent = '📍';
-  }}, 3000);
-}}
-
-gpsBtn.addEventListener('click', () => {{
-  if (!navigator.geolocation) {{
-    alert('La géolocalisation n\'est pas supportée par ce navigateur.');
-    return;
-  }}
-  if (gpsActif) {{
-    stopperGPS();
-  }} else {{
-    gpsActif = true;
-    gpsBtn.classList.add('active');
-    gpsBtn.title = 'Désactiver GPS';
-    gpsBtn.textContent = '🔵';
-    gpsWatchId = navigator.geolocation.watchPosition(
-      mettreAJourPosition,
-      erreurGPS,
-      {{ enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }}
-    );
-  }}
 }});
 
 // ── Bouton légende mobile ─────────────────────────────────────

@@ -1,25 +1,24 @@
-pays;région;;;;
-France;Ile de France;;;;
-;;;;;
-categorie;nom;adresse;description;lon;lat
-Monument;Tour Eiffel;;;2.294501;48.858260
-Monument;Arc de Triomphe;;;2.295037;48.873779
-Eglise;Saint Ambroise;;;2.374726;48.861043
-Eglise;Sacré -Cœur;;;2.343015;48.886806
-Adresse;Anne;22 rue spontini, 75116;;2.278211;48.869900
-Adresse;Etienne;76 boulevard Voltaire, 75011;;2.374251;48.861117
-A faire;Marché d'Aligre;;Marché le matin - Fermé lundi;2.3743;48.8496
-A faire;Père Lachaise;;Cimetière historique;2.3950;48.8616
-Hôtels;Hôtel du Nord;;3 étoiles - Vue canal;2.3600;48.8700
-Hôtels;Hôtel Grands Boulevards;;4 étoiles - Rooftop bar;2.3490;48.8711
-Musées;Musée du Louvre;;Ouvert 9h-18h - Fermé mardi;2.3364;48.8606
-Musées;Musée d'Orsay;;Impressionnisme - Ouvert 9h30-18h;2.3266;48.8600
-Musées;Musée Picasso;;Réservation conseillée;2.3524;48.8596
-Musées;Centre Pompidou;;Art moderne - Terrasse gratuite;2.3522;48.8607
-Points de vue;Tour Eiffel;;Montez au 2ème étage minimum;2.2945;48.8584
-Points de vue;Sacré-Cœur;;Vue panoramique sur Paris;2.3431;48.8867
-Points de vue;Butte Montmartre;;Quartier des artistes;2.3387;48.8867
-Restaurants;Chez Paul;;Cuisine traditionnelle française;2.3522;48.8566
-Restaurants;Le Bouillon Chartier;;Brasserie historique - Prix doux;2.3472;48.8739
-Restaurants;Septime;;Gastronomique - Résa obligatoire;2.3791;48.8524
-Restaurants;Au Pied de Cochon;;Ouvert 24h/24;2.3453;48.8628
+categorie;nom;adresse;note;description;transport;url;lon;lat
+A faire;Père Lachaise;;;Cimetière historique;;https://fr.wikipedia.org/?curid=22615;2.395000;48.861600
+Restaurants;Septime;;;Gastronomique - Résa obligatoire;;https://fr.wikipedia.org/?curid=62286;2.379100;48.852400
+Eglise;Saint Ambroise;;;;;https://fr.wikipedia.org/?curid=612933;2.374726;48.861043
+A faire;Marché d'Aligre;;;Marché le matin - Fermé lundi;;https://fr.wikipedia.org/?curid=3827707;2.374300;48.849600
+Adresse;Etienne;76 boulevard Voltaire, 75011;;;;;2.374251;48.861117
+Hôtels;Hôtel du Nord;;;3 étoiles - Vue canal;;https://fr.wikipedia.org/?curid=123206;2.360000;48.870000
+Musées;Musée Picasso;;;Réservation conseillée;;https://fr.wikipedia.org/?curid=1618932;2.352400;48.859600
+Musées;Centre Pompidou;;;Art moderne - Terrasse gratuite;;https://fr.wikipedia.org/?curid=77267;2.352200;48.860700
+Restaurants;Chez Paul;;;Cuisine traditionnelle française;;https://fr.wikipedia.org/?curid=15984104;2.352200;48.856600
+Hôtels;Hôtel Grands Boulevards;;;4 étoiles - Rooftop bar;;https://fr.wikipedia.org/?curid=6093835;2.349000;48.871100
+Restaurants;Le Bouillon Chartier;;;Brasserie historique - Prix doux;;https://fr.wikipedia.org/?curid=1229950;2.347200;48.873900
+Restaurants;Au Pied de Cochon;;;Ouvert 24h/24;;https://fr.wikipedia.org/?curid=5470195;2.345300;48.862800
+Points de vue;Sacré-Cœur;;;Vue panoramique sur Paris;;https://fr.wikipedia.org/?curid=146378;2.343100;48.886700
+Eglise;Sacré -Cœur;;;;;https://fr.wikipedia.org/?curid=408241;2.343015;48.886806
+Points de vue;Butte Montmartre;;;Quartier des artistes;;https://fr.wikipedia.org/?curid=24951;2.338700;48.886700
+Musées;Musée du Louvre;;;Ouvert 9h-18h - Fermé mardi;;https://fr.wikipedia.org/?curid=36857;2.336400;48.860600
+Musées;Musée d'Orsay;;;Impressionnisme - Ouvert 9h30-18h;;https://fr.wikipedia.org/?curid=69682;2.326600;48.860000
+Monument;Arc de Triomphe;;;;;https://fr.wikipedia.org/?curid=24581;2.295037;48.873779
+Monument;Tour Eiffel;;;;;https://fr.wikipedia.org/?curid=1359783;2.294501;48.858260
+Points de vue;Tour Eiffel;;;Montez au 2ème étage minimum;;https://fr.wikipedia.org/?curid=1359783;2.294500;48.858400
+Adresse;Anne;22 rue spontini, 75116;;;;;2.278211;48.869900
+pays;région;;;;;https://fr.wikipedia.org/?curid=2605;114.185798;22.349215
+France;Ile de France;;;;;https://fr.wikipedia.org/?curid=1498;2.316667;48.850000
