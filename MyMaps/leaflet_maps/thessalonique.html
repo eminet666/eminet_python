@@ -50,6 +50,29 @@
     /* ── Carte ──────────────────────────────────────────────── */
     #map { flex: 1; z-index: 1; }
 
+    /* ── Bouton GPS ─────────────────────────────────────────── */
+    #gps-toggle {
+      position: absolute;
+      bottom: 30px;
+      left: 10px;
+      z-index: 1000;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    #gps-toggle:hover  { box-shadow: 0 3px 12px rgba(0,0,0,0.2); }
+    #gps-toggle.active { background: #e8f5e9; border-color: #27AE60; }
+    #gps-toggle.error  { background: #fdecea; border-color: #e74c3c; }
+
     /* ── Marqueurs ──────────────────────────────────────────── */
     .marker-pin {
       width: 32px;
@@ -218,7 +241,21 @@
       }
       #legend-toggle:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 
-      /* Masquer popup Leaflet natif sur mobile */
+      /* Bouton GPS mobile — empilé au-dessus du bouton légende */
+      #gps-toggle {
+        position: absolute;
+        bottom: 84px;
+        left: unset;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        font-size: 1.3rem;
+        z-index: 1001;
+      }
+
+
       .leaflet-popup { display: none !important; }
 
       /* Bottom sheet à la place */
@@ -283,10 +320,13 @@
 
 <header>
   <h1>🗺 Thessalonique, Grèce</h1>
-  <span class="count">28 lieux</span>
+  <span class="count">48 lieux</span>
 </header>
 
 <div id="map"></div>
+
+<!-- Bouton GPS -->
+<button id="gps-toggle" title="Ma position">📍</button>
 
 <!-- Légende (desktop : flottante / mobile : bottom sheet) -->
 <div id="legend"><h3>Catégories</h3></div>
@@ -447,6 +487,17 @@ const DATA    = {
       "url": "https://fr.wikipedia.org/wiki/%C3%89glise_Saint-Nicolas-l%27Orphelin_de_Thessalonique",
       "lon": 22.955989,
       "lat": 40.637756
+    },
+    {
+      "categorie": "Eglise",
+      "nom": "Monastère de Latomou",
+      "adresse": "Osios David/Moni Latomou, Ano Poli, Thessaloniki",
+      "note": "",
+      "description": "Superbe vue sur la ville en plus",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Monast%C3%A8re_de_Latomou",
+      "lon": 22.952215,
+      "lat": 40.641968
     }
   ],
   "Antique": [
@@ -563,6 +614,17 @@ const DATA    = {
       "url": "https://fr.wikipedia.org/?curid=14373160",
       "lon": 22.954306,
       "lat": 40.63575
+    },
+    {
+      "categorie": "Contemporain",
+      "nom": "Bit Bazaar",
+      "adresse": "Olympou 72, Thessaloniki 546 31, Grèce",
+      "note": "",
+      "description": "Marché aux puces (10h-20h)",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=5052155",
+      "lon": 22.944476,
+      "lat": 40.639071
     }
   ],
   "Renaissance": [
@@ -625,16 +687,216 @@ const DATA    = {
       "lon": 22.221871,
       "lat": 40.464875
     }
+  ],
+  "Restaurant": [
+    {
+      "categorie": "Restaurant",
+      "nom": "Argofageio",
+      "adresse": "Leof. Georgikis Scholis 30",
+      "note": "",
+      "description": "Taverne traditionnelle : boureki, salades, viandes grillées copieuses.",
+      "transport": "",
+      "url": "",
+      "lon": 22.9475,
+      "lat": 40.6361
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Kanoula",
+      "adresse": "Tsimiski 9",
+      "note": "",
+      "description": "Meze grecs frais, portions généreuses, ambiance locale.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=2690022",
+      "lon": 22.9452,
+      "lat": 40.6338
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Ouzeri To Yenti",
+      "adresse": "Egnatia 154 (près Château)",
+      "note": "",
+      "description": "Ouzo + meze authentiques, tzatiki excellent, vue animée.",
+      "transport": "",
+      "url": "",
+      "lon": 22.9508,
+      "lat": 40.6275
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "John Deli Kebab",
+      "adresse": "Vasileos Irakleiou 35",
+      "note": "",
+      "description": "Dönér maison pita frais, meilleur kebab local ~4.5€.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=10762186",
+      "lon": 22.944,
+      "lat": 40.629
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Savvikos",
+      "adresse": "Egnatia 48",
+      "note": "",
+      "description": "Souvlaki/gyros rapides, qualité pro, street food top.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=15548048",
+      "lon": 22.9448,
+      "lat": 40.6345
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Chatzis",
+      "adresse": "Mitropoleos 19",
+      "note": "",
+      "description": "Pâtisserie orientale : kataifi, baklava frais <5€.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/?curid=8056689",
+      "lon": 22.947,
+      "lat": 40.633
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Trigona Elenedis",
+      "adresse": "Gounari 4",
+      "note": "",
+      "description": "Trigona elenitika croustillants crème, spécialité locale.",
+      "transport": "",
+      "url": "",
+      "lon": 22.9485,
+      "lat": 40.6312
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Stáfylos Gi",
+      "adresse": "Egnatia 30",
+      "note": "",
+      "description": "Tavernes meze grillades, rapport qualité/prix imbattable.",
+      "transport": "",
+      "url": "",
+      "lon": 22.944,
+      "lat": 40.634
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Pezouli",
+      "adresse": "Dim. Gounari 11",
+      "note": "",
+      "description": "Pizza bois street food, desserts top 5-10€.",
+      "transport": "",
+      "url": "",
+      "lon": 22.949,
+      "lat": 40.6315
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Kati Ap' Ola",
+      "adresse": "Leof. Vasileos Georgiou 22",
+      "note": "",
+      "description": "Meze grecs variés, grillades fraîches 10-15€.",
+      "transport": "",
+      "url": "https://en.wikipedia.org/?curid=28244469",
+      "lon": 22.9435,
+      "lat": 40.6378
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Stafilos Gi",
+      "adresse": "Apostolou Pavlou 24",
+      "note": "",
+      "description": "Tavernes meze copieux, ambiance familiale.",
+      "transport": "",
+      "url": "",
+      "lon": 22.9418,
+      "lat": 40.6352
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "To Mikraki",
+      "adresse": "Proxenou Koromila 2",
+      "note": "",
+      "description": "Plats maison grecs, portions généreuses 10-15€.",
+      "transport": "",
+      "url": "",
+      "lon": 22.9472,
+      "lat": 40.6321
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Mourga",
+      "adresse": "Ladadika quartier",
+      "note": "",
+      "description": "Fruits de mer meze frais, très copieux.",
+      "transport": "",
+      "url": "",
+      "lon": 22.944,
+      "lat": 40.638
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Ouzeri Agora",
+      "adresse": "Kapodistriou 5",
+      "note": "",
+      "description": "Ouzo + meze traditionnels, budget mid.",
+      "transport": "",
+      "url": "https://en.wikipedia.org/?curid=12108",
+      "lon": 22.948,
+      "lat": 40.6305
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Nea Diagonios",
+      "adresse": "Kalamaria (près port)",
+      "note": "",
+      "description": "Gyros/souvlaki meilleur rapport qualité/prix.",
+      "transport": "",
+      "url": "https://en.wikipedia.org/?curid=40471",
+      "lon": 22.97,
+      "lat": 40.612
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Takadum",
+      "adresse": "Centre-ville",
+      "note": "",
+      "description": "Meze méditerranéens, plan imbattable local.",
+      "transport": "",
+      "url": "",
+      "lon": 22.945,
+      "lat": 40.634
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Bougatsa Giannis",
+      "adresse": "Egnatia (marché)",
+      "note": "",
+      "description": "Bougatsa feuilletée sucrée <5€ matin/dîner.",
+      "transport": "",
+      "url": "https://en.wikipedia.org/?curid=40471",
+      "lon": 22.946,
+      "lat": 40.6335
+    },
+    {
+      "categorie": "Restaurant",
+      "nom": "Diagonios 1977",
+      "adresse": "Près centre",
+      "note": "",
+      "description": "Kebabs/saucisses tradition grecques authentiques.",
+      "transport": "",
+      "url": "",
+      "lon": 22.942,
+      "lat": 40.635
+    }
   ]
 };
-const STYLES  = {"Hotel": {"couleur": "#2980B9", "icone": "🏨"}, "Eglise": {"couleur": "#8E44AD", "icone": "⛪"}, "Antique": {"couleur": "#A0522D", "icone": "🏺"}, "Ottoman": {"couleur": "#95A5A6", "icone": "📍"}, "Contemporain": {"couleur": "#2C3E50", "icone": "🏙"}, "Renaissance": {"couleur": "#8B6914", "icone": "🎨"}, "Musée": {"couleur": "#E8462A", "icone": "🏛"}, "Paysage": {"couleur": "#95A5A6", "icone": "📍"}};
+const STYLES  = {"Hotel": {"couleur": "#2980B9", "icone": "🏨"}, "Eglise": {"couleur": "#8E44AD", "icone": "⛪"}, "Antique": {"couleur": "#A0522D", "icone": "🏺"}, "Ottoman": {"couleur": "#95A5A6", "icone": "📍"}, "Contemporain": {"couleur": "#2C3E50", "icone": "🏙"}, "Renaissance": {"couleur": "#8B6914", "icone": "🎨"}, "Musée": {"couleur": "#E8462A", "icone": "🏛"}, "Paysage": {"couleur": "#95A5A6", "icone": "📍"}, "Restaurant": {"couleur": "#E67E22", "icone": "🍽"}};
 const layers  = {};
 const hidden  = new Set();
 const isMobile = () => window.innerWidth <= 768;
 
 // ── Carte ────────────────────────────────────────────────────
 const map = L.map('map', {
-  center: [40.627687, 22.922733],
+  center: [40.629895, 22.932948],
   zoom: 13,
   zoomControl: true,
   tap: true,
@@ -737,6 +999,92 @@ Object.entries(DATA).forEach(([cat, lieux]) => {
     }
   });
   legend.appendChild(item);
+});
+
+// ── Géolocalisation ──────────────────────────────────────────
+const gpsBtn      = document.getElementById('gps-toggle');
+let   gpsActif    = false;
+let   gpsWatchId  = null;
+let   gpsMarker   = null;
+let   gpsCercle   = null;
+
+function stopperGPS() {
+  if (gpsWatchId !== null) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+  }
+  if (gpsMarker)  { map.removeLayer(gpsMarker);  gpsMarker  = null; }
+  if (gpsCercle)  { map.removeLayer(gpsCercle);  gpsCercle  = null; }
+  gpsActif = false;
+  gpsBtn.classList.remove('active', 'error');
+  gpsBtn.title = 'Ma position';
+  gpsBtn.textContent = '📍';
+}
+
+function mettreAJourPosition(pos) {
+  const lat = pos.coords.latitude;
+  const lon = pos.coords.longitude;
+  const acc = pos.coords.accuracy;
+
+  // Icône position personnalisée
+  const iconePos = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:16px; height:16px; border-radius:50%;
+      background:#2980B9; border:3px solid #fff;
+      box-shadow:0 0 0 2px #2980B9;
+    "></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  });
+
+  if (gpsMarker) {
+    gpsMarker.setLatLng([lat, lon]);
+    gpsCercle.setLatLng([lat, lon]).setRadius(acc);
+  } else {
+    gpsMarker = L.marker([lat, lon], {icon: iconePos, zIndexOffset: 9999})
+      .bindPopup(`📍 Vous êtes ici<br><small>Précision : ${Math.round(acc)} m</small>`)
+      .addTo(map);
+    gpsCercle = L.circle([lat, lon], {
+      radius: acc,
+      color: '#2980B9',
+      fillColor: '#2980B9',
+      fillOpacity: 0.08,
+      weight: 1,
+    }).addTo(map);
+    map.setView([lat, lon], 15);
+  }
+}
+
+function erreurGPS(err) {
+  gpsBtn.classList.remove('active');
+  gpsBtn.classList.add('error');
+  gpsBtn.title = err.code === 1 ? 'Accès refusé' : 'Position indisponible';
+  gpsBtn.textContent = '⚠️';
+  setTimeout(() => {
+    gpsBtn.classList.remove('error');
+    gpsBtn.textContent = '📍';
+  }, 3000);
+}
+
+gpsBtn.addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    alert('La géolocalisation n'est pas supportée par ce navigateur.');
+    return;
+  }
+  if (gpsActif) {
+    stopperGPS();
+  } else {
+    gpsActif = true;
+    gpsBtn.classList.add('active');
+    gpsBtn.title = 'Désactiver GPS';
+    gpsBtn.textContent = '🔵';
+    gpsWatchId = navigator.geolocation.watchPosition(
+      mettreAJourPosition,
+      erreurGPS,
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
+    );
+  }
 });
 
 // ── Bouton légende mobile ─────────────────────────────────────

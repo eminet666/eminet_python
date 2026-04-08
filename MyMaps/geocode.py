@@ -76,15 +76,24 @@ def dms_en_decimal(valeur):
     except ValueError:
         pass
 
+    # Décimal avec ° et/ou lettre cardinale : "22.9475° E", "40.6361°N", "22,9475 E"
+    m0 = re.match(r"^\s*(\d+(?:[.,]\d+)?)\s*°?\s*([NSEWnsew])\s*$", valeur.strip())
+    if m0:
+        d, hemi = m0.groups()
+        decimal = float(d.replace(",", "."))
+        if hemi.upper() in ("S", "W"):
+            decimal = -decimal
+        return round(decimal, 6)
+
     # Regex DMS souple : degrés, minutes, secondes, hémisphère
     pattern = r"""
         ^\s*
         (\d+(?:[.,]\d+)?)           # degrés (entier ou décimal)
         [°:\s]+                      # séparateur
         (\d+(?:[.,]\d+)?)           # minutes
-        ['\s]+                       # séparateur
+        [':\s]+                      # séparateur (apostrophe, deux-points ou espace)
         (\d+(?:[.,]\d+)?)           # secondes
-        ["\s]*                       # séparateur optionnel
+        [":\s]*                      # séparateur optionnel
         ([NSEWnsew])                 # hémisphère
         \s*$
     """
