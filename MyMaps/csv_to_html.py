@@ -104,9 +104,11 @@ def lire_csv(chemin):
     entete = [c.strip().lower() for c in lignes[debut]]
     debut += 1
 
+    index_csv = 0
     for row in lignes[debut:]:
         if not any(c.strip() for c in row):
             continue
+        index_csv += 1
         d = {col: (row[i].strip() if i < len(row) else "") for i, col in enumerate(entete)}
         try:
             lon = float(d.get("lon", ""))
@@ -116,6 +118,7 @@ def lire_csv(chemin):
             print(f"  ⚠️  Ignoré (pas de coordonnées) : {nom} — lance d'abord geocode.py")
             continue
         lieux.append({
+            "index":       index_csv,
             "categorie":   d.get("categorie", "Autre"),
             "nom":         d.get("nom", "Sans nom"),
             "adresse":     d.get("adresse", ""),
@@ -514,13 +517,20 @@ L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
 }}).addTo(map);
 
 // ── Icônes ───────────────────────────────────────────────────
-function creerIcone(style) {{
+function creerIcone(style, icone) {{
   const sz = isMobile() ? 42 : 32;
-  const fs = isMobile() ? 18 : 14;
+  const label = (icone !== undefined) ? icone : style.icone;
+  const isNum = (typeof label === 'number' || (typeof label === 'string' && /^[0-9]+$/.test(label)));
+  const fs = isNum
+    ? (isMobile() ? 13 : 11)
+    : (isMobile() ? 18 : 14);
+  const extraStyle = isNum
+    ? 'font-weight:700;color:#fff;font-family:monospace;transform:rotate(45deg);'
+    : 'transform:rotate(45deg);';
   return L.divIcon({{
     className: '',
     html: `<div class="marker-pin" style="background:${{style.couleur}};width:${{sz}}px;height:${{sz}}px">
-             <span class="marker-icon" style="font-size:${{fs}}px">${{style.icone}}</span>
+             <span class="marker-icon" style="font-size:${{fs}}px;${{extraStyle}}">${{label}}</span>
            </div>`,
     iconSize:    [sz, sz],
     iconAnchor:  [sz/2, sz],
@@ -567,7 +577,7 @@ Object.entries(DATA).forEach(([cat, lieux]) => {{
   layers[cat]  = groupe;
 
   lieux.forEach(lieu => {{
-    const marker = L.marker([lieu.lat, lieu.lon], {{icon: creerIcone(style)}});
+    const marker = L.marker([lieu.lat, lieu.lon], {{icon: creerIcone(style, lieu.index)}});
 
     marker.on('click', () => {{
       if (isMobile()) {{
@@ -675,7 +685,7 @@ function erreurGPS(err) {{
 
 gpsBtn.addEventListener('click', () => {{
   if (!navigator.geolocation) {{
-    alert('La géolocalisation n\'est pas supportée par ce navigateur.');
+    alert("La géolocalisation n'est pas supportée par ce navigateur.");
     return;
   }}
   if (gpsActif) {{

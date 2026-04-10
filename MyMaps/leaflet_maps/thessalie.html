@@ -50,6 +50,29 @@
     /* ── Carte ──────────────────────────────────────────────── */
     #map { flex: 1; z-index: 1; }
 
+    /* ── Bouton GPS ─────────────────────────────────────────── */
+    #gps-toggle {
+      position: absolute;
+      bottom: 30px;
+      left: 10px;
+      z-index: 1000;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    #gps-toggle:hover  { box-shadow: 0 3px 12px rgba(0,0,0,0.2); }
+    #gps-toggle.active { background: #e8f5e9; border-color: #27AE60; }
+    #gps-toggle.error  { background: #fdecea; border-color: #e74c3c; }
+
     /* ── Marqueurs ──────────────────────────────────────────── */
     .marker-pin {
       width: 32px;
@@ -218,7 +241,21 @@
       }
       #legend-toggle:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 
-      /* Masquer popup Leaflet natif sur mobile */
+      /* Bouton GPS mobile — empilé au-dessus du bouton légende */
+      #gps-toggle {
+        position: absolute;
+        bottom: 84px;
+        left: unset;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        font-size: 1.3rem;
+        z-index: 1001;
+      }
+
+
       .leaflet-popup { display: none !important; }
 
       /* Bottom sheet à la place */
@@ -288,6 +325,9 @@
 
 <div id="map"></div>
 
+<!-- Bouton GPS -->
+<button id="gps-toggle" title="Ma position">📍</button>
+
 <!-- Légende (desktop : flottante / mobile : bottom sheet) -->
 <div id="legend"><h3>Catégories</h3></div>
 
@@ -304,6 +344,7 @@
 const DATA    = {
   "Hotel": [
     {
+      "index": 1,
       "categorie": "Hotel",
       "nom": "Leiland #colony_White_Tower_Suite",
       "adresse": "8 Dimitrios Gounaris, Thessalonique, 54621, Grèce",
@@ -315,6 +356,7 @@ const DATA    = {
       "lat": 40.586996
     },
     {
+      "index": 2,
       "categorie": "Hotel",
       "nom": "Nefeli HTL",
       "adresse": "Agiou Nikolaou 41, Paralia, 60100, Grèce",
@@ -326,6 +368,7 @@ const DATA    = {
       "lat": 40.274065
     },
     {
+      "index": 3,
       "categorie": "Hotel",
       "nom": "Villa Olga Studios",
       "adresse": "Nea skioni, Nea Skioni, 63085, Grèce",
@@ -337,6 +380,7 @@ const DATA    = {
       "lat": 39.9496
     },
     {
+      "index": 4,
       "categorie": "Hotel",
       "nom": "Archodariki",
       "adresse": "Ouranoupoli, Ouranoupoli, 63075, Grèce",
@@ -348,6 +392,7 @@ const DATA    = {
       "lat": 40.338895
     },
     {
+      "index": 5,
       "categorie": "Hotel",
       "nom": "Ladario Studios",
       "adresse": "Sarti, Sarti, 63072, Grèce",
@@ -361,6 +406,7 @@ const DATA    = {
   ],
   "Antique": [
     {
+      "index": 6,
       "categorie": "Antique",
       "nom": "Site archéologique de Dion",
       "adresse": "",
@@ -372,6 +418,7 @@ const DATA    = {
       "lat": 40.170278
     },
     {
+      "index": 7,
       "categorie": "Antique",
       "nom": "Musée archéologique de Dion",
       "adresse": "",
@@ -383,6 +430,7 @@ const DATA    = {
       "lat": 40.170278
     },
     {
+      "index": 12,
       "categorie": "Antique",
       "nom": "Aigia",
       "adresse": "",
@@ -394,6 +442,7 @@ const DATA    = {
       "lat": 40.488111
     },
     {
+      "index": 13,
       "categorie": "Antique",
       "nom": "Mieza",
       "adresse": "",
@@ -405,6 +454,7 @@ const DATA    = {
       "lat": 40.644167
     },
     {
+      "index": 14,
       "categorie": "Antique",
       "nom": "Veria",
       "adresse": "",
@@ -416,6 +466,7 @@ const DATA    = {
       "lat": 40.520278
     },
     {
+      "index": 15,
       "categorie": "Antique",
       "nom": "Site archéologique de Pella",
       "adresse": "",
@@ -427,6 +478,7 @@ const DATA    = {
       "lat": 40.76
     },
     {
+      "index": 18,
       "categorie": "Antique",
       "nom": "Nea Potidea, Kassandra",
       "adresse": "",
@@ -438,6 +490,7 @@ const DATA    = {
       "lat": 40.02
     },
     {
+      "index": 19,
       "categorie": "Antique",
       "nom": "Olinthe, Kassandra",
       "adresse": "",
@@ -449,6 +502,7 @@ const DATA    = {
       "lat": 40.296
     },
     {
+      "index": 20,
       "categorie": "Antique",
       "nom": "Polygyros, Kassandra",
       "adresse": "",
@@ -460,6 +514,7 @@ const DATA    = {
       "lat": 40.366667
     },
     {
+      "index": 22,
       "categorie": "Antique",
       "nom": "Stagire, Kassandra",
       "adresse": "",
@@ -473,6 +528,7 @@ const DATA    = {
   ],
   "Village": [
     {
+      "index": 8,
       "categorie": "Village",
       "nom": "Litochoro",
       "adresse": "",
@@ -484,6 +540,7 @@ const DATA    = {
       "lat": 40.1
     },
     {
+      "index": 21,
       "categorie": "Village",
       "nom": "Arnea, Kassandra",
       "adresse": "",
@@ -495,6 +552,7 @@ const DATA    = {
       "lat": 40.486667
     },
     {
+      "index": 27,
       "categorie": "Village",
       "nom": "Neo Marmaras, Sithonia",
       "adresse": "",
@@ -506,6 +564,7 @@ const DATA    = {
       "lat": 40.091389
     },
     {
+      "index": 29,
       "categorie": "Village",
       "nom": "Porto Koufo, Sithonia",
       "adresse": "",
@@ -519,6 +578,7 @@ const DATA    = {
   ],
   "Eglise": [
     {
+      "index": 9,
       "categorie": "Eglise",
       "nom": "Old Holy Monastery of Saint Dionysios of Olympus",
       "adresse": "",
@@ -532,6 +592,7 @@ const DATA    = {
   ],
   "Plages": [
     {
+      "index": 10,
       "categorie": "Plages",
       "nom": "Pydna",
       "adresse": "",
@@ -543,6 +604,7 @@ const DATA    = {
       "lat": 40.251028
     },
     {
+      "index": 24,
       "categorie": "Plages",
       "nom": "Gerakini, Sithonia",
       "adresse": "",
@@ -554,6 +616,7 @@ const DATA    = {
       "lat": 40.2685
     },
     {
+      "index": 25,
       "categorie": "Plages",
       "nom": "Metamorphosis, Sithonia",
       "adresse": "",
@@ -565,6 +628,7 @@ const DATA    = {
       "lat": 40.2685
     },
     {
+      "index": 26,
       "categorie": "Plages",
       "nom": "Nikiti, Sithonia",
       "adresse": "",
@@ -576,6 +640,7 @@ const DATA    = {
       "lat": 40.097778
     },
     {
+      "index": 30,
       "categorie": "Plages",
       "nom": "Kalamitsi, Sithonia",
       "adresse": "",
@@ -589,6 +654,7 @@ const DATA    = {
   ],
   "Moyen-Age": [
     {
+      "index": 11,
       "categorie": "Moyen-Age",
       "nom": "Platamon",
       "adresse": "",
@@ -600,6 +666,7 @@ const DATA    = {
       "lat": 39.991111
     },
     {
+      "index": 28,
       "categorie": "Moyen-Age",
       "nom": "Toroni, Sithonia",
       "adresse": "",
@@ -613,6 +680,7 @@ const DATA    = {
   ],
   "Musée": [
     {
+      "index": 16,
       "categorie": "Musée",
       "nom": "Musée archéologique de Pella",
       "adresse": "",
@@ -626,6 +694,7 @@ const DATA    = {
   ],
   "Contemporain": [
     {
+      "index": 17,
       "categorie": "Contemporain",
       "nom": "Presqu'ile Kassandra",
       "adresse": "",
@@ -637,6 +706,7 @@ const DATA    = {
       "lat": 40.02
     },
     {
+      "index": 23,
       "categorie": "Contemporain",
       "nom": "Sithonia",
       "adresse": "",
@@ -648,6 +718,7 @@ const DATA    = {
       "lat": 40.097778
     },
     {
+      "index": 31,
       "categorie": "Contemporain",
       "nom": "Mont Athos",
       "adresse": "",
@@ -660,7 +731,7 @@ const DATA    = {
     }
   ]
 };
-const STYLES  = {"Hotel": {"couleur": "#2980B9", "icone": "🏨"}, "Antique": {"couleur": "#A0522D", "icone": "🏺"}, "Village": {"couleur": "#502C3E", "icone": "🏙"}, "Eglise": {"couleur": "#8E44AD", "icone": "⛪"}, "Plages": {"couleur": "#1ABC9C", "icone": "🏖"}, "Moyen-Age": {"couleur": "#148B69", "icone": "🎨"}, "Musée": {"couleur": "#E8462A", "icone": "🏛"}, "Contemporain": {"couleur": "#2C3E50", "icone": "🏙"}};
+const STYLES  = {"Hotel": {"couleur": "#2980B9", "icone": "🏨"}, "Antique": {"couleur": "#A0522D", "icone": "🏺"}, "Village": {"couleur": "#502C3E", "icone": "🏘"}, "Eglise": {"couleur": "#8E44AD", "icone": "⛪"}, "Plages": {"couleur": "#1ABC9C", "icone": "🏖"}, "Moyen-Age": {"couleur": "#148B69", "icone": "⚔️"}, "Musée": {"couleur": "#E8462A", "icone": "🏛"}, "Contemporain": {"couleur": "#2C3E50", "icone": "🏙"}};
 const layers  = {};
 const hidden  = new Set();
 const isMobile = () => window.innerWidth <= 768;
@@ -679,13 +750,20 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // ── Icônes ───────────────────────────────────────────────────
-function creerIcone(style) {
+function creerIcone(style, icone) {
   const sz = isMobile() ? 42 : 32;
-  const fs = isMobile() ? 18 : 14;
+  const label = (icone !== undefined) ? icone : style.icone;
+  const isNum = (typeof label === 'number' || (typeof label === 'string' && /^[0-9]+$/.test(label)));
+  const fs = isNum
+    ? (isMobile() ? 13 : 11)
+    : (isMobile() ? 18 : 14);
+  const extraStyle = isNum
+    ? 'font-weight:700;color:#fff;font-family:monospace;transform:rotate(45deg);'
+    : 'transform:rotate(45deg);';
   return L.divIcon({
     className: '',
     html: `<div class="marker-pin" style="background:${style.couleur};width:${sz}px;height:${sz}px">
-             <span class="marker-icon" style="font-size:${fs}px">${style.icone}</span>
+             <span class="marker-icon" style="font-size:${fs}px;${extraStyle}">${label}</span>
            </div>`,
     iconSize:    [sz, sz],
     iconAnchor:  [sz/2, sz],
@@ -732,7 +810,7 @@ Object.entries(DATA).forEach(([cat, lieux]) => {
   layers[cat]  = groupe;
 
   lieux.forEach(lieu => {
-    const marker = L.marker([lieu.lat, lieu.lon], {icon: creerIcone(style)});
+    const marker = L.marker([lieu.lat, lieu.lon], {icon: creerIcone(style, lieu.index)});
 
     marker.on('click', () => {
       if (isMobile()) {
@@ -770,6 +848,92 @@ Object.entries(DATA).forEach(([cat, lieux]) => {
     }
   });
   legend.appendChild(item);
+});
+
+// ── Géolocalisation ──────────────────────────────────────────
+const gpsBtn      = document.getElementById('gps-toggle');
+let   gpsActif    = false;
+let   gpsWatchId  = null;
+let   gpsMarker   = null;
+let   gpsCercle   = null;
+
+function stopperGPS() {
+  if (gpsWatchId !== null) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+  }
+  if (gpsMarker)  { map.removeLayer(gpsMarker);  gpsMarker  = null; }
+  if (gpsCercle)  { map.removeLayer(gpsCercle);  gpsCercle  = null; }
+  gpsActif = false;
+  gpsBtn.classList.remove('active', 'error');
+  gpsBtn.title = 'Ma position';
+  gpsBtn.textContent = '📍';
+}
+
+function mettreAJourPosition(pos) {
+  const lat = pos.coords.latitude;
+  const lon = pos.coords.longitude;
+  const acc = pos.coords.accuracy;
+
+  // Icône position personnalisée
+  const iconePos = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:16px; height:16px; border-radius:50%;
+      background:#2980B9; border:3px solid #fff;
+      box-shadow:0 0 0 2px #2980B9;
+    "></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  });
+
+  if (gpsMarker) {
+    gpsMarker.setLatLng([lat, lon]);
+    gpsCercle.setLatLng([lat, lon]).setRadius(acc);
+  } else {
+    gpsMarker = L.marker([lat, lon], {icon: iconePos, zIndexOffset: 9999})
+      .bindPopup(`📍 Vous êtes ici<br><small>Précision : ${Math.round(acc)} m</small>`)
+      .addTo(map);
+    gpsCercle = L.circle([lat, lon], {
+      radius: acc,
+      color: '#2980B9',
+      fillColor: '#2980B9',
+      fillOpacity: 0.08,
+      weight: 1,
+    }).addTo(map);
+    map.setView([lat, lon], 15);
+  }
+}
+
+function erreurGPS(err) {
+  gpsBtn.classList.remove('active');
+  gpsBtn.classList.add('error');
+  gpsBtn.title = err.code === 1 ? 'Accès refusé' : 'Position indisponible';
+  gpsBtn.textContent = '⚠️';
+  setTimeout(() => {
+    gpsBtn.classList.remove('error');
+    gpsBtn.textContent = '📍';
+  }, 3000);
+}
+
+gpsBtn.addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    alert("La géolocalisation n'est pas supportée par ce navigateur.");
+    return;
+  }
+  if (gpsActif) {
+    stopperGPS();
+  } else {
+    gpsActif = true;
+    gpsBtn.classList.add('active');
+    gpsBtn.title = 'Désactiver GPS';
+    gpsBtn.textContent = '🔵';
+    gpsWatchId = navigator.geolocation.watchPosition(
+      mettreAJourPosition,
+      erreurGPS,
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
+    );
+  }
 });
 
 // ── Bouton légende mobile ─────────────────────────────────────
