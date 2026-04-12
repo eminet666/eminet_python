@@ -39,8 +39,6 @@ import urllib.request
 import urllib.parse
 import json
 
-from utils import SEPARATEUR, detecter_encodage
-
 # ─────────────────────────────────────────────────────────────
 # Configuration
 # ─────────────────────────────────────────────────────────────
@@ -48,6 +46,7 @@ NOMINATIM_URL  = "https://nominatim.openstreetmap.org/search"
 WIKIPEDIA_API  = "https://{lang}.wikipedia.org/w/api.php"
 USER_AGENT     = "VoyageKML/1.0 (usage personnel)"
 DELAI_SECONDES = 1.1
+SEPARATEUR     = ";"
 
 # Catégories pour lesquelles on ne cherche pas Wikipedia
 CATEGORIES_SANS_WIKI = {"adresse"}
@@ -343,9 +342,20 @@ def chercher_wikipedia(nom, pays="", lang_prioritaire="fr"):
 # Lecture / écriture CSV
 # ─────────────────────────────────────────────────────────────
 
+def _detecter_encodage(chemin):
+    for enc in ("utf-8-sig", "utf-8", "latin-1", "cp1252"):
+        try:
+            with open(chemin, encoding=enc) as f:
+                f.read()
+            return enc
+        except UnicodeDecodeError:
+            continue
+    return "latin-1"
+
+
 def lire_fichier(chemin):
     contexte = {"pays": "", "region": ""}
-    enc = detecter_encodage(chemin)
+    enc = _detecter_encodage(chemin)
 
     # Lecture brute ligne par ligne — on split sur ; sans interpréter les guillemets
     # car les coordonnées DMS contiennent des " (secondes d'arc)

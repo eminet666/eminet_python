@@ -21,15 +21,66 @@ import os
 import json
 from pathlib import Path
 
-from utils import (
-    SEPARATEUR, DEFAUT, FICHIER_CONFIG,
-    CATEGORIES_DEFAUT,
-    detecter_encodage, charger_categories,
-)
+SEPARATEUR     = ";"
+DEFAUT         = {"couleur": "#95A5A6", "icone": "📍"}
+FICHIER_CONFIG = "categories.json"
+
+# ─────────────────────────────────────────────────────────────
+# Chargement des couleurs/icônes depuis categories.json
+# Si le fichier n'existe pas, utilise les valeurs intégrées.
+# Pour ajouter une catégorie : édite categories.json directement.
+# ─────────────────────────────────────────────────────────────
+CATEGORIES_DEFAUT = {
+    "Musée":         {"couleur": "#E8462A", "icone": "🏛"},
+    "Musées":        {"couleur": "#E8462A", "icone": "🏛"},
+    "Monument":      {"couleur": "#C0392B", "icone": "🗿"},
+    "Monuments":     {"couleur": "#C0392B", "icone": "🗿"},
+    "Eglise":        {"couleur": "#8E44AD", "icone": "⛪"},
+    "Eglises":       {"couleur": "#8E44AD", "icone": "⛪"},
+    "Restaurants":   {"couleur": "#E67E22", "icone": "🍽"},
+    "Restaurant":    {"couleur": "#E67E22", "icone": "🍽"},
+    "Hôtels":        {"couleur": "#2980B9", "icone": "🏨"},
+    "Hôtel":         {"couleur": "#2980B9", "icone": "🏨"},
+    "Hotel":         {"couleur": "#2980B9", "icone": "🏨"},
+    "Points de vue": {"couleur": "#27AE60", "icone": "👁"},
+    "A faire":       {"couleur": "#F39C12", "icone": "📌"},
+    "Adresse":       {"couleur": "#7F8C8D", "icone": "📍"},
+    "Plages":        {"couleur": "#1ABC9C", "icone": "🏖"},
+    "Randonnées":    {"couleur": "#16A085", "icone": "🥾"},
+    "Shopping":      {"couleur": "#D35400", "icone": "🛍"},
+    "Antique":       {"couleur": "#A0522D", "icone": "🏺"},
+    "Renaissance":   {"couleur": "#8B6914", "icone": "🎨"},
+    "Contemporain":  {"couleur": "#2C3E50", "icone": "🏙"},
+    "Quartier":      {"couleur": "#16A085", "icone": "🚶"},
+    "Train":         {"couleur": "#7D3C98", "icone": "🚂"},
+}
+
+def _charger_categories():
+    """Charge categories.json si présent, sinon utilise les valeurs intégrées."""
+    if os.path.exists(FICHIER_CONFIG):
+        try:
+            with open(FICHIER_CONFIG, encoding="utf-8") as f:
+                cats = json.load(f)
+            print(f"📋 Catégories chargées depuis {FICHIER_CONFIG} ({len(cats)} entrées)")
+            return cats
+        except Exception as e:
+            print(f"⚠️  Erreur lecture {FICHIER_CONFIG} : {e} — utilisation des valeurs par défaut")
+    return CATEGORIES_DEFAUT
+
+
+def _detecter_encodage(chemin):
+    for enc in ("utf-8-sig", "utf-8", "latin-1", "cp1252"):
+        try:
+            with open(chemin, encoding=enc) as f:
+                f.read()
+            return enc
+        except UnicodeDecodeError:
+            continue
+    return "latin-1"
 
 
 def lire_csv(chemin):
-    enc = detecter_encodage(chemin)
+    enc = _detecter_encodage(chemin)
     lieux = []
     titre_carte = ""
 
@@ -150,116 +201,6 @@ def generer_html(lieux, titre="Mon Voyage", categories=None):
       font-size: 0.75rem;
       color: #999;
       letter-spacing: 0.05em;
-      white-space: nowrap;
-    }}
-
-    /* ── Barre de recherche ─────────────────────────────────── */
-    #search-box {{
-      position: relative;
-      display: flex;
-      align-items: center;
-      flex: 1;
-      max-width: 300px;
-      margin: 0 16px;
-    }}
-
-    .search-icon {{
-      position: absolute;
-      left: 10px;
-      font-size: 0.8rem;
-      pointer-events: none;
-      color: #bbb;
-      line-height: 1;
-    }}
-
-    #search-input {{
-      width: 100%;
-      padding: 6px 28px 6px 30px;
-      border: 1px solid #e0e0e0;
-      border-radius: 20px;
-      font-size: 0.83rem;
-      font-family: inherit;
-      outline: none;
-      background: #f5f5f5;
-      color: #333;
-      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-      /* Masque le bouton natif "✕" des navigateurs sur type=search */
-      -webkit-appearance: none;
-    }}
-    #search-input:focus {{
-      border-color: #bbb;
-      background: #fff;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-    }}
-    #search-input::placeholder {{ color: #ccc; }}
-    #search-input::-webkit-search-cancel-button {{ display: none; }}
-
-    #search-clear {{
-      position: absolute;
-      right: 9px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 0.7rem;
-      color: #bbb;
-      display: none;
-      padding: 2px 4px;
-      line-height: 1;
-      border-radius: 50%;
-    }}
-    #search-clear:hover {{ color: #555; background: #eee; }}
-
-    /* ── Dropdown résultats ─────────────────────────────────── */
-    #search-results {{
-      display: none;
-      position: absolute;
-      top: calc(100% + 6px);
-      left: 0;
-      right: 0;
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-      max-height: 300px;
-      overflow-y: auto;
-      z-index: 2000;
-    }}
-    #search-results.visible {{ display: block; }}
-
-    .result-item {{
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 12px;
-      cursor: pointer;
-      border-bottom: 1px solid #f2f2f2;
-      transition: background 0.1s;
-    }}
-    .result-item:last-child {{ border-bottom: none; }}
-    .result-item:hover {{ background: #f7f7f7; }}
-
-    .result-dot {{
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }}
-    .result-text {{ flex: 1; min-width: 0; }}
-    .result-nom {{
-      font-size: 0.83rem;
-      font-weight: 600;
-      color: #222;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }}
-    .result-meta {{ font-size: 0.7rem; color: #aaa; margin-top: 1px; }}
-
-    .result-empty {{
-      padding: 14px 12px;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #bbb;
     }}
 
     /* ── Carte ──────────────────────────────────────────────── */
@@ -389,22 +330,6 @@ def generer_html(lieux, titre="Mon Voyage", categories=None):
       /* Header plus compact */
       header {{ padding: 8px 14px; }}
       header h1 {{ font-size: 0.85rem; }}
-
-      /* Barre de recherche pleine largeur sur mobile */
-      #search-box {{
-        max-width: unset;
-        margin: 0 10px;
-      }}
-      header .count {{ display: none; }}
-
-      /* Résultats — position fixe sous le header sur mobile */
-      #search-results {{
-        position: fixed;
-        top: 51px;
-        left: 8px;
-        right: 8px;
-        max-height: 50vh;
-      }}
 
       /* Marqueurs plus grands pour le doigt */
       .marker-pin {{
@@ -551,12 +476,6 @@ def generer_html(lieux, titre="Mon Voyage", categories=None):
 
 <header>
   <h1>🗺 {titre}</h1>
-  <div id="search-box">
-    <span class="search-icon">🔍</span>
-    <input id="search-input" type="search" placeholder="Rechercher un lieu…" autocomplete="off" spellcheck="false">
-    <button id="search-clear" title="Effacer">✕</button>
-    <div id="search-results"></div>
-  </div>
   <span class="count">{len(lieux)} lieux</span>
 </header>
 
@@ -582,7 +501,6 @@ const DATA    = {data_js};
 const STYLES  = {styles_js};
 const layers  = {{}};
 const hidden  = new Set();
-const allMarkers = [];   // {{ marker, lieu, cat, style }} — pour la recherche
 const isMobile = () => window.innerWidth <= 768;
 
 // ── Carte ────────────────────────────────────────────────────
@@ -670,7 +588,6 @@ Object.entries(DATA).forEach(([cat, lieux]) => {{
     }});
 
     groupe.addLayer(marker);
-    allMarkers.push({{marker, lieu, cat, style}});
   }});
 }});
 
@@ -699,110 +616,6 @@ Object.entries(DATA).forEach(([cat, lieux]) => {{
   }});
   legend.appendChild(item);
 }});
-
-// ── Barre de recherche ────────────────────────────────────────
-const searchInput   = document.getElementById('search-input');
-const searchClear   = document.getElementById('search-clear');
-const searchResults = document.getElementById('search-results');
-const searchLayer   = L.layerGroup().addTo(map);
-let   enRecherche   = false;
-
-function quitterRecherche() {{
-  searchLayer.clearLayers();
-  enRecherche = false;
-  // Réinjecter chaque marqueur dans son groupe de catégorie
-  allMarkers.forEach(({{marker, cat}}) => layers[cat].addLayer(marker));
-  // Restaurer la visibilité selon l'état de la légende
-  Object.entries(layers).forEach(([cat, groupe]) => {{
-    if (!hidden.has(cat)) map.addLayer(groupe);
-    else map.removeLayer(groupe);
-  }});
-  searchResults.classList.remove('visible');
-  searchResults.innerHTML = '';
-  searchClear.style.display = 'none';
-}}
-
-function filtrerMarqueurs(query) {{
-  const q = query.trim().toLowerCase();
-  if (!q) {{ quitterRecherche(); return; }}
-
-  searchClear.style.display = 'block';
-
-  // Première frappe : retirer tous les groupes de catégories de la carte
-  if (!enRecherche) {{
-    Object.values(layers).forEach(g => map.removeLayer(g));
-    enRecherche = true;
-  }}
-  searchLayer.clearLayers();
-
-  const resultats = [];
-  allMarkers.forEach(entry => {{
-    const {{lieu, cat}} = entry;
-    const haystack = [lieu.nom, lieu.adresse, lieu.description, cat]
-      .join(' ').toLowerCase();
-    if (haystack.includes(q)) {{
-      searchLayer.addLayer(entry.marker);
-      resultats.push(entry);
-    }}
-  }});
-
-  // Construire le dropdown
-  searchResults.innerHTML = '';
-  if (resultats.length === 0) {{
-    searchResults.innerHTML = '<div class="result-empty">Aucun résultat</div>';
-  }} else {{
-    resultats.slice(0, 25).forEach(({{lieu, cat, style, marker}}) => {{
-      const item = document.createElement('div');
-      item.className = 'result-item';
-      const meta = [cat, lieu.adresse].filter(Boolean).join(' · ');
-      item.innerHTML = `
-        <div class="result-dot" style="background:${{style.couleur}}"></div>
-        <div class="result-text">
-          <div class="result-nom">${{lieu.nom}}</div>
-          <div class="result-meta">${{meta}}</div>
-        </div>`;
-      item.addEventListener('click', () => {{
-        map.setView([lieu.lat, lieu.lon], 17);
-        if (isMobile()) {{
-          openSheet(buildPopupHtml(lieu, cat, style));
-        }} else {{
-          marker.bindPopup(buildPopupHtml(lieu, cat, style), {{maxWidth: 260}}).openPopup();
-        }}
-        searchResults.classList.remove('visible');
-      }});
-      searchResults.appendChild(item);
-    }});
-    if (resultats.length > 25) {{
-      const more = document.createElement('div');
-      more.className = 'result-empty';
-      more.textContent = `… ${{resultats.length - 25}} résultats supplémentaires`;
-      searchResults.appendChild(more);
-    }}
-  }}
-  searchResults.classList.add('visible');
-}}
-
-searchInput.addEventListener('input', e => filtrerMarqueurs(e.target.value));
-
-searchInput.addEventListener('focus', () => {{
-  if (searchInput.value.trim()) searchResults.classList.add('visible');
-}});
-
-searchClear.addEventListener('click', () => {{
-  searchInput.value = '';
-  searchInput.focus();
-  quitterRecherche();
-}});
-
-document.addEventListener('keydown', e => {{
-  if (e.key === 'Escape') {{
-    searchInput.value = '';
-    quitterRecherche();
-    searchInput.blur();
-  }}
-}});
-
-map.on('click', () => searchResults.classList.remove('visible'));
 
 // ── Géolocalisation ──────────────────────────────────────────
 const gpsBtn      = document.getElementById('gps-toggle');
@@ -930,7 +743,7 @@ def main():
         titre_carte = Path(fichiers_csv[0]).stem.replace("_", " ").title()
 
     # Charger les catégories (depuis categories.json ou valeurs intégrées)
-    cats = charger_categories()
+    cats = _charger_categories()
 
     # Avertir pour les catégories inconnues
     cats_inconnues = set(l["categorie"] for l in tous_les_lieux) - set(cats.keys())
