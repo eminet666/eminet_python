@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="export_gpx.py"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1
+       http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Thessalonique, Grèce</name>
+    <desc>48 lieux exportés depuis thessalonique.csv</desc>
+    <time>2026-04-13T14:25:09Z</time>
+    <author><name>export_gpx.py</name></author>
+  </metadata>
+  <wpt lat="40.586996" lon="22.954650">
+    <name>Leiland #colony_White_Tower_Suite</name>
+    <cmt>Hotel</cmt>
+    <desc>Hotel
+8 Dimitrios Gounaris, Thessalonique, 54621, Grèce</desc>
+    <type>Hotel</type>
+    <sym>Hotel</sym>
+  </wpt>
+  <wpt lat="40.632844" lon="22.947094">
+    <name>Eglise Aghia Sophia</name>
+    <cmt>Eglise ★★★★☆</cmt>
+    <desc>Eglise  ★★★★☆
+mosaïques **, vierge à l'enfant **, fresques *, chapiteaux corinthiens feuilles retournées *</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Sophie_de_Thessalonique">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.630335" lon="22.949315">
+    <name>Palais de Galère</name>
+    <cmt>Antique ★★★☆☆</cmt>
+    <desc>Antique  ★★★☆☆
+mosaïques *, salle octogone * gratuit</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=8517061">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.630335" lon="22.949315">
+    <name>Arc de Galère</name>
+    <cmt>Antique ★★★☆☆</cmt>
+    <desc>Antique  ★★★☆☆</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=576201">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.633525" lon="22.952876">
+    <name>Rotonde Aghios Giorgios</name>
+    <cmt>Antique ★★★★★</cmt>
+    <desc>Antique  ★★★★★
+coupole à mosaïques</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://www.divento.com/fr/home/23131-la-rotonde-thessalonique.html">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.633111" lon="22.951207">
+    <name>Basilique Aghios panteleimon</name>
+    <cmt>Eglise ★★☆☆☆</cmt>
+    <desc>Eglise  ★★☆☆☆</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/%C3%89glise_Saint-Pantal%C3%A9on_de_Thessalonique">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.634935" lon="22.947995">
+    <name>Basilique Theotokos Acheropietos</name>
+    <cmt>Eglise ★★★☆☆</cmt>
+    <desc>Eglise  ★★★☆☆</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/%C3%89glise_de_l%27Acheiropoi%C3%A8tos">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.633333" lon="22.950000">
+    <name>Ladadika</name>
+    <cmt>Eglise ★★★☆☆</cmt>
+    <desc>Eglise  ★★★☆☆
+Près du port quartier anciennes huileries</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/?curid=99719">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.636408" lon="22.941413">
+    <name>Agora</name>
+    <cmt>Antique ★★★☆☆</cmt>
+    <desc>Antique  ★★★☆☆
+Avec Odéon</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=74569">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.636782" lon="22.943658">
+    <name>Eglise Panaghia ton Chalkeon, Thessalonique</name>
+    <cmt>Eglise ★★★☆☆</cmt>
+    <desc>Eglise  ★★★☆☆
+Fresques</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/%C3%89glise_de_la_Panag%C3%ADa_Chalk%C3%A9on">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.638822" lon="22.947858">
+    <name>Eglise Aghios Dimitrios, Thessalonique</name>
+    <cmt>Eglise ★★★★☆</cmt>
+    <desc>Eglise  ★★★★☆
+Mosaïques, ciboire, crypte en sous sol</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/Basilique_Saint-Dimitri_de_Thessalonique">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.642839" lon="22.937547">
+    <name>Eglise Aghioi Apostoli, , Thessalonique</name>
+    <cmt>Eglise ★★★☆☆</cmt>
+    <desc>Eglise  ★★★☆☆
+Mosaiques, peintures</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/%C3%89glise_des_Saints-Ap%C3%B4tres_de_Thessalonique">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.637400" lon="22.941700">
+    <name>Mosquée Hamza Bey</name>
+    <cmt>Ottoman ★☆☆☆☆</cmt>
+    <desc>Ottoman  ★☆☆☆☆</desc>
+    <type>Ottoman</type>
+    <sym>Waypoint</sym>
+    <link href="https://fr.wikipedia.org/?curid=14398411">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.633333" lon="22.950000">
+    <name>Bezesten</name>
+    <cmt>Ottoman ★☆☆☆☆</cmt>
+    <desc>Ottoman  ★☆☆☆☆
+En face du marché central très animé</desc>
+    <type>Ottoman</type>
+    <sym>Waypoint</sym>
+    <link href="https://fr.wikipedia.org/?curid=99719">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.633333" lon="22.950000">
+    <name>Yahudi Hammam</name>
+    <cmt>Ottoman ★☆☆☆☆</cmt>
+    <desc>Ottoman  ★☆☆☆☆
+Marche aux fleurs</desc>
+    <type>Ottoman</type>
+    <sym>Waypoint</sym>
+    <link href="https://fr.wikipedia.org/?curid=99719">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.635700" lon="22.945300">
+    <name>Bey Hammam</name>
+    <cmt>Ottoman ★☆☆☆☆</cmt>
+    <desc>Ottoman  ★☆☆☆☆</desc>
+    <type>Ottoman</type>
+    <sym>Waypoint</sym>
+    <link href="https://fr.wikipedia.org/?curid=658895">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.639200" lon="22.949600">
+    <name>Mosquée Alaca Imaret, Thessalonique</name>
+    <cmt>Ottoman ★☆☆☆☆</cmt>
+    <desc>Ottoman  ★☆☆☆☆</desc>
+    <type>Ottoman</type>
+    <sym>Waypoint</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mosqu%C3%A9e_Ishak-Pacha">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.643150" lon="22.944304">
+    <name>Eglise Aghia Ekaterini, Thessalonique</name>
+    <cmt>Eglise ★★☆☆☆</cmt>
+    <desc>Eglise  ★★☆☆☆
+Art de la renaissance paléologue</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/%C3%89glise_Sainte-Catherine_de_Thessalonique">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.640917" lon="22.948583">
+    <name>Eglise Profitis, Thessalonique</name>
+    <cmt>Eglise ★★★☆☆</cmt>
+    <desc>Eglise  ★★★☆☆
+Belle déco extérieure peintures murales</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/%C3%89glise_du_Proph%C3%A8te-%C3%89lie_de_Thessalonique">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.641806" lon="22.952278">
+    <name>Eglise Hosios David</name>
+    <cmt>Eglise ★★★★☆</cmt>
+    <desc>Eglise  ★★★★☆
+Mosaïque et fresques du VIe siècle ! Unique à Thessalonique</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/?curid=8523623">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.644000" lon="22.962000">
+    <name>Acropole, Thessalonique</name>
+    <cmt>Eglise</cmt>
+    <desc>Eglise
+Tour Andronic, quartier de maisons ottomanes, citadelle egyptario, porte Anne Paleologue, tour de la chaîne, tour d'Hormisdas</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/Heptapyrgion">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.637756" lon="22.955989">
+    <name>Eglise Aghios Nicolaos Orphanos, Thessalonique</name>
+    <cmt>Eglise ★★★★★</cmt>
+    <desc>Eglise  ★★★★★
+Un des bijoux architecturaux de la ville, fresques</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/%C3%89glise_Saint-Nicolas-l%27Orphelin_de_Thessalonique">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.635750" lon="22.954306">
+    <name>Maison Ataturk, Thessalonique</name>
+    <cmt>Contemporain ★☆☆☆☆</cmt>
+    <desc>Contemporain  ★☆☆☆☆</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/?curid=14373160">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.626389" lon="22.948333">
+    <name>Tour blanche</name>
+    <cmt>Renaissance ★★★☆☆</cmt>
+    <desc>Renaissance  ★★★☆☆
+Belle vue de la terrasse</desc>
+    <type>Renaissance</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=1719664">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.625000" lon="22.953889">
+    <name>Musée archéologique, Thessalonique</name>
+    <cmt>Musée ★★★★☆</cmt>
+    <desc>Musée  ★★★★☆
+Médaillon Athena, figurines terre cuite, ...</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/?curid=658252">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.633333" lon="22.950000">
+    <name>Musée de la civilisation byzantine, Thessalonique</name>
+    <cmt>Musée ★★★★☆</cmt>
+    <desc>Musée  ★★★★☆
+Collection art paléo chrétien et icônes</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/?curid=99719">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.633028" lon="22.935447">
+    <name>Musée de la photo, Thessalonique</name>
+    <cmt>Musée ★★★☆☆</cmt>
+    <desc>Musée  ★★★☆☆
+Pour un des lus beaux panorama sur la ville  au bar</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_de_la_Photographie_de_Thessalonique">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.464875" lon="22.221871">
+    <name>le « banc de Kallipetra »</name>
+    <cmt>Paysage</cmt>
+    <desc>Paysage
+Superbe paysage, point de vue élevé, à 8km de Véria</desc>
+    <type>Paysage</type>
+    <sym>Waypoint</sym>
+    <link href="https://discoververia.gr/kalipetras-pagkaki/">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.636100" lon="22.947500">
+    <name>Argofageio</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Leof. Georgikis Scholis 30
+Taverne traditionnelle : boureki, salades, viandes grillées copieuses.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.633800" lon="22.945200">
+    <name>Kanoula</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Tsimiski 9
+Meze grecs frais, portions généreuses, ambiance locale.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://fr.wikipedia.org/?curid=2690022">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.627500" lon="22.950800">
+    <name>Ouzeri To Yenti</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Egnatia 154 (près Château)
+Ouzo + meze authentiques, tzatiki excellent, vue animée.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.629000" lon="22.944000">
+    <name>John Deli Kebab</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Vasileos Irakleiou 35
+Dönér maison pita frais, meilleur kebab local ~4.5€.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://fr.wikipedia.org/?curid=10762186">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.634500" lon="22.944800">
+    <name>Savvikos</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Egnatia 48
+Souvlaki/gyros rapides, qualité pro, street food top.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://fr.wikipedia.org/?curid=15548048">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.633000" lon="22.947000">
+    <name>Chatzis</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Mitropoleos 19
+Pâtisserie orientale : kataifi, baklava frais &lt;5€.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://fr.wikipedia.org/?curid=8056689">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.631200" lon="22.948500">
+    <name>Trigona Elenedis</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Gounari 4
+Trigona elenitika croustillants crème, spécialité locale.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.634000" lon="22.944000">
+    <name>Stáfylos Gi</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Egnatia 30
+Tavernes meze grillades, rapport qualité/prix imbattable.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.631500" lon="22.949000">
+    <name>Pezouli</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Dim. Gounari 11
+Pizza bois street food, desserts top 5-10€.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.637800" lon="22.943500">
+    <name>Kati Ap' Ola</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Leof. Vasileos Georgiou 22
+Meze grecs variés, grillades fraîches 10-15€.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://en.wikipedia.org/?curid=28244469">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.635200" lon="22.941800">
+    <name>Stafilos Gi</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Apostolou Pavlou 24
+Tavernes meze copieux, ambiance familiale.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.632100" lon="22.947200">
+    <name>To Mikraki</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Proxenou Koromila 2
+Plats maison grecs, portions généreuses 10-15€.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.638000" lon="22.944000">
+    <name>Mourga</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Ladadika quartier
+Fruits de mer meze frais, très copieux.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.630500" lon="22.948000">
+    <name>Ouzeri Agora</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Kapodistriou 5
+Ouzo + meze traditionnels, budget mid.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://en.wikipedia.org/?curid=12108">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.612000" lon="22.970000">
+    <name>Nea Diagonios</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Kalamaria (près port)
+Gyros/souvlaki meilleur rapport qualité/prix.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://en.wikipedia.org/?curid=40471">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.634000" lon="22.945000">
+    <name>Takadum</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Centre-ville
+Meze méditerranéens, plan imbattable local.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.633500" lon="22.946000">
+    <name>Bougatsa Giannis</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Egnatia (marché)
+Bougatsa feuilletée sucrée &lt;5€ matin/dîner.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://en.wikipedia.org/?curid=40471">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.635000" lon="22.942000">
+    <name>Diagonios 1977</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Près centre
+Kebabs/saucisses tradition grecques authentiques.</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="40.641968" lon="22.952215">
+    <name>Monastère de Latomou</name>
+    <cmt>Eglise</cmt>
+    <desc>Eglise
+Osios David/Moni Latomou, Ano Poli, Thessaloniki
+Superbe vue sur la ville en plus</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/Monast%C3%A8re_de_Latomou">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.639071" lon="22.944476">
+    <name>Bit Bazaar</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+Olympou 72, Thessaloniki 546 31, Grèce
+Marché aux puces (10h-20h)</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/?curid=5052155">
+      <text>Lien</text>
+    </link>
+  </wpt>
+</gpx>

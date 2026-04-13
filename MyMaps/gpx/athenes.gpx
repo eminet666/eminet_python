@@ -1,0 +1,944 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="export_gpx.py"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1
+       http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Athènes, Grèce</name>
+    <desc>83 lieux exportés depuis athenes.csv</desc>
+    <time>2026-04-13T12:45:53Z</time>
+    <author><name>export_gpx.py</name></author>
+  </metadata>
+  <wpt lat="37.986655" lon="23.739202">
+    <name>Démosthene</name>
+    <cmt>Amis</cmt>
+    <desc>Amis
+Zoodochou Pigis 85, Athina 114 73, Grèce</desc>
+    <type>Amis</type>
+    <sym>Waypoint</sym>
+    <link href="https://fr.wikipedia.org/?curid=74157">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.980161" lon="23.732728">
+    <name>Memorial 1941-1944</name>
+    <cmt>Musée</cmt>
+    <desc>Musée
+Korai 4, Athina 105 64, Grèce
+Ancienne prison nazie
+🚇 Métro ligne 2, Panepistimiou</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://vivreathenes.com/korai-4-une-ancienne-prison-nazie-a-athenes-reconvertie-en-musee.html?srsltid=AfmBOooAj4EV0wbd7sX9HX-Vel4LRbbrWrRJWjUlguVJNbIcRV_UUBzB">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.969286" lon="23.752460">
+    <name>H Thraka (gyros)</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Imittou 58, Athina 116 34, Grèce
+Bons gyros à Pancrati
+🚇 Trolley 2, Pancrati</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://e-thraka.gr/">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.964786" lon="23.751598">
+    <name>Magerio</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Resto dans Pancrati
+🚇 Trolley 11 ou bus 209, Gefyra</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="37.985643" lon="23.727916">
+    <name>Stani</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Marikas Kotopouli 10, Athina 104 32, Grèce
+Meilleurs yaourt d'Athènes</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="http://www.stani1931.com/">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.983465" lon="23.727986">
+    <name>Sklavenitis (supermarché)</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Athinas 62, Athina 105 51, Grèce</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://fr.wikipedia.org/?curid=16280717">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.985708" lon="23.727356">
+    <name>Lefteris O Politis (est. 1951)</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Satovriandou 20, Athina 104 32, Grèce
+Pas de gyros mais des burgers et soutsoukis (boulettes)</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://fr.wikipedia.org/?curid=833173">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.966022" lon="23.750277">
+    <name>Zacharoplasteio Lido</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Chremonidou 35, Athina 116 33, Grèce
+Les meilleurs tsourekis (brioches de pâques)
+🚇 trolley 2-11, Filolaou ou bus 209, Frynis</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="37.953779" lon="23.633864">
+    <name>Oinopantopoleui to eidikon</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Psaron 38, Pireas 185 46, Grèce
+Epicerie taverne typique .... presque un musée</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="37.946509" lon="23.644334">
+    <name>O Yorgos Souvlaki</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Gounari 18 Νikita gonia, Pirée 18531 Grèce
+Super souvlakis au Pirée</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://fr.wikipedia.org/?curid=5242721">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.984192" lon="23.726568">
+    <name>Patisserie Kristakis</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Sokratous 59, Athina 104 31, Grèce
+Loukoumades (beignets ua miel)</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="37.985987" lon="23.731754">
+    <name>Bougatsa Sabbas</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Tzortz 10, Athina 106 77, Grèce
+Bougatsa</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="37.940418" lon="23.730717">
+    <name>Remoútsiko Taverna</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Leof. Agiou Dimitriou 120, Ag. Dimitrios 173 41, Grèce
+Taverne typique
+🚇 Métro Ligne 2, Aghios Dimitrios</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+  </wpt>
+  <wpt lat="37.974167" lon="23.738333">
+    <name>Jardin national d’Athènes</name>
+    <cmt>Jardin</cmt>
+    <desc>Jardin
+Parc ombragé idéal pour pause nature et observation.</desc>
+    <type>Jardin</type>
+    <sym>Park</sym>
+    <link href="https://fr.wikipedia.org/wiki/Jardin_national_d%27Ath%C3%A8nes">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="38.002966" lon="23.741523">
+    <name>Kypséli</name>
+    <cmt>Quartier</cmt>
+    <desc>Quartier
+Quartier authentique au nord du musée national</desc>
+    <type>Quartier</type>
+    <sym>City (Medium)</sym>
+    <link href="https://fr.wikipedia.org/wiki/Kyps%C3%A9li_(Ath%C3%A8nes)">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.986111" lon="23.734722">
+    <name>Exarchia</name>
+    <cmt>Quartier</cmt>
+    <desc>Quartier
+Quartier authentique à côté de Polytechnique</desc>
+    <type>Quartier</type>
+    <sym>City (Medium)</sym>
+    <link href="https://fr.wikipedia.org/wiki/Ex%C3%A1rcheia">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.971389" lon="23.736389">
+    <name>Zappeion</name>
+    <cmt>Néoclassique</cmt>
+    <desc>Néoclassique
+Palais néoclassique jardins, événements culturels calmes.</desc>
+    <type>Néoclassique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=4813838">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.969372" lon="23.733078">
+    <name>Temple de Zeus olympien</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Colossal temple antique au coeur moderne.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Olympi%C3%A9ion_(Ath%C3%A8nes)">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.970167" lon="23.732000">
+    <name>Arc d’Hadrien</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Arc romain élégant entre époques.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=4435619">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.977800" lon="23.735400">
+    <name>Musée numismatique d’Athènes</name>
+    <cmt>Musée</cmt>
+    <desc>Musée
+Monnaies rares racontant l'histoire économique grecque.</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_numismatique_d%27Ath%C3%A8nes">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975830" lon="23.740280">
+    <name>Musée Benaki</name>
+    <cmt>Musée</cmt>
+    <desc>Musée
+Art grec byzantin à moderne, collections pointues.</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_Benaki">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.980424" lon="23.734762">
+    <name>Académie d’Athènes</name>
+    <cmt>Néoclassique</cmt>
+    <desc>Néoclassique
+Chef-d'oeuvre architectural néoclassique imposant.</desc>
+    <type>Néoclassique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=1817214">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.941389" lon="23.692222">
+    <name>Bibliothèque nationale de Grèce</name>
+    <cmt>Musée</cmt>
+    <desc>Musée
+Trésor livres anciens, architecture théâtrale.</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/wiki/Biblioth%C3%A8que_nationale_de_Gr%C3%A8ce">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.977167" lon="23.740639">
+    <name>Quartier de Kolonáki</name>
+    <cmt>Quartier</cmt>
+    <desc>Quartier
+Chic résidentiel galeries, cafés branchés.</desc>
+    <type>Quartier</type>
+    <sym>City (Medium)</sym>
+    <link href="https://fr.wikipedia.org/?curid=5126238">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.976300" lon="23.728600">
+    <name>Église Kapnikaréa</name>
+    <cmt>Eglise</cmt>
+    <desc>Eglise
+Byzantin miniature cachée rue commerçante.</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/?curid=14031555">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975276" lon="23.736974">
+    <name>Parlement hellénique</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+Ex-palais royal, tombe Soldat inconnu.</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/?curid=778176">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.969376" lon="23.736733">
+    <name>Mets</name>
+    <cmt>Quartier</cmt>
+    <desc>Quartier
+Quartier arty calme, street art local.</desc>
+    <type>Quartier</type>
+    <sym>City (Medium)</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mets_(Ath%C3%A8nes)">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.968576" lon="23.740958">
+    <name>Colline d’Ardittos</name>
+    <cmt>Quartier</cmt>
+    <desc>Quartier
+Vue panoramique stade olympique, balade sauvage.</desc>
+    <type>Quartier</type>
+    <sym>City (Medium)</sym>
+    <link href="https://fr.wikipedia.org/?curid=8103414">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.963161" lon="23.737875">
+    <name>Premier cimetière d’Athènes</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+Nécropole sculpturale romantique, tombes célèbres.</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/wiki/Premier_cimeti%C3%A8re_d%27Ath%C3%A8nes">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.971288" lon="23.725170">
+    <name>Anafiotika</name>
+    <cmt>Quartier</cmt>
+    <desc>Quartier
+Cycladique insolite sous Acropole, ruelles blanches.</desc>
+    <type>Quartier</type>
+    <sym>City (Medium)</sym>
+    <link href="https://fr.wikipedia.org/?curid=8047332">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.968077" lon="23.744165">
+    <name>Quartier de Pangrati</name>
+    <cmt>Quartier</cmt>
+    <desc>Quartier
+Bohème alternatif bars, street art vivant.</desc>
+    <type>Quartier</type>
+    <sym>City (Medium)</sym>
+    <link href="https://fr.wikipedia.org/?curid=8048764">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.976861" lon="23.734961">
+    <name>Rue Voukourestiou</name>
+    <cmt>Quartier</cmt>
+    <desc>Quartier
+Luxe discret galeries art, boutiques mode.</desc>
+    <type>Quartier</type>
+    <sym>City (Medium)</sym>
+    <link href="https://en.wikipedia.org/wiki/Voukourestiou_Street">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975060" lon="23.729994">
+    <name>Église de Panagia Gorgoepikoos</name>
+    <cmt>Eglise</cmt>
+    <desc>Eglise
+Byzantin raffiné fresques dorées, intimiste.</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/?curid=13783196">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975422" lon="23.732093">
+    <name>Église d’Agia Dynami</name>
+    <cmt>Eglise</cmt>
+    <desc>Eglise
+Byzantin minuscule ruelle, perle oubliée.</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://www.thisisathens.org/fr/attractions/agia-dynami-church">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.992500" lon="23.708060">
+    <name>Académie de Platon</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Site de l'académie de Platon</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Acad%C3%A9mie_de_Platon">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.972083" lon="23.725056">
+    <name>Source clepsydre</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Fontaine mycénienne souterraine, hydraulique ancienne.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Klepsydre_(Acropole)">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.974170" lon="23.726110">
+    <name>Agora romaine</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Marché impérial romain, Tour des Vents unique.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=3162411">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975556" lon="23.726111">
+    <name>Bibliothèque d'Hadrien</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Complexe culturel romain massif, restes imposants.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Biblioth%C3%A8que_d%27Hadrien">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975139" lon="23.723167">
+    <name>Odéon d'Agrippa</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Théâtre couvert romain reconstruit, acoustique antique.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Od%C3%A9on_d%27Agrippa">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975000" lon="23.724170">
+    <name>Stoa d'Attale</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Portique marchand hellénistique, musée intégré.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Stoa_d%27Attale">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975604" lon="23.721412">
+    <name>Temple d'Héphaïstos</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Dorique parfaitement préservé dans Agora antique.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=16690">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.978730" lon="23.719506">
+    <name>Kéramikos</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Nécropole antique portes fortifiées, tombes peintes.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=9528074">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.971667" lon="23.719444">
+    <name>Pnyx</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Colline assemblées démocratiques, vue oratoire antique.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Pnyx">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.972500" lon="23.723060">
+    <name>Aréopage</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Roche tribunal Paul apôtre, panorama Acropole.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Ar%C3%A9opage">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975617" lon="23.721392">
+    <name>Theseion</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Temple antique réutilisé église, dorique intact.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=74604">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.970280" lon="23.727800">
+    <name>Théâtre de Dionysos</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Berceau tragédie grecque, sièges sculptés.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Th%C3%A9%C3%A2tre_de_Dionysos">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.969375" lon="23.720810">
+    <name>Prison de Socrate</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Cachot philosophique austère, mythe exécution.</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=7208">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.989170" lon="23.732500">
+    <name>Musée archéologique national</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Trésors mycéniens et classiques inégalés.
+🚇 Métro ligne 2/3, Victoria</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_national_arch%C3%A9ologique_d%27Ath%C3%A8nes">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.968333" lon="23.741111">
+    <name>Stade panathénaïque</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Marbre blanc JO antiques recréés.
+🚇 Métro ligne 2, Académie</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.926390" lon="23.993610">
+    <name>Sanctuaire d'Artémis à Brauron</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Temple archaïque et rituels féminins.
+🚇 Bus 122, Brauron (1h)</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Brauron">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="38.042563" lon="23.539425">
+    <name>Eléusis (mystères)</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Telesterion rites secrets Déméter.
+🚇 Métro ligne 3, Elefsina</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=61955">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.983000" lon="23.717000">
+    <name>Musée épigraphique</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Inscriptions gravées lois antiques.
+🚇 Métro ligne 2, Syntagma</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_%C3%A9pigraphique_d%27Ath%C3%A8nes">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.981940" lon="23.743060">
+    <name>Lycabette (sanctuaire antique)</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Chapelle hellénistique sommet colline.
+🚇 Métro ligne 3, Evangelismos</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=636702">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="38.483000" lon="22.501000">
+    <name>Stade olympique d'Apollon</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Course antique préservée Marathon.
+🚇 Bus 720, Marathon (45min)</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=26546">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.650250" lon="24.024556">
+    <name>Temple Poséidon Sounion</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Colonnes doriques coucher soleil mythique.
+🚇 Bus 122, Sounion (1h30)</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=12508787">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.967000" lon="23.717000">
+    <name>Musée byzantin et chrétien</name>
+    <cmt>Byzantin</cmt>
+    <desc>Byzantin
+Icônes, fresques byzantines exceptionnelles.
+🚇 Métro ligne 3, Evangelismos</desc>
+    <type>Byzantin</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=546240">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.960800" lon="23.798200">
+    <name>Monastère de Kaisariani</name>
+    <cmt>Eglise</cmt>
+    <desc>Eglise
+Église XIe siècle mont Hymette mystique.
+🚇 Bus 223/224, Kaisariani (20min)</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/?curid=11497889">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.968333" lon="23.741111">
+    <name>Stade panathénaïque (moderne)</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Marbre reconstruit JO 1896 mythiques.
+🚇 Métro ligne 2, Stade</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Stade_panath%C3%A9na%C3%AFque">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.968198" lon="23.778684">
+    <name>Université nationale (contemporaine)</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+Campus néoclassique savoir moderne.
+🚇 Métro ligne 2, Panepistimiou</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/wiki/Universit%C3%A9_nationale_et_capodistrienne_d%27Ath%C3%A8nes">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.963140" lon="23.725542">
+    <name>EMST (art contemporain)</name>
+    <cmt>Musée</cmt>
+    <desc>Musée
+Avant-garde grecque installations choc.
+🚇 Métro ligne 1, Fix</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_national_d%27art_contemporain_d%27Ath%C3%A8nes">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.975830" lon="23.741940">
+    <name>Musée d’art cycladique</name>
+    <cmt>Musée</cmt>
+    <desc>Musée
+Idoles blanches néolithiques épurées.
+🚇 Bus 022, Kolonaki</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/?curid=2834057">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.939700" lon="23.737666">
+    <name>Fondation Stavros Niarchos</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+Opéra/bibliothèque futuriste bord mer.
+🚇 Métro ligne 1, Neo Faliro</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/wiki/Centre_culturel_de_la_fondation_St%C3%A1vros-Ni%C3%A1rchos">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.971450" lon="23.737666">
+    <name>Ciné Aegli (Zappeion)</name>
+    <cmt>Cinéma</cmt>
+    <desc>Cinéma
+Zappeion Garden, Athina 105 57, Grèce
+Plus ancien cinéma plein air (1903), jardins luxuriants.</desc>
+    <type>Cinéma</type>
+    <sym>Theater</sym>
+  </wpt>
+  <wpt lat="37.979366" lon="23.741798">
+    <name>Ciné Dexameni</name>
+    <cmt>Cinéma</cmt>
+    <desc>Cinéma
+Plateia Dexamenis 7, Athina 106 73, Grèce
+Sur citerne Hadrien (1905), magie Kolonaki boisée.</desc>
+    <type>Cinéma</type>
+    <sym>Theater</sym>
+  </wpt>
+  <wpt lat="37.972911" lon="23.720467">
+    <name>Ciné Thision</name>
+    <cmt>Cinéma</cmt>
+    <desc>Cinéma
+Apostolou Pavlou 7, Athina 118 51, Grèce
+Sous Acropole depuis 1935, vue Parthénon inoubliable.</desc>
+    <type>Cinéma</type>
+    <sym>Theater</sym>
+    <link href="http://cine-thisio.gr/">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.986911" lon="23.735597">
+    <name>Ciné Vox (Exarchia)</name>
+    <cmt>Cinéma</cmt>
+    <desc>Cinéma
+Themistokleous 82, Athina 106 81, Grèce
+Ouvert 1938, ambiance alternative quartier vibrant.</desc>
+    <type>Cinéma</type>
+    <sym>Theater</sym>
+  </wpt>
+  <wpt lat="37.985697" lon="23.735872">
+    <name>Ciné Riviera (Exarchia)</name>
+    <cmt>Cinéma</cmt>
+    <desc>Cinéma
+Valtetsiou 46, Athina 106 81, Grèce
+Frère de Vox, art et essai sur place animée.</desc>
+    <type>Cinéma</type>
+    <sym>Theater</sym>
+  </wpt>
+  <wpt lat="38.013056" lon="23.635833">
+    <name>Monastère Daphni</name>
+    <cmt>Eglise</cmt>
+    <desc>Eglise
+Monastère connu notamment pour ses mosaïques
+🚇 Métro ligne 3, terminus Aghia Marina, 7' à pieds</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://fr.wikipedia.org/wiki/Monast%C3%A8re_de_Daphn%C3%AD">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.986600" lon="23.735400">
+    <name>Immeuble Bleu (Exarchia)</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+Moderniste 1932, admiré Le Corbusier, près Vox.</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://en.wikipedia.org/wiki/The_Blue_Condominium_of_Exarcheia">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.938270" lon="23.646128">
+    <name>Port de Zea (Moukiari)</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+Arsenal antique trières, yachts modernes.
+🚇 Métro ligne 1, Firaeus (sortie Zea)</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/wiki/Port_de_Zea">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.937222" lon="23.644444">
+    <name>Musée archéologique du Pirée</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Bronzes antiques, hermès portuaire rares.
+🚇 Métro ligne 1, Firaeus</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_arch%C3%A9ologique_du_Pir%C3%A9e">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.932500" lon="23.645917">
+    <name>Musée maritime hellénique</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+Modèles navires 3000 ans histoire maritime.
+🚇 Métro ligne 1, Firaeus + bus 843</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_maritime_hell%C3%A9nique">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.938595" lon="23.659541">
+    <name>Port de Mikrolimano (Turcolimano)</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+Pêcheurs tavernes, vue baie charmante.
+🚇 Métro ligne 1, Firaeus + 25min marche</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mikrolimano">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.944422" lon="23.645054">
+    <name>Église Agia Triada (Mikrolimano)</name>
+    <cmt>Byzantin</cmt>
+    <desc>Byzantin
+Byzantin ottoman, icônes maritimes.
+🚇 Métro ligne 1, Firaeus + tram C1</desc>
+    <type>Byzantin</type>
+    <sym>Historic Site</sym>
+    <link href="https://www.thisisathens.org/fr/attractions/agia-triada-russian-orthodox-eglise">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.939489" lon="23.655967">
+    <name>Quartier Kastella</name>
+    <cmt>Quartier</cmt>
+    <desc>Quartier
+Collines néoclassiques, vues mer oubliées.
+🚇 Métro 1 Firaeus + 20min montée</desc>
+    <type>Quartier</type>
+    <sym>City (Medium)</sym>
+    <link href="https://fr.wikipedia.org/wiki/Kast%C3%A9lla_(Le_Pir%C3%A9e)">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.944610" lon="23.645160">
+    <name>Marché municipal du Pirée</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+Halles bruyantes poissons frais, épices.
+🚇 Métro 1 Firaeus (sortie marché)</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/wiki/March%C3%A9_municipal_du_Pir%C3%A9e">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.941200" lon="23.649800">
+    <name>Mur de Thémistocle (Piraiki)</name>
+    <cmt>Antique</cmt>
+    <desc>Antique
+section visible rue Erysichthonos 29, près porte Pirée
+Remparts antiques Vème s. le long rochers.
+🚇 Métro 1 Firaeus + 15min côte</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mur_de_Th%C3%A9mistocle">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.936500" lon="23.644500">
+    <name>Place Terpsitheas</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+intersection rue Iroon Polytechniou / 2is Merarchias
+Antiquités éparses cafés marins locaux.
+🚇 Métro 1 Firaeus + 10min</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://en.wikipedia.org/wiki/Archaeological_site_of_Terpsithea_Square">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.945000" lon="23.652000">
+    <name>Bakalotavernes (ruelles Piraiki)</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain
+ruelles autour Akti Themistokleous, Piraiki
+Tavernes traditionnelles rebetiko, ambiance 50s.
+🚇 Métro 1 Firaeus + 15min</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+  </wpt>
+  <wpt lat="37.982399" lon="23.738226">
+    <name>Ecole Française d'Athènes</name>
+    <cmt>Musée</cmt>
+    <desc>Musée
+Didotou 6, Athina 106 80, Grèce</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/?curid=126507">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.976925" lon="23.730191">
+    <name>Lefteris O Politis</name>
+    <cmt>Restaurant</cmt>
+    <desc>Restaurant
+Romvis 18, Athina 105 62, Grèce
+Biftekis pitas</desc>
+    <type>Restaurant</type>
+    <sym>Restaurant</sym>
+    <link href="https://fr.wikipedia.org/?curid=833173">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.983000" lon="23.717000">
+    <name>Musée épigraphique</name>
+    <cmt>Musée</cmt>
+    <desc>Musée
+Dans une aile du musée nationale
+Musée entièrement consacré aux inscriptions antiques</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_%C3%A9pigraphique_d%27Ath%C3%A8nes">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="37.977449" lon="23.727704">
+    <name>Hotel Tempi</name>
+    <cmt>Hotel</cmt>
+    <desc>Hotel
+Aiolou 29, Athina 105 51, Grèce</desc>
+    <type>Hotel</type>
+    <sym>Hotel</sym>
+    <link href="https://tempihotel.gr/">
+      <text>Lien</text>
+    </link>
+  </wpt>
+</gpx>

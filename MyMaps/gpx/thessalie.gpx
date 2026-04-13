@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="export_gpx.py"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1
+       http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Thessalie, Grèce</name>
+    <desc>31 lieux exportés depuis thessalie.csv</desc>
+    <time>2026-04-13T14:24:57Z</time>
+    <author><name>export_gpx.py</name></author>
+  </metadata>
+  <wpt lat="40.586996" lon="22.954650">
+    <name>Leiland #colony_White_Tower_Suite</name>
+    <cmt>Hotel</cmt>
+    <desc>Hotel
+8 Dimitrios Gounaris, Thessalonique, 54621, Grèce</desc>
+    <type>Hotel</type>
+    <sym>Hotel</sym>
+  </wpt>
+  <wpt lat="40.274065" lon="22.583838">
+    <name>Nefeli HTL</name>
+    <cmt>Hotel</cmt>
+    <desc>Hotel
+Agiou Nikolaou 41, Paralia, 60100, Grèce</desc>
+    <type>Hotel</type>
+    <sym>Hotel</sym>
+  </wpt>
+  <wpt lat="39.949600" lon="23.533500">
+    <name>Villa Olga Studios</name>
+    <cmt>Hotel</cmt>
+    <desc>Hotel
+Nea skioni, Nea Skioni, 63085, Grèce</desc>
+    <type>Hotel</type>
+    <sym>Hotel</sym>
+    <link href="https://fr.wikipedia.org/?curid=749788">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.338895" lon="23.970551">
+    <name>Archodariki</name>
+    <cmt>Hotel</cmt>
+    <desc>Hotel
+Ouranoupoli, Ouranoupoli, 63075, Grèce</desc>
+    <type>Hotel</type>
+    <sym>Hotel</sym>
+  </wpt>
+  <wpt lat="40.097255" lon="23.979299">
+    <name>Ladario Studios</name>
+    <cmt>Hotel</cmt>
+    <desc>Hotel
+Sarti, Sarti, 63072, Grèce</desc>
+    <type>Hotel</type>
+    <sym>Hotel</sym>
+  </wpt>
+  <wpt lat="40.170278" lon="22.486250">
+    <name>Site archéologique de Dion</name>
+    <cmt>Antique ★★★☆☆</cmt>
+    <desc>Antique  ★★★☆☆</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=16657546">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.170278" lon="22.486250">
+    <name>Musée archéologique de Dion</name>
+    <cmt>Antique ★★★☆☆</cmt>
+    <desc>Antique  ★★★☆☆
+Orgue hydraulique ***, Statuaire **, Vie quotidienne au sous-sol</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=16657546">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.100000" lon="22.500000">
+    <name>Litochoro</name>
+    <cmt>Village</cmt>
+    <desc>Village</desc>
+    <type>Village</type>
+    <sym>City (Small)</sym>
+    <link href="https://fr.wikipedia.org/?curid=1113556">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.118000" lon="22.484000">
+    <name>Old Holy Monastery of Saint Dionysios of Olympus</name>
+    <cmt>Eglise ★★★☆☆</cmt>
+    <desc>Eglise  ★★★☆☆
+Monastère ancien, belle vue sur Olympe (à proximité, un plus récent du même nom</desc>
+    <type>Eglise</type>
+    <sym>Church</sym>
+    <link href="https://en.wikipedia.org/wiki/Agios_Dionysios_Monastery,_Olympus">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.251028" lon="22.473556">
+    <name>Pydna</name>
+    <cmt>Plages</cmt>
+    <desc>Plages
+Plage</desc>
+    <type>Plages</type>
+    <sym>Swimming Area</sym>
+    <link href="https://fr.wikipedia.org/?curid=242119">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="39.991111" lon="22.626667">
+    <name>Platamon</name>
+    <cmt>Moyen-Age ★☆☆☆☆</cmt>
+    <desc>Moyen-Age  ★☆☆☆☆
+Forteresse, plage</desc>
+    <type>Moyen-Age</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=1526162">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.488111" lon="22.320333">
+    <name>Aigia</name>
+    <cmt>Antique ★★★★★</cmt>
+    <desc>Antique  ★★★★★
+Tombes royales</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_des_Tombes_royales_d%27Aigai">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.644167" lon="22.122222">
+    <name>Mieza</name>
+    <cmt>Antique ★★★★★</cmt>
+    <desc>Antique  ★★★★★
+Ecole d'Aristote, Tombes</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=14117093">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.520278" lon="22.201944">
+    <name>Veria</name>
+    <cmt>Antique ★★★★☆</cmt>
+    <desc>Antique  ★★★★☆
+Ancienne Beroia, antique et églises</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=201881">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.760000" lon="22.519170">
+    <name>Site archéologique de Pella</name>
+    <cmt>Antique ★★★★☆</cmt>
+    <desc>Antique  ★★★★☆
+Maisons, mosaiques</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=201856">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.762000" lon="22.519200">
+    <name>Musée archéologique de Pella</name>
+    <cmt>Musée ★★★★☆</cmt>
+    <desc>Musée  ★★★★☆
+Mosaiques</desc>
+    <type>Musée</type>
+    <sym>Museum</sym>
+    <link href="https://fr.wikipedia.org/wiki/Mus%C3%A9e_arch%C3%A9ologique_de_Pella">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.020000" lon="23.450000">
+    <name>Presqu'ile Kassandra</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/wiki/P%C3%A9ninsule_de_Cassandra">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.020000" lon="23.450000">
+    <name>Nea Potidea, Kassandra</name>
+    <cmt>Antique ★★☆☆☆</cmt>
+    <desc>Antique  ★★☆☆☆
+Une tour, reste de murailles</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/?curid=6165222">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.296000" lon="23.354000">
+    <name>Olinthe, Kassandra</name>
+    <cmt>Antique ★★★☆☆</cmt>
+    <desc>Antique  ★★★☆☆
+ruine ville antique 10min marche, villa de la bonne fortune</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Olynthe">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.366667" lon="23.433333">
+    <name>Polygyros, Kassandra</name>
+    <cmt>Antique ★★★☆☆</cmt>
+    <desc>Antique  ★★★☆☆
+musée archéologique* bouclier de Philippe, statuettes polychromes</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Pol%C3%BDgyros">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.486667" lon="23.594722">
+    <name>Arnea, Kassandra</name>
+    <cmt>Village ★★★☆☆</cmt>
+    <desc>Village  ★★★☆☆
+village maisons traditionnelles colorées</desc>
+    <type>Village</type>
+    <sym>City (Small)</sym>
+    <link href="https://fr.wikipedia.org/wiki/Arn%C3%A9a">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.529055" lon="23.753197">
+    <name>Stagire, Kassandra</name>
+    <cmt>Antique ★★★★☆</cmt>
+    <desc>Antique  ★★★★☆
+site en accès libre, cadre splendide</desc>
+    <type>Antique</type>
+    <sym>Historic Site</sym>
+    <link href="https://fr.wikipedia.org/wiki/Stagire">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.097778" lon="23.868333">
+    <name>Sithonia</name>
+    <cmt>Contemporain</cmt>
+    <desc>Contemporain</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/?curid=6184980">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.268500" lon="23.447306">
+    <name>Gerakini, Sithonia</name>
+    <cmt>Plages</cmt>
+    <desc>Plages</desc>
+    <type>Plages</type>
+    <sym>Swimming Area</sym>
+    <link href="https://www.visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/338/plage-de-gerakini">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.268500" lon="23.447306">
+    <name>Metamorphosis, Sithonia</name>
+    <cmt>Plages</cmt>
+    <desc>Plages</desc>
+    <type>Plages</type>
+    <sym>Swimming Area</sym>
+    <link href="https://visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/612/plage-de-metamorfosi">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.097778" lon="23.670667">
+    <name>Nikiti, Sithonia</name>
+    <cmt>Plages</cmt>
+    <desc>Plages</desc>
+    <type>Plages</type>
+    <sym>Swimming Area</sym>
+    <link href="https://visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/332/plage-de-nikiti">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.091389" lon="23.785750">
+    <name>Neo Marmaras, Sithonia</name>
+    <cmt>Village ★★☆☆☆</cmt>
+    <desc>Village  ★★☆☆☆
+Port de pêcheurs</desc>
+    <type>Village</type>
+    <sym>City (Small)</sym>
+    <link href="https://www.feelgreece.com/fr/neos-marmaras">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="39.985389" lon="23.902472">
+    <name>Toroni, Sithonia</name>
+    <cmt>Moyen-Age ★★★☆☆</cmt>
+    <desc>Moyen-Age  ★★★☆☆
+longue baie avec vestiges forteresse byzantine et église paléo chrétienne</desc>
+    <type>Moyen-Age</type>
+    <sym>Historic Site</sym>
+    <link href="https://www.visit-halkidiki.gr/portfolio-view/ancient-town-toroni/">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="39.963611" lon="23.921944">
+    <name>Porto Koufo, Sithonia</name>
+    <cmt>Village ★★★☆☆</cmt>
+    <desc>Village  ★★★☆☆
+port de pêche, beaux point de vue * sur le cap Drepano</desc>
+    <type>Village</type>
+    <sym>City (Small)</sym>
+    <link href="https://en.wikipedia.org/wiki/Porto_Koufo">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="39.990889" lon="23.990917">
+    <name>Kalamitsi, Sithonia</name>
+    <cmt>Plages ★★★★☆</cmt>
+    <desc>Plages  ★★★★☆
+Très belle plage</desc>
+    <type>Plages</type>
+    <sym>Swimming Area</sym>
+    <link href="https://www.visit-centralmacedonia.gr/fr/quoi-faire/73/soleil-et-mer/343/plage-de-kalamitsi">
+      <text>Lien</text>
+    </link>
+  </wpt>
+  <wpt lat="40.158984" lon="24.328011">
+    <name>Mont Athos</name>
+    <cmt>Contemporain ★★★★★</cmt>
+    <desc>Contemporain  ★★★★★</desc>
+    <type>Contemporain</type>
+    <sym>Building</sym>
+    <link href="https://fr.wikipedia.org/?curid=119043">
+      <text>Lien</text>
+    </link>
+  </wpt>
+</gpx>

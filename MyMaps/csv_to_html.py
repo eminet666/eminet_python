@@ -24,62 +24,10 @@ from pathlib import Path
 from utils import (
     SEPARATEUR, DEFAUT, FICHIER_CONFIG,
     CATEGORIES_DEFAUT,
-    detecter_encodage, charger_categories,
+    detecter_encodage, charger_categories, lire_csv,
 )
 
 
-def lire_csv(chemin):
-    enc = detecter_encodage(chemin)
-    lieux = []
-    titre_carte = ""
-
-    with open(chemin, newline="", encoding=enc) as f:
-        lignes = list(csv.reader(f, delimiter=SEPARATEUR))
-
-    debut = 0
-    if lignes and lignes[0] and lignes[0][0].strip().lower() in ("pays", "country"):
-        if len(lignes) > 1:
-            vals = lignes[1]
-            pays   = vals[0].strip() if len(vals) > 0 else ""
-            region = vals[1].strip() if len(vals) > 1 else ""
-            titre_carte = f"{region}{', ' if region and pays else ''}{pays}"
-        debut = 2
-        while debut < len(lignes) and not any(c.strip() for c in lignes[debut]):
-            debut += 1
-
-    if debut >= len(lignes):
-        return lieux, titre_carte
-
-    entete = [c.strip().lower() for c in lignes[debut]]
-    debut += 1
-
-    index_csv = 0
-    for row in lignes[debut:]:
-        if not any(c.strip() for c in row):
-            continue
-        index_csv += 1
-        d = {col: (row[i].strip() if i < len(row) else "") for i, col in enumerate(entete)}
-        try:
-            lon = float(d.get("lon", ""))
-            lat = float(d.get("lat", ""))
-        except ValueError:
-            nom = d.get("nom", "?")
-            print(f"  ⚠️  Ignoré (pas de coordonnées) : {nom} — lance d'abord geocode.py")
-            continue
-        lieux.append({
-            "index":       index_csv,
-            "categorie":   d.get("categorie", "Autre"),
-            "nom":         d.get("nom", "Sans nom"),
-            "adresse":     d.get("adresse", ""),
-            "note":        d.get("note", ""),
-            "description": d.get("description", ""),
-            "transport":   d.get("transport", ""),
-            "url":         d.get("url", ""),
-            "lon":         lon,
-            "lat":         lat,
-        })
-
-    return lieux, titre_carte
 
 
 def generer_html(lieux, titre="Mon Voyage", categories=None):

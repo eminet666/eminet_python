@@ -1,16 +1,18 @@
 """
 utils.py
 --------
-Utilitaires partagés entre geocode.py et csv_to_html.py.
+Utilitaires partagés entre geocode.py, csv_to_html.py et export_gpx.py.
 
   SEPARATEUR      — séparateur de colonnes du CSV (";")
   DEFAUT          — style par défaut pour les catégories inconnues
   FICHIER_CONFIG  — nom du fichier de configuration des catégories
   detecter_encodage(chemin) → str
   charger_categories()      → dict
+  lire_csv(chemin)          → (lieux, titre)
 """
 
 import os
+import csv
 import json
 
 # ─────────────────────────────────────────────────────────────
@@ -86,3 +88,68 @@ def charger_categories():
         except Exception as e:
             print(f"⚠️  Erreur lecture {FICHIER_CONFIG} : {e} — utilisation des valeurs par défaut")
     return CATEGORIES_DEFAUT
+
+
+# ─────────────────────────────────────────────────────────────
+# Lecture CSV
+# ─────────────────────────────────────────────────────────────
+def lire_csv(chemin):
+    """
+    Lit un fichier CSV au format du projet et retourne (lieux, titre).
+
+    lieux  — liste de dicts avec les clés :
+              index, categorie, nom, adresse, note, description,
+              transport, url, lon (float), lat (float)
+    titre  — chaîne "Région, Pays" issue de l'en-tête, ou "" si absente
+    """
+    enc = detecter_encodage(chemin)
+    lieux = []
+    titre = ""
+
+    with open(chemin, newline="", encoding=enc) as f:
+        lignes = list(csv.reader(f, delimiter=SEPARATEUR))
+
+    debut = 0
+    if lignes and lignes[0] and lignes[0][0].strip().lower() in ("pays", "country"):
+        if len(lignes) > 1:
+            vals  = lignes[1]
+            pays   = vals[0].strip() if len(vals) > 0 else ""
+            region = vals[1].strip() if len(vals) > 1 else ""
+            titre  = f"{region}{', ' if region and pays else ''}{pays}"
+        debut = 2
+        while debut < len(lignes) and not any(c.strip() for c in lignes[debut]):
+            debut += 1
+
+    if debut >= len(lignes):
+        return lieux, titre
+
+    entete = [c.strip().lower() for c in lignes[debut]]
+    debut += 1
+
+    index_csv = 0
+    for row in lignes[debut:]:
+        if not any(c.strip() for c in row):
+            continue
+        index_csv += 1
+        d = {col: (row[i].strip() if i < len(row) else "") for i, col in enumerate(entete)}
+        try:
+            lon = float(d.get("lon", ""))
+            lat = float(d.get("lat", ""))
+        except ValueError:
+            nom = d.get("nom", "?")
+            print(f"  ⚠️  Ignoré (pas de coordonnées) : {nom} — lance d'abord geocode.py")
+            continue
+        lieux.append({
+            "index":       index_csv,
+            "categorie":   d.get("categorie", "Autre"),
+            "nom":         d.get("nom", "Sans nom"),
+            "adresse":     d.get("adresse", ""),
+            "note":        d.get("note", ""),
+            "description": d.get("description", ""),
+            "transport":   d.get("transport", ""),
+            "url":         d.get("url", ""),
+            "lon":         lon,
+            "lat":         lat,
+        })
+
+    return lieux, titre
