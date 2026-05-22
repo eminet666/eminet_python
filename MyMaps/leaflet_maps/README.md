@@ -4,3 +4,4 @@
 * [Thessalie](./thessalie.html)
 * [Rome](./rome.html)
 * [Paris](./paris_mygps.html)
+* [Norby](./norby.html)
