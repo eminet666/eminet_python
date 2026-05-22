@@ -2,7 +2,7 @@ pays;région;;;;;;;
 Grece;Crete;;;;;;;
 ;;;;;;;;
 categorie;nom;adresse;note;description;transport;url;lon;lat
-Hotel;Studio Seeview 4;Lentas, Grèce;;Studio 4;;;"24°55'20.8""";"34°55'49.2"""
-Resto;Nikitas;;;Super vue, notre spot;;https://fr.wikipedia.org/?curid=17214153;24.922362;34.929399
+Hotel;Studio Seeview 4;Lentas, Grèce;;Studio 4;;;"24.922625";"34.930374"
+Resto;Nikitas;;;Super vue, notre spot;;https://www.tripadvisor.fr/Restaurant_Review-g1187886-d18980093-Reviews-Taverna_Nikitas-Lentas_Crete.html;24.922362;34.929399
 Bar;Blue café;;;Café au bord de l'eau / Tour en bateau;;https://blue-cafe-beach-cruises.webnode.gr/;24.922358;34.929702
-Visite;Aphrodites bleues;;;Mon temple dans la montagne;;https://fr.wikipedia.org/?curid=20360;24.920718;34.927448
+Visite;Aphrodites bleues;;;Mon temple dans la montagne;;;24.920718;34.927448
