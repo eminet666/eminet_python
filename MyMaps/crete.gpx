@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="export_gpx.py"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1
+       http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Crete, Grece</name>
+    <desc>1 lieux exportés depuis crete.csv</desc>
+    <time>2026-05-22T21:31:56Z</time>
+    <author><name>export_gpx.py</name></author>
+  </metadata>
+  <wpt lat="48.859870" lon="2.362115">
+    <name>Studio Seeview 4</name>
+    <cmt>Hotel</cmt>
+    <desc>Hotel</desc>
+    <type>Hotel</type>
+    <sym>Hotel</sym>
+  </wpt>
+</gpx>
