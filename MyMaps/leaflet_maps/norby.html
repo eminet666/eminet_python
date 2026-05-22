@@ -452,7 +452,7 @@
     <button id="search-clear" title="Effacer">✕</button>
     <div id="search-results"></div>
   </div>
-  <span class="count">3 lieux</span>
+  <span class="count">4 lieux</span>
 </header>
 
 <div id="map"></div>
@@ -474,6 +474,20 @@
 
 <script>
 const DATA    = {
+  "Hotel": [
+    {
+      "index": 1,
+      "categorie": "Hotel",
+      "nom": "Studio Seeview 4",
+      "adresse": "Lentas, Grèce",
+      "note": "",
+      "description": "Studio 4",
+      "transport": "",
+      "url": "",
+      "lon": 24.922625,
+      "lat": 34.930374
+    }
+  ],
   "Resto": [
     {
       "index": 2,
@@ -483,9 +497,9 @@ const DATA    = {
       "note": "",
       "description": "Super vue, notre spot",
       "transport": "",
-      "url": "https://fr.wikipedia.org/?curid=17214153",
-      "lon": 24.922362,
-      "lat": 34.929399
+      "url": "https://www.tripadvisor.fr/Restaurant_Review-g1187886-d18980093-Reviews-Taverna_Nikitas-Lentas_Crete.html",
+      "lon": 24.922446,
+      "lat": 34.929202
     }
   ],
   "Bar": [
@@ -511,13 +525,13 @@ const DATA    = {
       "note": "",
       "description": "Mon temple dans la montagne",
       "transport": "",
-      "url": "https://fr.wikipedia.org/?curid=20360",
+      "url": "",
       "lon": 24.920718,
       "lat": 34.927448
     }
   ]
 };
-const STYLES  = {"Resto": {"couleur": "#95A5A6", "icone": "📍"}, "Bar": {"couleur": "#95A5A6", "icone": "📍"}, "Visite": {"couleur": "#95A5A6", "icone": "📍"}};
+const STYLES  = {"Hotel": {"couleur": "#2980B9", "icone": "🏨"}, "Resto": {"couleur": "#95A5A6", "icone": "📍"}, "Bar": {"couleur": "#95A5A6", "icone": "📍"}, "Visite": {"couleur": "#95A5A6", "icone": "📍"}};
 const layers  = {};
 const hidden  = new Set();
 const allMarkers = [];   // { marker, lieu, cat, style } — pour la recherche
@@ -525,7 +539,7 @@ const isMobile = () => window.innerWidth <= 768;
 
 // ── Carte ────────────────────────────────────────────────────
 const map = L.map('map', {
-  center: [34.928850, 24.921813],
+  center: [34.929181, 24.922037],
   zoom: 13,
   zoomControl: true,
   tap: true,
