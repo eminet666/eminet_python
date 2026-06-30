@@ -325,8 +325,6 @@ def generer_html(lieux, titre="Mon Voyage", categories=None):
     .popup-adresse  {{ font-size: 0.75rem; color: #888; margin-bottom: 4px; }}
     .popup-transport{{ font-size: 0.75rem; color: #5d8aa8; margin-bottom: 4px; }}
     .popup-desc     {{ font-size: 0.8rem; color: #555; line-height: 1.4; }}
-    .popup-photo    {{ margin-top: 8px; }}
-    .popup-photo img {{ width: 100%; max-height: 160px; object-fit: cover; border-radius: 6px; display: block; }}
     .popup-url      {{ font-size: 0.75rem; margin-top: 6px; }}
     .popup-url a    {{ color: #2980B9; text-decoration: none; font-weight: 500; }}
     .popup-url a:hover {{ text-decoration: underline; }}
@@ -474,7 +472,6 @@ def generer_html(lieux, titre="Mon Voyage", categories=None):
       #bottom-sheet .popup-adresse {{ font-size: 0.85rem; margin-bottom: 6px; }}
       #bottom-sheet .popup-transport {{ font-size: 0.85rem; margin-bottom: 6px; }}
       #bottom-sheet .popup-desc    {{ font-size: 0.9rem; line-height: 1.5; }}
-      #bottom-sheet .popup-photo img {{ max-height: 220px; }}
       #bottom-sheet .popup-url     {{ font-size: 0.9rem; margin-top: 12px; }}
       #bottom-sheet .popup-url a   {{ font-size: 1rem; padding: 8px 0; display: inline-block; }}
 
@@ -583,7 +580,6 @@ function buildPopupHtml(lieu, cat, style) {{
   if (lieu.adresse)     html += `<div class="popup-adresse">📮 ${{lieu.adresse}}</div>`;
   if (lieu.transport)   html += `<div class="popup-transport">🚇 ${{lieu.transport}}</div>`;
   if (lieu.description) html += `<div class="popup-desc">${{lieu.description}}</div>`;
-  if (lieu.photo)       html += `<div class="popup-photo"><img src="${{lieu.photo}}" alt="${{lieu.nom}}" loading="lazy"></div>`;
   if (lieu.url)         html += `<div class="popup-url"><a href="${{lieu.url}}" target="_blank">🔗 Site</a></div>`;
   html += `</div>`;
   return html;
@@ -617,10 +613,7 @@ Object.entries(DATA).forEach(([cat, lieux]) => {{
       if (isMobile()) {{
         openSheet(buildPopupHtml(lieu, cat, style));
       }} else {{
-        L.popup({{maxWidth: 260}})
-          .setLatLng(marker.getLatLng())
-          .setContent(buildPopupHtml(lieu, cat, style))
-          .openOn(map);
+        marker.bindPopup(buildPopupHtml(lieu, cat, style), {{maxWidth: 260}}).openPopup();
       }}
     }});
 
@@ -721,10 +714,7 @@ function filtrerMarqueurs(query) {{
         if (isMobile()) {{
           openSheet(buildPopupHtml(lieu, cat, style));
         }} else {{
-          L.popup({{maxWidth: 260}})
-            .setLatLng([lieu.lat, lieu.lon])
-            .setContent(buildPopupHtml(lieu, cat, style))
-            .openOn(map);
+          marker.bindPopup(buildPopupHtml(lieu, cat, style), {{maxWidth: 260}}).openPopup();
         }}
         searchResults.classList.remove('visible');
       }});

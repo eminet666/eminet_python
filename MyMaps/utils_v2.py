@@ -99,7 +99,7 @@ def lire_csv(chemin):
 
     lieux  — liste de dicts avec les clés :
               index, categorie, nom, adresse, note, description,
-              transport, url, photo, lon (float), lat (float)
+              transport, url, lon (float), lat (float)
     titre  — chaîne "Région, Pays" issue de l'en-tête, ou "" si absente
     """
     enc = detecter_encodage(chemin)
@@ -148,7 +148,6 @@ def lire_csv(chemin):
             "description": d.get("description", ""),
             "transport":   d.get("transport", ""),
             "url":         d.get("url", ""),
-            "photo":       d.get("photo", ""),
             "lon":         lon,
             "lat":         lat,
         })
