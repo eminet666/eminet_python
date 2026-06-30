@@ -5,6 +5,6 @@
 #### hotel
 
 #### aphrodites bleues
-Coucou
+
 
 #### rublique 2
