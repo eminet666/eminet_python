@@ -5,4 +5,4 @@
 * [Rome](./rome.html)
 * [Paris](./paris_mygps.html)
 * [Norby](./norby.html)
-* [Norby Images](./norby2.html)
+* [Norby2](./norby2.html)
