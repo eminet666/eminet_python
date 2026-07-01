@@ -550,20 +550,13 @@ L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
 }}).addTo(map);
 
 // ── Icônes ───────────────────────────────────────────────────
-function creerIcone(style, icone) {{
+function creerIcone(style, num) {{
   const sz = isMobile() ? 42 : 32;
-  const label = (icone !== undefined) ? icone : style.icone;
-  const isNum = (typeof label === 'number' || (typeof label === 'string' && /^[0-9]+$/.test(label)));
-  const fs = isNum
-    ? (isMobile() ? 13 : 11)
-    : (isMobile() ? 18 : 14);
-  const extraStyle = isNum
-    ? 'font-weight:700;color:#fff;font-family:monospace;transform:rotate(45deg);'
-    : 'transform:rotate(45deg);';
+  const fs = isMobile() ? 13 : 11;
   return L.divIcon({{
     className: '',
     html: `<div class="marker-pin" style="background:${{style.couleur}};width:${{sz}}px;height:${{sz}}px">
-             <span class="marker-icon" style="font-size:${{fs}}px;${{extraStyle}}">${{label}}</span>
+             <span class="marker-icon" style="font-size:${{fs}}px;font-weight:700;color:#fff;font-family:monospace;transform:rotate(45deg);">${{num}}</span>
            </div>`,
     iconSize:    [sz, sz],
     iconAnchor:  [sz/2, sz],
@@ -606,7 +599,7 @@ map.on('click', () => sheet.classList.remove('open'));
 
 // ── Marqueurs ────────────────────────────────────────────────
 Object.entries(DATA).forEach(([cat, lieux]) => {{
-  const style  = STYLES[cat] || {{couleur: '#95A5A6', icone: '📍'}};
+  const style  = STYLES[cat] || {{couleur: '#95A5A6'}};
   const groupe = L.layerGroup().addTo(map);
   layers[cat]  = groupe;
 
@@ -632,13 +625,13 @@ Object.entries(DATA).forEach(([cat, lieux]) => {{
 // ── Légende interactive ───────────────────────────────────────
 const legend = document.getElementById('legend');
 Object.entries(DATA).forEach(([cat, lieux]) => {{
-  const style = STYLES[cat] || {{couleur: '#95A5A6', icone: '📍'}};
+  const style = STYLES[cat] || {{couleur: '#95A5A6'}};
   const item  = document.createElement('div');
   item.className   = 'legend-item';
   item.dataset.cat = cat;
   item.innerHTML   = `
     <div class="legend-dot" style="background:${{style.couleur}}"></div>
-    <span class="legend-label">${{style.icone}} ${{cat}}</span>
+    <span class="legend-label">${{cat}}</span>
     <span class="legend-count">${{lieux.length}}</span>`;
 
   item.addEventListener('click', () => {{

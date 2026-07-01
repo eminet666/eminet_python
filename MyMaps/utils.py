@@ -19,7 +19,7 @@ import json
 # Constantes communes
 # ─────────────────────────────────────────────────────────────
 SEPARATEUR     = ";"
-DEFAUT         = {"couleur": "#95A5A6", "icone": "📍"}
+DEFAUT         = {"couleur": "#95A5A6"}
 FICHIER_CONFIG = "categories.json"
 
 # ─────────────────────────────────────────────────────────────
@@ -27,35 +27,31 @@ FICHIER_CONFIG = "categories.json"
 # Pour ajouter une catégorie : édite categories.json directement.
 # ─────────────────────────────────────────────────────────────
 CATEGORIES_DEFAUT = {
-    "Musée":         {"couleur": "#E8462A", "icone": "🏛"},
-    "Musées":        {"couleur": "#E8462A", "icone": "🏛"},
-    "Monument":      {"couleur": "#C0392B", "icone": "🗿"},
-    "Monuments":     {"couleur": "#C0392B", "icone": "🗿"},
-    "Eglise":        {"couleur": "#8E44AD", "icone": "⛪"},
-    "Eglises":       {"couleur": "#8E44AD", "icone": "⛪"},
-    "Restaurants":   {"couleur": "#E67E22", "icone": "🍽"},
-    "Restaurant":    {"couleur": "#E67E22", "icone": "🍽"},
-    "Hôtels":        {"couleur": "#2980B9", "icone": "🏨"},
-    "Hôtel":         {"couleur": "#2980B9", "icone": "🏨"},
-    "Hotel":         {"couleur": "#2980B9", "icone": "🏨"},
-    "Points de vue": {"couleur": "#27AE60", "icone": "👁"},
-    "A faire":       {"couleur": "#F39C12", "icone": "📌"},
-    "Adresse":       {"couleur": "#7F8C8D", "icone": "📍"},
-    "Plages":        {"couleur": "#1ABC9C", "icone": "🏖"},
-    "Randonnées":    {"couleur": "#16A085", "icone": "🥾"},
-    "Shopping":      {"couleur": "#D35400", "icone": "🛍"},
-    "Antique":       {"couleur": "#A0522D", "icone": "🏺"},
-    "Renaissance":   {"couleur": "#8B6914", "icone": "🎨"},
-    "Moyen-Age":     {"couleur": "#148B69", "icone": "⚔️"},
-    "Contemporain":  {"couleur": "#2C3E50", "icone": "🏙"},
-    "Village":       {"couleur": "#502C3E", "icone": "🏘"},
-    "Quartier":      {"couleur": "#16A085", "icone": "🚶"},
-    "Train":         {"couleur": "#7D3C98", "icone": "🚂"},
-    "Jardin":        {"couleur": "#52A835", "icone": "🌿"},
-    "Place":         {"couleur": "#E0A020", "icone": "🏟"},
-    "Néoclassique":  {"couleur": "#5B8DB8", "icone": "🏛"},
-    "Cinéma":        {"couleur": "#E91E8C", "icone": "🎬"},
-    "Byzantin":      {"couleur": "#8B1A8B", "icone": "✝️"},
+    "Musée":         {"couleur": "#E84545"},
+    "Monument":      {"couleur": "#FF6B35"},
+    "Eglise":        {"couleur": "#A855F7"},
+    "Resto":         {"couleur": "#F59E0B"},
+    "Bar":           {"couleur": "#EF4444"},
+    "Hôtel":         {"couleur": "#3B82F6"},
+    "Points de vue": {"couleur": "#10B981"},
+    "A faire":       {"couleur": "#F97316"},
+    "Adresse":       {"couleur": "#6B7280"},
+    "Plages":        {"couleur": "#06B6D4"},
+    "Randonnées":    {"couleur": "#16A34A"},
+    "Shopping":      {"couleur": "#DB2777"},
+    "Antique":       {"couleur": "#92400E"},
+    "Renaissance":   {"couleur": "#B45309"},
+    "Moyen-Age":     {"couleur": "#065F46"},
+    "Contemporain":  {"couleur": "#1E3A5F"},
+    "Village":       {"couleur": "#7C3AED"},
+    "Quartier":      {"couleur": "#0E7490"},
+    "Train":         {"couleur": "#6D28D9"},
+    "Jardin":        {"couleur": "#4ADE80"},
+    "Place":         {"couleur": "#D97706"},
+    "Néoclassique":  {"couleur": "#60A5FA"},
+    "Cinéma":        {"couleur": "#EC4899"},
+    "Byzantin":      {"couleur": "#9333EA"},
+    "Visite":        {"couleur": "#14B8A6"},
 }
 
 
