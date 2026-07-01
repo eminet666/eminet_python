@@ -3,7 +3,8 @@ Grece;Crete;;;;;;;;
 ;;;;;;;;;
 categorie;nom;adresse;note;description;transport;url;lon;lat;photo
 Hôtel;Studio Seeview 4;Lentas, Grèce;4;Au premier étage, le studio est petit mais avec un balcon vue sur mer. Le parking est juste derrière.;;https://www.hotel-lentas.com/en/seaview-studios/location.html;24.922625;34.930374;./norby/studio_seaview.jpg
-Resto;Nikitas;;5;;;;24.922446;34.929202;./norby/nikitas.jpg
+Resto;Nikitas;;5;"C'est notre spot ! Une vue grandiose, la table le plus au sud de l'Europe., sur une belle terrasse au dessus de la mer. On adore Nikitas et sa famille<br>
+Bonnes grillades au feu de bois et cuisine familiale. Le vin (au pichet) n'est pas terrible. Pain maison.<b>Seulement le soir</b><br>";;;24.922446;34.929202;./norby/nikitas.jpg
 Bar;Blue café;;5;"Café au bord de l'eau avec une vue géniale. Super spot le matin, en pleine chaleur, le soir
 <br>Argyris est adorable, c'est lui qui fait aussi des excursions sur son bateau.";;https://blue-cafe-beach-cruises.webnode.gr/;24.922446;34.92956300545437;./norby/blue_cafe.jpg
 A faire;Aphrodites bleues;;5;"<b>Mon temple dans la montagne depuis presque 5 ans ! </b>J'y vais tous les matins au lever du soleil pour y passer une à deux heures. Magique ! <br>
