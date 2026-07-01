@@ -36,7 +36,7 @@ CATEGORIES_DEFAUT = {
     "Points de vue": {"couleur": "#10B981"},
     "A faire":       {"couleur": "#F97316"},
     "Adresse":       {"couleur": "#6B7280"},
-    "Plages":        {"couleur": "#06B6D4"},
+    "Plage":         {"couleur": "#06B6D4"},
     "Randonnées":    {"couleur": "#16A34A"},
     "Shopping":      {"couleur": "#DB2777"},
     "Antique":       {"couleur": "#92400E"},
