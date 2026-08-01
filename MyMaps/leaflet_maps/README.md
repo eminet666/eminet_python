@@ -1,4 +1,6 @@
 ## MyMaps
+* [Chios](./chios.html)
+* [Samos](./samos.html)
 * [Athènes](./athenes.html)
 * [Thessalonique](./thessalonique.html)
 * [Thessalie](./thessalie.html)

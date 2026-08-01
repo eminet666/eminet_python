@@ -1,0 +1,73 @@
+﻿pays;région;;;;;;;;
+;;;;;;;;;
+;;;;;;;;;
+categorie;nom;adresse;note;description;transport;url;lon;lat;photo
+Hôtel;Pelineon Rooms;Omirou 9, Chios, 82100, Grèce;4;1 nuit 10-11 aout, 60€, Anne;;https://pelineonrooms.com/en/;26.137873;38.368891;./chios/chios_pelineon_rooms.jpg
+Hôtel;Lithos Homes;Volissos 821 03, Grèce;4;3 nuits 11-14 aout, 289,50€, Anne;;https://lithoshomes.gr/;25.927745;38.485909;./chios/chios_lithos_homes.jpg
+Hôtel;Mastiha luxury maisonette II;Lithi 821 02, Grèce;4;2 nuits 14-16 aout, 276€, Anne;;;26.001211;38.333079;./chios/chios_maisonnette.jpg
+Hôtel;Thea Appartements;Εμπορειός 821 02, Chios, Grèce;4;3 nuits, 16-19 aout, 361€, Anne, +306946011339;;;26.029495;38.189069;./chios/chios_thea_appaerements.jpg
+Hotel;Aeroport Chios;;;Aegean, 14:05 Paris - 21:25 Chios;;;26.142598;38.345357;
+Musée;Musée archéologique;Michalon 10, Chios 821 00, Grèce;4;"Fermé pour travaux
+Musée moderne mais peu d’explications (mer-dim 8h-15h)";;https://archaeologicalmuseums.gr/en/museum/5df34af3deca5e2d79e8c130/archaeological-museum-of-chios;26.139424;38.365402;./chios/chios_musee_archeo.jpg
+Quartier;Quartier Kastro;;;;;https://fr.wikipedia.org/wiki/Chios_(ville);26.137311;38.373630;
+Quartier;Quartier Kampos;Chios 821 00, Grèce;3;Ancien quatier des riches génois du XVè, 200 villas arborées, unité architectural mais murs très hauts;;;26.136999;38.323921;./chios/chios_kampos.jpg
+Moyen-Age;Chateau de Chios;Kalothetou 10, Chios 821 00, Grèce;;"Vieille citadelle médiévale fortifiée située au nord de la ville de Chios (Chora)
+Toukours ouvert";;;26.136624;38.371683;./chios/chios_chateau.jpg
+Byzantin;Monastère Agios Markos;Ιερά Μονή Αγίου Μάρκου, Karies 821 00, Grèce;;"Très beau bâtiment perché, chaulé, jaune et bleu, panorama samos-icaria-turquie
+07:30–13:00, 16:30–20:00";;https://www.naegean-modernhistory.gr/en/landmark/chios-en/%CE%B9%CE%B5%CF%81%CE%AC-%CE%BC%CE%BF%CE%BD%CE%AE-%CE%B1%CE%B3%CE%AF%CE%BF%CF%85-%CE%BC%CE%AC%CF%81%CE%BA%CE%BF%CF%85-%CE%BA%CE%B1%CF%81%CF%85%CF%8E%CE%BD/;;;
+Byzantin;Monastère Nea Moni;Nea Moni of Chios 821 00, Grèce;4;"Un des plus important monuments byzantir de Grèce, mosaique, musée 8h-13h
+(de lever au coucher du jour, fermé entre 13h et 16h) joyau de lart bizantin du XIè
+08:00–13:00, 17:00–19:00";;https://fr.wikipedia.org/wiki/Monast%C3%A8re_Nea_Moni_de_Chios;26.055991;38.374009;./chios/chios_nea_moni.jpg
+Village;Village d'Avgonima;Αυγώνυμα, 821 00, Grèce;3;Village médiéval, perché, austère et superbe, maisons cubes, panorama splendide;;https://fr.wikipedia.org/wiki/Avg%C3%B3nyma;26.021064;38.376875;./chios/chios_village_avgomina.jpg
+Village;Village d'Anavatos;"Ανάβατος
+ 821 00
+ Grèce";5;Incroyable village médiéval en ruine après 1822, risque chutes de pierre, belle église toute en haut;;https://fr.wikipedia.org/wiki/An%C3%A1vatos;26.019789;38.402821;./chios/chios_village_anavatos.jpg
+Plage;Plage Elinta;Omiroupoli 821 00, Grèce;4;"Plage de petits galets, peu d'ombre
+Attention, ossibilité qu’il y ait des abeilles";;;25.990210;38.391614;../leaflet_maps/chios/chios_plage_Elinda.jpg
+Plage;Plage Tigani;Unnamed Road, Chios 821 03, Grèce;4;Abritée, propre, agréable;;;25.966133;38.403801;./chios/chios_plage_tigani.jpg
+Plage;Plage Metochi;Unnamed Road, Chios 821 03, Grèce;4;Belle plage, peu fréquentée;;;25.963412;38.416982;./chios/chios_plage_metochi.jpg
+Village;Village Volissos;"Βολισσός
+ 821 03 Grèce";;;;;25.926687;38.483257;./chios/chios_village_volissos.jpg
+Plage;Lampsa Beach;;;;;;25.902500;38.475195;./chios/chios_plage_lampsa.jpg
+Plage;Limnos Beach;;;;;;25.910050;38.473066;./chios/chios_plage_limnos.jpg
+Plage;Leftkakia Beach;;;Belle plage aussi;;;25.914728;38.471419;./chios/chios_plage_lefkakia.jpg
+Plage;Volissos Beach;;;Belle plage aussi;;;25.929344;38.467094;./chios/chios_village_volissos.jpg
+Plage;Magemena Beach;;;Belle plage aussi;;;25.9246101;38.469372;./chios/chios_plage_magemena.jpg
+Village;Village Agio Gala;;;"Petit village au nord sur les pentes du mont Amani (809m)
+En poursuivant vers le nord, véritable road trip long mais pittoresque (ni plage, ni essences)
+= chapelets de villages avec cafés panoramiques";;;25.860182;38.564090;./chios/chios_village_agio_gala.jpg
+A faire;Grotte Agio Galas;;4;"Petite grottes sans stalactiques avec 2 petites églises
+11h-18h30, fermée le lundi";;;25.860351;38.562338;./chios/chios_grotte_agio_galas.jpg
+A faire;Grotte Olimpi;Unnamed Rd Chios 821 02, Olimpi 821 00, Grèce;4;Un peu tout ce qu’on peu voir dans une grotte, tlj sauf lundi 11h15h-17h20;;;25.924788;38.212786;./chios/chios_grotte_olimpi.jpg
+Plage;Village-Plage Agiasmata;;;"Station balnéaire surréaliste, rochers torturés, plage de gros rochers de galets noirs, petits galets au bout.
+Route retour entre les monts Katavassi, Vrondados avec de beaux paysages";;;25.936890;38.587447;./chios/chios_plage_agiasmata.jpg
+Plage;Village-Plage Daskalopetra;;;Homère y aurait enseigné;;;26.134377;38.421035;./chios/chios_plage_daskalopetra.jpg
+Byzantin;Monastère Myrtidiotissa;;;Avec ses coupoles bleues au dessus de la mer, belle crique de galets en contrebas;;;26.140429;38.429892;./chios/chios_monastere_myrtidiotissa.jpg
+Plage;Plage Myrsinidi;;;Belle crique de galets en contrebas;;;26.140558;38.429177;./chios/chios_plage_myrsinidi.jpg
+Village;Village Pantoukios;;;Port de pêche avec tavernes;;;26.135289;38.463637;../leaflet_maps/chios/chios_village_pantoukios.jpg
+Eglise;Eglise Agios Isidoros;;;Belle plage de sable avec des tamaris, belle chapelle sur un rocher au bout d’une jetée;;;25.857190;38.503602;./chios/chios_eglise_agiosisidoros.jpg
+Village;Village Lankada;;;Autre port, assez animé avec café et tavernes;;;26.123997;38.477355;../leaflet_maps/chios/chios_village_lankada.jpg
+Village;Village Marmaro;;;Autre port, peu de charme, 2 statues, le pécheur et sa femme;;;26.108568;38.543739;./chios/chios_village_marmaro.jpg
+Village;Village Nagos;;;Petit port avec une petite plage;;;26.083046;38.559040;../leaflet_maps/chios/chios_village_nagos.jpg
+Plage;Plage de Giosonas;;;;;;26.080145;38.563156;./chios/chios_plage_giosona.jpg
+Plage;Plage de Karfas;;;A fuir, très touristique malgré la plage de sable fin;;;26.153588;38.320527;./chios/chios_village_karfas.jpg
+Village;Village Pyrghi;"Πυργί
+ 821 02
+ Grèce";5;"Superbe village fortifié aux ruelles étroites et fraiches avec des escaliers de fer vers les toits terrasse. 
+Très nombreuses belles maisons recouvertes de Xysta (# grattage, parement blanc). Place du village animée, superbe église byzantine Agii Apostoli avec des fresques (tlj sauf lun, dim, 8h-14h30)";;https://fr.wikipedia.org/wiki/Pyrg%C3%AD_(Chios);25.998751;38.227140;./chios/chios_village_pyrghi.jpg
+Village;Village Emborios;;;Joli port naturel sans ombre, temple néolithique au dessus de la mer, 2 tavernes (Faisto, Neptuno). À 200m, Mavros Galos : plage de galet noirs, puis une autre naturiste sous falaises rouge et jaune (+belle);;;26.028241;38.188144;./chios/chios_village_emborios.jpg
+Village;Village Komi;;;Petite station balnéaire avec grande plage de sable mais manque de charme et du monde;;;26.043379;38.201166;./chios/chios_village_komi.jpg
+Village;Village Komi (copie);;;Petite station balnéaire avec grande plage de sable mais manque de charme et du monde;;;26.043379;38.201166;./chios/chios_village_komi.jpg
+Plage;Plage Vroulidia;;;800m avant Emborios puis 4km, maginifque petite plage en bas des marches mais pas d’ombre;;;24.655425;37.023673;./chios/chios_plage_vroulidia.jpg
+Plage;Plage Kato Fana;;;Belle baie fermée abritée du vent, 2km de Pyrghi puis 4km de piste, plage de sable, tamaris, chapelle. Quelques ruine d'un site archéollogique dédié à Apollon. Phanaios;;;25.927326;38.206620;./chios/chios_plage_fana.jpg
+Village;Village Olympi;;5;Village médieval en pierre de taille avec les cultures autour, très calme, venir plutôt fin de journée, 2 cafés;;;25.942464;38.247691;../leaflet_maps/chios/chios_village_olimpi.jpg
+Village;Village Maestra;;5;"Impressionnant village musée (presque trop léché), unité car 1 seul archi, place au centre avec cafés, une vieille église, 1 parking extérieur.
+Possibilité de balade « mastic tour» : masticulture.com, 18€";;;25.922499;38.260220;./chios/chios_village_maestra.jpg
+Plage;Plage Agia Dinami;;;1km plus loin que les grottes d'Olimpi, petite église avec qq tables pour mique-niquer, au-dessu d’un petite plage;;;25.912616;38.212446;../leaflet_maps/chios/chios_plage_agia_dinami.jpg
+Village;Village Limenas;;;Station balnéaire ratée mais point de départ de la route pour les belles plages de la côte ouest;;;25.931078;38.287299;../leaflet_maps/chios/chios_village_limenas.jpg
+Plage;Plage de Dydima;;;;;;25.939112;38.293140;./chios/chios_plage_didima.jpg
+Plage;Plage de Fistiki;;;;;;25.9359788;38.296643;./chios/chios_plage_fistiki.jpg
+Plage;Plage d'Agia Irini;;;Très belle crique caillouteuse avec une chapelle, petit port et tarverne;;;25.965095;38.295093;./chios/chios_plage_agia_irini.jpg
+Plage;Plage de Lithi;;;Plage en contrebas de Vessa, large baie protégée, plage de sable familiale, transats gratuits;;;25.991435;38.340662;../leaflet_maps/chios/chios_plage_lithi.jpg
+Village;Village de Vessa;;;Magnifique village au charme indéniable, peu de touriste, taverne Fotia Lemoni à l’entrée du village;;;26.009948;38.297859;./chios/chios_village_vessa.jpg
+;Nouveau lieu;;;;;;;;

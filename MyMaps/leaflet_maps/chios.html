@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chios</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    header {
+      background: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 1000;
+      flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    header .count {
+      font-size: 0.75rem;
+      color: #999;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    /* ── Barre de recherche ─────────────────────────────────── */
+    #search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 1;
+      max-width: 300px;
+      margin: 0 16px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      font-size: 0.8rem;
+      pointer-events: none;
+      color: #bbb;
+      line-height: 1;
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 6px 28px 6px 30px;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      font-size: 0.83rem;
+      font-family: inherit;
+      outline: none;
+      background: #f5f5f5;
+      color: #333;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      /* Masque le bouton natif "✕" des navigateurs sur type=search */
+      -webkit-appearance: none;
+    }
+    #search-input:focus {
+      border-color: #bbb;
+      background: #fff;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    }
+    #search-input::placeholder { color: #ccc; }
+    #search-input::-webkit-search-cancel-button { display: none; }
+
+    #search-clear {
+      position: absolute;
+      right: 9px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.7rem;
+      color: #bbb;
+      display: none;
+      padding: 2px 4px;
+      line-height: 1;
+      border-radius: 50%;
+    }
+    #search-clear:hover { color: #555; background: #eee; }
+
+    /* ── Dropdown résultats ─────────────────────────────────── */
+    #search-results {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 2000;
+    }
+    #search-results.visible { display: block; }
+
+    .result-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #f2f2f2;
+      transition: background 0.1s;
+    }
+    .result-item:last-child { border-bottom: none; }
+    .result-item:hover { background: #f7f7f7; }
+
+    .result-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .result-text { flex: 1; min-width: 0; }
+    .result-nom {
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: #222;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .result-meta { font-size: 0.7rem; color: #aaa; margin-top: 1px; }
+
+    .result-empty {
+      padding: 14px 12px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #bbb;
+    }
+
+    /* ── Carte ──────────────────────────────────────────────── */
+    #map { flex: 1; z-index: 1; }
+
+    /* ── Bouton GPS ─────────────────────────────────────────── */
+    #gps-toggle {
+      position: absolute;
+      bottom: 30px;
+      left: 10px;
+      z-index: 1000;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    #gps-toggle:hover  { box-shadow: 0 3px 12px rgba(0,0,0,0.2); }
+    #gps-toggle.active { background: #e8f5e9; border-color: #27AE60; }
+    #gps-toggle.error  { background: #fdecea; border-color: #e74c3c; }
+
+    /* ── Marqueurs ──────────────────────────────────────────── */
+    .marker-pin {
+      width: 32px;
+      height: 32px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .marker-pin .marker-icon {
+      transform: rotate(45deg);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    /* ── Légende DESKTOP ────────────────────────────────────── */
+    #legend {
+      position: absolute;
+      bottom: 30px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 16px;
+      min-width: 165px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+
+    #legend h3 {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .legend-item:hover { background: #f5f5f5; }
+    .legend-item.hidden { opacity: 0.3; }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-label { font-size: 0.8rem; color: #333; flex: 1; }
+    .legend-count  { font-size: 0.7rem; color: #bbb; }
+
+    /* Bouton légende mobile — caché sur desktop */
+    #legend-toggle { display: none; }
+
+    /* ── Popup DESKTOP ──────────────────────────────────────── */
+    .leaflet-popup-content-wrapper {
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      color: #222;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .leaflet-popup-tip       { background: #ffffff; }
+    .leaflet-popup-close-button { color: #aaa !important; }
+
+    /* ── Bottom sheet MOBILE (caché par défaut) ─────────────── */
+    #bottom-sheet {
+      display: none; /* activé en JS sur mobile */
+    }
+
+    /* ── Contenu popup / bottom-sheet (partagé) ─────────────── */
+    .popup-content  { padding: 4px 2px; }
+    .popup-cat      { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+    .popup-nom      { font-size: 1rem; font-weight: 600; color: #111; margin-bottom: 4px; }
+    .popup-note     { font-size: 0.85rem; color: #f0a500; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .popup-adresse  { font-size: 0.75rem; color: #888; margin-bottom: 4px; }
+    .popup-transport{ font-size: 0.75rem; color: #5d8aa8; margin-bottom: 4px; }
+    .popup-desc     { font-size: 0.8rem; color: #555; line-height: 1.4; }
+    .popup-photo    { margin-top: 8px; }
+    .popup-photo img { width: 100%; max-height: 160px; object-fit: cover; border-radius: 6px; display: block; }
+    .popup-url      { font-size: 0.75rem; margin-top: 6px; }
+    .popup-url a    { color: #2980B9; text-decoration: none; font-weight: 500; }
+    .popup-url a:hover { text-decoration: underline; }
+
+    /* ════════════════════════════════════════════════════════
+       MOBILE  (écrans ≤ 768px)
+       ════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* Header plus compact */
+      header { padding: 8px 14px; }
+      header h1 { font-size: 0.85rem; }
+
+      /* Barre de recherche pleine largeur sur mobile */
+      #search-box {
+        max-width: unset;
+        margin: 0 10px;
+      }
+      header .count { display: none; }
+
+      /* Résultats — position fixe sous le header sur mobile */
+      #search-results {
+        position: fixed;
+        top: 51px;
+        left: 8px;
+        right: 8px;
+        max-height: 50vh;
+      }
+
+      /* Marqueurs plus grands pour le doigt */
+      .marker-pin {
+        width: 42px;
+        height: 42px;
+        border-width: 3px;
+      }
+      .marker-pin .marker-icon { font-size: 18px; }
+
+      /* Légende cachée par défaut, ouvrable */
+      #legend {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        border-radius: 16px 16px 0 0;
+        padding: 16px 20px 24px;
+        min-width: unset;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      #legend.open { transform: translateY(0); }
+
+      #legend h3 {
+        font-size: 0.7rem;
+        text-align: center;
+        margin-bottom: 14px;
+      }
+
+      /* Drag handle au dessus de la légende */
+      #legend::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 14px;
+      }
+
+      .legend-item  { padding: 8px 6px; }
+      .legend-label { font-size: 0.9rem; }
+      .legend-count { font-size: 0.8rem; }
+      .legend-dot   { width: 12px; height: 12px; }
+
+      /* Bouton flottant pour ouvrir la légende */
+      #legend-toggle {
+        display: flex;
+        position: absolute;
+        bottom: 24px;
+        right: 16px;
+        z-index: 1001;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: box-shadow 0.15s;
+      }
+      #legend-toggle:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+      /* Bouton GPS mobile — empilé au-dessus du bouton légende */
+      #gps-toggle {
+        position: absolute;
+        bottom: 84px;
+        left: unset;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        font-size: 1.3rem;
+        z-index: 1001;
+      }
+
+
+      .leaflet-popup { display: none !important; }
+
+      /* Bottom sheet à la place */
+      #bottom-sheet {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1002;
+        background: #ffffff;
+        border-radius: 16px 16px 0 0;
+        padding: 20px 20px 32px;
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 55vh;
+        overflow-y: auto;
+      }
+      #bottom-sheet.open { transform: translateY(0); }
+
+      #bottom-sheet::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 16px;
+      }
+
+      #bottom-sheet .popup-nom     { font-size: 1.15rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-cat     { font-size: 0.7rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-note    { font-size: 1rem; margin-bottom: 8px; }
+      #bottom-sheet .popup-adresse { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-transport { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-desc    { font-size: 0.9rem; line-height: 1.5; }
+      #bottom-sheet .popup-photo img { max-height: 220px; }
+      #bottom-sheet .popup-url     { font-size: 0.9rem; margin-top: 12px; }
+      #bottom-sheet .popup-url a   { font-size: 1rem; padding: 8px 0; display: inline-block; }
+
+      /* Bouton fermer le bottom sheet */
+      #sheet-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: #f5f5f5;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🗺 Chios</h1>
+  <div id="search-box">
+    <span class="search-icon">🔍</span>
+    <input id="search-input" type="search" placeholder="Rechercher un lieu…" autocomplete="off" spellcheck="false">
+    <button id="search-clear" title="Effacer">✕</button>
+    <div id="search-results"></div>
+  </div>
+  <span class="count">50 lieux</span>
+</header>
+
+<div id="map"></div>
+
+<!-- Bouton GPS -->
+<button id="gps-toggle" title="Ma position">📍</button>
+
+<!-- Légende (desktop : flottante / mobile : bottom sheet) -->
+<div id="legend"><h3>Catégories</h3></div>
+
+<!-- Bouton mobile pour ouvrir la légende -->
+<button id="legend-toggle" title="Catégories">🗂</button>
+
+<!-- Bottom sheet mobile -->
+<div id="bottom-sheet">
+  <button id="sheet-close">✕</button>
+  <div id="sheet-content"></div>
+</div>
+
+<script>
+const DATA    = {
+  "Hôtel": [
+    {
+      "index": 1,
+      "categorie": "Hôtel",
+      "nom": "Pelineon Rooms",
+      "adresse": "Omirou 9, Chios, 82100, Grèce",
+      "note": "4",
+      "description": "1 nuit 10-11 aout, 60,50€, Anne",
+      "transport": "",
+      "url": "https://pelineonrooms.com/en/",
+      "photo": "./chios/chios_pelineon_rooms.jpg",
+      "lon": 26.137873,
+      "lat": 38.368891
+    },
+    {
+      "index": 2,
+      "categorie": "Hôtel",
+      "nom": "Lithos Homes",
+      "adresse": "Volissos 821 03, Grèce",
+      "note": "4",
+      "description": "3 nuits 11-14 aout, 289,50€, Anne",
+      "transport": "",
+      "url": "https://lithoshomes.gr/",
+      "photo": "./chios/chios_lithos_homes.jpg",
+      "lon": 25.927745,
+      "lat": 38.485909
+    },
+    {
+      "index": 3,
+      "categorie": "Hôtel",
+      "nom": "Mastiha luxury maisonette II",
+      "adresse": "Lithi 821 02, Grèce",
+      "note": "4",
+      "description": "2 nuits 14-16 aout, 276€, Anne",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_maisonnette.jpg",
+      "lon": 26.001211,
+      "lat": 38.333079
+    },
+    {
+      "index": 4,
+      "categorie": "Hôtel",
+      "nom": "Thea Appartements",
+      "adresse": "Εμπορειός 821 02, Chios, Grèce",
+      "note": "4",
+      "description": "3 nuits, 16-19 aout, 361€, Anne, +306946011339",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_thea_appaerements.jpg",
+      "lon": 26.029495,
+      "lat": 38.189069
+    }
+  ],
+  "Hotel": [
+    {
+      "index": 5,
+      "categorie": "Hotel",
+      "nom": "Aeroport Chios",
+      "adresse": "",
+      "note": "",
+      "description": "Aegean, 14:05 Paris - 21:25 Chios",
+      "transport": "",
+      "url": "",
+      "photo": "",
+      "lon": 26.142598,
+      "lat": 38.345357
+    }
+  ],
+  "Musée": [
+    {
+      "index": 6,
+      "categorie": "Musée",
+      "nom": "Musée archéologique",
+      "adresse": "Michalon 10, Chios 821 00, Grèce",
+      "note": "4",
+      "description": "Fermé pour travaux\nMusée moderne mais peu d’explications (mer-dim 8h-15h)",
+      "transport": "",
+      "url": "https://archaeologicalmuseums.gr/en/museum/5df34af3deca5e2d79e8c130/archaeological-museum-of-chios",
+      "photo": "",
+      "lon": 26.139424,
+      "lat": 38.365402
+    }
+  ],
+  "Quartier": [
+    {
+      "index": 7,
+      "categorie": "Quartier",
+      "nom": "Quartier Kastro",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Chios_(ville)",
+      "photo": "",
+      "lon": 26.137311,
+      "lat": 38.37363
+    },
+    {
+      "index": 8,
+      "categorie": "Quartier",
+      "nom": "Quartier Kampos",
+      "adresse": "Chios 821 00, Grèce",
+      "note": "3",
+      "description": "Ancien quatier des riches génois du XVè, 200 villas arborées, unité architectural mais murs très hauts",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_kampos.jpg",
+      "lon": 26.136999,
+      "lat": 38.323921
+    }
+  ],
+  "Moyen-Age": [
+    {
+      "index": 9,
+      "categorie": "Moyen-Age",
+      "nom": "Chateau de Chios",
+      "adresse": "Kalothetou 10, Chios 821 00, Grèce",
+      "note": "",
+      "description": "Vieille citadelle médiévale fortifiée située au nord de la ville de Chios (Chora)\nToukours ouvert",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_chateau.jpg",
+      "lon": 26.136624,
+      "lat": 38.371683
+    }
+  ],
+  "Byzantin": [
+    {
+      "index": 11,
+      "categorie": "Byzantin",
+      "nom": "Monastère Nea Moni",
+      "adresse": "Nea Moni of Chios 821 00, Grèce",
+      "note": "4",
+      "description": "Un des plus important monuments byzantir de Grèce, mosaique, musée 8h-13h\n(de lever au coucher du jour, fermé entre 13h et 16h) joyau de lart bizantin du XIè\n08:00–13:00, 17:00–19:00",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Monast%C3%A8re_Nea_Moni_de_Chios",
+      "photo": "./chios/chios_nea_moni.jpg",
+      "lon": 26.055991,
+      "lat": 38.374009
+    },
+    {
+      "index": 28,
+      "categorie": "Byzantin",
+      "nom": "Monastère Myrtidiotissa",
+      "adresse": "",
+      "note": "",
+      "description": "Avec ses coupoles bleues au dessus de la mer, belle crique de galets en contrebas",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_monastere_myrtidiotissa.jpg",
+      "lon": 26.140429,
+      "lat": 38.429892
+    }
+  ],
+  "Village": [
+    {
+      "index": 12,
+      "categorie": "Village",
+      "nom": "Village d'Avgonima",
+      "adresse": "Αυγώνυμα, 821 00, Grèce",
+      "note": "3",
+      "description": "Village médiéval, perché, austère et superbe, maisons cubes, panorama splendide",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Avg%C3%B3nyma",
+      "photo": "./chios/chios_village_avgomina.jpg",
+      "lon": 26.021064,
+      "lat": 38.376875
+    },
+    {
+      "index": 13,
+      "categorie": "Village",
+      "nom": "Village d'Anavatos",
+      "adresse": "Ανάβατος\n 821 00\n Grèce",
+      "note": "5",
+      "description": "Incroyable village médiéval en ruine après 1822, risque chutes de pierre, belle église toute en haut",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/An%C3%A1vatos",
+      "photo": "./chios/chios_village_anavatos.jpg",
+      "lon": 26.019789,
+      "lat": 38.402821
+    },
+    {
+      "index": 17,
+      "categorie": "Village",
+      "nom": "Village Volissos",
+      "adresse": "Βολισσός\n 821 03 Grèce",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_volissos.jpg",
+      "lon": 25.926687,
+      "lat": 38.483257
+    },
+    {
+      "index": 23,
+      "categorie": "Village",
+      "nom": "Village Agio Gala",
+      "adresse": "",
+      "note": "",
+      "description": "Petit village au nord sur les pentes du mont Amani (809m)\nEn poursuivant vers le nord, véritable road trip long mais pittoresque (ni plage, ni essences)\n= chapelets de villages avec cafés panoramiques",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_agio_gala.jpg",
+      "lon": 25.860182,
+      "lat": 38.56409
+    },
+    {
+      "index": 30,
+      "categorie": "Village",
+      "nom": "Village Pantoukios",
+      "adresse": "",
+      "note": "",
+      "description": "Port de pêche avec tavernes",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/chios/chios_village_pantoukios.jpg",
+      "lon": 26.135289,
+      "lat": 38.463637
+    },
+    {
+      "index": 32,
+      "categorie": "Village",
+      "nom": "Village Lankada",
+      "adresse": "",
+      "note": "",
+      "description": "Autre port, assez animé avec café et tavernes",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/chios/chios_village_lankada.jpg",
+      "lon": 26.123997,
+      "lat": 38.477355
+    },
+    {
+      "index": 33,
+      "categorie": "Village",
+      "nom": "Village Marmaro",
+      "adresse": "",
+      "note": "",
+      "description": "Autre port, peu de charme, 2 statues, le pécheur et sa femme",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_marmaro.jpg",
+      "lon": 26.108568,
+      "lat": 38.543739
+    },
+    {
+      "index": 34,
+      "categorie": "Village",
+      "nom": "Village Nagos",
+      "adresse": "",
+      "note": "",
+      "description": "Petit port avec une petite plage",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/chios/chios_village_nagos.jpg",
+      "lon": 26.083046,
+      "lat": 38.55904
+    },
+    {
+      "index": 37,
+      "categorie": "Village",
+      "nom": "Village Pyrghi",
+      "adresse": "Πυργί\n 821 02\n Grèce",
+      "note": "5",
+      "description": "Superbe village fortifié aux ruelles étroites et fraiches avec des escaliers de fer vers les toits terrasse. \nTrès nombreuses belles maisons recouvertes de Xysta (# grattage, parement blanc). Place du village animée, superbe église byzantine Agii Apostoli avec des fresques (tlj sauf lun, dim, 8h-14h30)",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Pyrg%C3%AD_(Chios)",
+      "photo": "./chios/chios_village_pyrghi.jpg",
+      "lon": 25.998751,
+      "lat": 38.22714
+    },
+    {
+      "index": 38,
+      "categorie": "Village",
+      "nom": "Village Emborios",
+      "adresse": "",
+      "note": "",
+      "description": "Joli port naturel sans ombre, temple néolithique au dessus de la mer, 2 tavernes (Faisto, Neptuno). À 200m, Mavros Galos : plage de galet noirs, puis une autre naturiste sous falaises rouge et jaune (+belle)",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_emborios.jpg",
+      "lon": 26.028241,
+      "lat": 38.188144
+    },
+    {
+      "index": 39,
+      "categorie": "Village",
+      "nom": "Village Komi",
+      "adresse": "",
+      "note": "",
+      "description": "Petite station balnéaire avec grande plage de sable mais manque de charme et du monde",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_komi.jpg",
+      "lon": 26.043379,
+      "lat": 38.201166
+    },
+    {
+      "index": 40,
+      "categorie": "Village",
+      "nom": "Village Komi (copie)",
+      "adresse": "",
+      "note": "",
+      "description": "Petite station balnéaire avec grande plage de sable mais manque de charme et du monde",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_komi.jpg",
+      "lon": 26.043379,
+      "lat": 38.201166
+    },
+    {
+      "index": 43,
+      "categorie": "Village",
+      "nom": "Village Olympi",
+      "adresse": "",
+      "note": "5",
+      "description": "Village médieval en pierre de taille avec les cultures autour, très calme, venir plutôt fin de journée, 2 cafés",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/chios/chios_village_olimpi.jpg",
+      "lon": 25.942464,
+      "lat": 38.247691
+    },
+    {
+      "index": 44,
+      "categorie": "Village",
+      "nom": "Village Maestra",
+      "adresse": "",
+      "note": "5",
+      "description": "Impressionnant village musée (presque trop léché), unité car 1 seul archi, place au centre avec cafés, une vieille église, 1 parking extérieur.\nPossibilité de balade « mastic tour» : masticulture.com, 18€",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_maestra.jpg",
+      "lon": 25.922499,
+      "lat": 38.26022
+    },
+    {
+      "index": 46,
+      "categorie": "Village",
+      "nom": "Village Limenas",
+      "adresse": "",
+      "note": "",
+      "description": "Station balnéaire ratée mais point de départ de la route pour les belles plages de la côte ouest",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/chios/chios_village_limenas.jpg",
+      "lon": 25.931078,
+      "lat": 38.287299
+    },
+    {
+      "index": 51,
+      "categorie": "Village",
+      "nom": "Village de Vessa",
+      "adresse": "",
+      "note": "",
+      "description": "Magnifique village au charme indéniable, peu de touriste, taverne Fotia Lemoni à l’entrée du village",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_vessa.jpg",
+      "lon": 26.009948,
+      "lat": 38.297859
+    }
+  ],
+  "Plage": [
+    {
+      "index": 14,
+      "categorie": "Plage",
+      "nom": "Plage Elinta",
+      "adresse": "Omiroupoli 821 00, Grèce",
+      "note": "4",
+      "description": "Plage de petits galets, peu d'ombre\nAttention, ossibilité qu’il y ait des abeilles",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/chios/chios_plage_Elinda.jpg",
+      "lon": 25.99021,
+      "lat": 38.391614
+    },
+    {
+      "index": 15,
+      "categorie": "Plage",
+      "nom": "Plage Tigani",
+      "adresse": "Unnamed Road, Chios 821 03, Grèce",
+      "note": "4",
+      "description": "Abritée, propre, agréable",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_tigani.jpg",
+      "lon": 25.966133,
+      "lat": 38.403801
+    },
+    {
+      "index": 16,
+      "categorie": "Plage",
+      "nom": "Plage Metochi",
+      "adresse": "Unnamed Road, Chios 821 03, Grèce",
+      "note": "4",
+      "description": "Belle plage, peu fréquentée",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_metochi.jpg",
+      "lon": 25.963412,
+      "lat": 38.416982
+    },
+    {
+      "index": 18,
+      "categorie": "Plage",
+      "nom": "Lampsa Beach",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_lampsa.jpg",
+      "lon": 25.9025,
+      "lat": 38.475195
+    },
+    {
+      "index": 19,
+      "categorie": "Plage",
+      "nom": "Limnos Beach",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_limnos.jpg",
+      "lon": 25.91005,
+      "lat": 38.473066
+    },
+    {
+      "index": 20,
+      "categorie": "Plage",
+      "nom": "Leftkakia Beach",
+      "adresse": "",
+      "note": "",
+      "description": "Belle plage aussi",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_limnos.jpg",
+      "lon": 25.914728,
+      "lat": 38.471419
+    },
+    {
+      "index": 21,
+      "categorie": "Plage",
+      "nom": "Volissos Beach",
+      "adresse": "",
+      "note": "",
+      "description": "Belle plage aussi",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_volissos.jpg",
+      "lon": 25.929344,
+      "lat": 38.467094
+    },
+    {
+      "index": 22,
+      "categorie": "Plage",
+      "nom": "Magemena Beach",
+      "adresse": "",
+      "note": "",
+      "description": "Belle plage aussi",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_magemena.jpg",
+      "lon": 25.9246101,
+      "lat": 38.469372
+    },
+    {
+      "index": 26,
+      "categorie": "Plage",
+      "nom": "Village-Plage Agiasmata",
+      "adresse": "",
+      "note": "",
+      "description": "Station balnéaire surréaliste, rochers torturés, plage de gros rochers de galets noirs, petits galets au bout.\nRoute retour entre les monts Katavassi, Vrondados avec de beaux paysages",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_agiasmata.jpg",
+      "lon": 25.93689,
+      "lat": 38.587447
+    },
+    {
+      "index": 27,
+      "categorie": "Plage",
+      "nom": "Village-Plage Daskalopetra",
+      "adresse": "",
+      "note": "",
+      "description": "Homère y aurait enseigné",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_daskalopetra.jpg",
+      "lon": 26.134377,
+      "lat": 38.421035
+    },
+    {
+      "index": 29,
+      "categorie": "Plage",
+      "nom": "Plage Myrsinidi",
+      "adresse": "",
+      "note": "",
+      "description": "Belle crique de galets en contrebas",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_myrsinidi.jpg",
+      "lon": 26.140558,
+      "lat": 38.429177
+    },
+    {
+      "index": 35,
+      "categorie": "Plage",
+      "nom": "Plage de Giosonas",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_giosona.jpg",
+      "lon": 26.080145,
+      "lat": 38.563156
+    },
+    {
+      "index": 36,
+      "categorie": "Plage",
+      "nom": "Plage de Karfas",
+      "adresse": "",
+      "note": "",
+      "description": "A fuir, très touristique malgré la plage de sable fin",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_village_karfas.jpg",
+      "lon": 26.153588,
+      "lat": 38.320527
+    },
+    {
+      "index": 41,
+      "categorie": "Plage",
+      "nom": "Plage Vroulidia",
+      "adresse": "",
+      "note": "",
+      "description": "800m avant Emborios puis 4km, maginifque petite plage en bas des marches mais pas d’ombre",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_vroulidia.jpg",
+      "lon": 24.655425,
+      "lat": 37.023673
+    },
+    {
+      "index": 42,
+      "categorie": "Plage",
+      "nom": "Plage Kato Fana",
+      "adresse": "",
+      "note": "",
+      "description": "Belle baie fermée abritée du vent, 2km de Pyrghi puis 4km de piste, plage de sable, tamaris, chapelle. Quelques ruine d'un site archéollogique dédié à Apollon. Phanaios",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_fana.jpg",
+      "lon": 25.927326,
+      "lat": 38.20662
+    },
+    {
+      "index": 45,
+      "categorie": "Plage",
+      "nom": "Plage Agia Dinami",
+      "adresse": "",
+      "note": "",
+      "description": "1km plus loin que les grottes d'Olimpi, petite église avec qq tables pour mique-niquer, au-dessu d’un petite plage",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/chios/chios_plage_agia_dinami.jpg",
+      "lon": 25.912616,
+      "lat": 38.212446
+    },
+    {
+      "index": 47,
+      "categorie": "Plage",
+      "nom": "Plage de Dydima",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_didima.jpg",
+      "lon": 25.939112,
+      "lat": 38.29314
+    },
+    {
+      "index": 48,
+      "categorie": "Plage",
+      "nom": "Plage de Fistiki",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_fistiki.jpg",
+      "lon": 25.9359788,
+      "lat": 38.296643
+    },
+    {
+      "index": 49,
+      "categorie": "Plage",
+      "nom": "Plage d'Agia Irini",
+      "adresse": "",
+      "note": "",
+      "description": "Très belle crique caillouteuse avec une chapelle, petit port et tarverne",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_plage_agia_irini.jpg",
+      "lon": 25.965095,
+      "lat": 38.295093
+    },
+    {
+      "index": 50,
+      "categorie": "Plage",
+      "nom": "Plage de Lithi",
+      "adresse": "",
+      "note": "",
+      "description": "Plage en contrebas de Vessa, large baie protégée, plage de sable familiale, transats gratuits",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/chios/chios_plage_lithi.jpg",
+      "lon": 25.991435,
+      "lat": 38.340662
+    }
+  ],
+  "A faire": [
+    {
+      "index": 24,
+      "categorie": "A faire",
+      "nom": "Grotte Agio Galas",
+      "adresse": "",
+      "note": "4",
+      "description": "Petite grottes sans stalactiques avec 2 petites églises\n11h-18h30, fermée le lundi",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_grotte_agio_galas.jpg",
+      "lon": 25.860351,
+      "lat": 38.562338
+    },
+    {
+      "index": 25,
+      "categorie": "A faire",
+      "nom": "Grotte Olimpi",
+      "adresse": "Unnamed Rd Chios 821 02, Olimpi 821 00, Grèce",
+      "note": "4",
+      "description": "Un peu tout ce qu’on peu voir dans une grotte, tlj sauf lundi 11h15h-17h20",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_grotte_olimpi.jpg",
+      "lon": 25.924788,
+      "lat": 38.212786
+    }
+  ],
+  "Eglise": [
+    {
+      "index": 31,
+      "categorie": "Eglise",
+      "nom": "Eglise Agios Isidoros",
+      "adresse": "",
+      "note": "",
+      "description": "Belle plage de sable avec des tamaris, belle chapelle sur un rocher au bout d’une jetée",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_eglise_agiosisidoros.jpg",
+      "lon": 25.85719,
+      "lat": 38.503602
+    }
+  ]
+};
+const STYLES  = {"Hôtel": {"couleur": "#3B82F6"}, "Hotel": {"couleur": "#95A5A6"}, "Musée": {"couleur": "#E84545"}, "Quartier": {"couleur": "#0E7490"}, "Moyen-Age": {"couleur": "#065F46"}, "Byzantin": {"couleur": "#9333EA"}, "Village": {"couleur": "#7C3AED"}, "Plage": {"couleur": "#06B6D4"}, "A faire": {"couleur": "#F97316"}, "Eglise": {"couleur": "#A855F7"}};
+const layers  = {};
+const hidden  = new Set();
+const allMarkers = [];   // { marker, lieu, cat, style } — pour la recherche
+const isMobile = () => window.innerWidth <= 768;
+
+// ── Carte ────────────────────────────────────────────────────
+const map = L.map('map', {
+  center: [38.351585, 25.981998],
+  zoom: 13,
+  zoomControl: true,
+  tap: true,
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  maxZoom: 19,
+}).addTo(map);
+
+// ── Icônes ───────────────────────────────────────────────────
+function creerIcone(style, num) {
+  const sz = isMobile() ? 42 : 32;
+  const fs = isMobile() ? 13 : 11;
+  return L.divIcon({
+    className: '',
+    html: `<div class="marker-pin" style="background:${style.couleur};width:${sz}px;height:${sz}px">
+             <span class="marker-icon" style="font-size:${fs}px;font-weight:700;color:#fff;font-family:monospace;transform:rotate(45deg);">${num}</span>
+           </div>`,
+    iconSize:    [sz, sz],
+    iconAnchor:  [sz/2, sz],
+    popupAnchor: [0, -(sz+4)],
+  });
+}
+
+// ── Contenu popup ─────────────────────────────────────────────
+function buildPopupHtml(lieu, cat, style) {
+  let html = `<div class="popup-content">
+    <div class="popup-cat" style="color:${style.couleur}">${cat}</div>
+    <div class="popup-nom">${lieu.nom}</div>`;
+  if (lieu.note) {
+    const n = Math.min(5, Math.max(1, parseInt(lieu.note) || 0));
+    html += `<div class="popup-note">${'★'.repeat(n) + '☆'.repeat(5-n)}</div>`;
+  }
+  if (lieu.adresse)     html += `<div class="popup-adresse">📮 ${lieu.adresse}</div>`;
+  if (lieu.transport)   html += `<div class="popup-transport">🚇 ${lieu.transport}</div>`;
+  if (lieu.description) html += `<div class="popup-desc">${lieu.description}</div>`;
+  if (lieu.photo)       html += `<div class="popup-photo"><img src="${lieu.photo}" alt="${lieu.nom}" loading="lazy"></div>`;
+  if (lieu.url)         html += `<div class="popup-url"><a href="${lieu.url}" target="_blank">🔗 Site</a></div>`;
+  html += `</div>`;
+  return html;
+}
+
+// ── Bottom sheet mobile ───────────────────────────────────────
+const sheet        = document.getElementById('bottom-sheet');
+const sheetContent = document.getElementById('sheet-content');
+const sheetClose   = document.getElementById('sheet-close');
+
+function openSheet(html) {
+  sheetContent.innerHTML = html;
+  sheet.classList.add('open');
+  // Fermer la légende si ouverte
+  document.getElementById('legend').classList.remove('open');
+}
+
+sheetClose.addEventListener('click', () => sheet.classList.remove('open'));
+map.on('click', () => sheet.classList.remove('open'));
+
+// ── Marqueurs ────────────────────────────────────────────────
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style  = STYLES[cat] || {couleur: '#95A5A6'};
+  const groupe = L.layerGroup().addTo(map);
+  layers[cat]  = groupe;
+
+  lieux.forEach(lieu => {
+    const marker = L.marker([lieu.lat, lieu.lon], {icon: creerIcone(style, lieu.index)});
+
+    marker.on('click', () => {
+      if (isMobile()) {
+        openSheet(buildPopupHtml(lieu, cat, style));
+      } else {
+        L.popup({maxWidth: 260})
+          .setLatLng(marker.getLatLng())
+          .setContent(buildPopupHtml(lieu, cat, style))
+          .openOn(map);
+      }
+    });
+
+    groupe.addLayer(marker);
+    allMarkers.push({marker, lieu, cat, style});
+  });
+});
+
+// ── Légende interactive ───────────────────────────────────────
+const legend = document.getElementById('legend');
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style = STYLES[cat] || {couleur: '#95A5A6'};
+  const item  = document.createElement('div');
+  item.className   = 'legend-item';
+  item.dataset.cat = cat;
+  item.innerHTML   = `
+    <div class="legend-dot" style="background:${style.couleur}"></div>
+    <span class="legend-label">${cat}</span>
+    <span class="legend-count">${lieux.length}</span>`;
+
+  item.addEventListener('click', () => {
+    if (hidden.has(cat)) {
+      map.addLayer(layers[cat]);
+      hidden.delete(cat);
+      item.classList.remove('hidden');
+    } else {
+      map.removeLayer(layers[cat]);
+      hidden.add(cat);
+      item.classList.add('hidden');
+    }
+  });
+  legend.appendChild(item);
+});
+
+// ── Barre de recherche ────────────────────────────────────────
+const searchInput   = document.getElementById('search-input');
+const searchClear   = document.getElementById('search-clear');
+const searchResults = document.getElementById('search-results');
+const searchLayer   = L.layerGroup().addTo(map);
+let   enRecherche   = false;
+
+function quitterRecherche() {
+  searchLayer.clearLayers();
+  enRecherche = false;
+  // Réinjecter chaque marqueur dans son groupe de catégorie
+  allMarkers.forEach(({marker, cat}) => layers[cat].addLayer(marker));
+  // Restaurer la visibilité selon l'état de la légende
+  Object.entries(layers).forEach(([cat, groupe]) => {
+    if (!hidden.has(cat)) map.addLayer(groupe);
+    else map.removeLayer(groupe);
+  });
+  searchResults.classList.remove('visible');
+  searchResults.innerHTML = '';
+  searchClear.style.display = 'none';
+}
+
+function filtrerMarqueurs(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) { quitterRecherche(); return; }
+
+  searchClear.style.display = 'block';
+
+  // Première frappe : retirer tous les groupes de catégories de la carte
+  if (!enRecherche) {
+    Object.values(layers).forEach(g => map.removeLayer(g));
+    enRecherche = true;
+  }
+  searchLayer.clearLayers();
+
+  const resultats = [];
+  allMarkers.forEach(entry => {
+    const {lieu, cat} = entry;
+    const haystack = [lieu.nom, lieu.adresse, lieu.description, cat]
+      .join(' ').toLowerCase();
+    if (haystack.includes(q)) {
+      searchLayer.addLayer(entry.marker);
+      resultats.push(entry);
+    }
+  });
+
+  // Construire le dropdown
+  searchResults.innerHTML = '';
+  if (resultats.length === 0) {
+    searchResults.innerHTML = '<div class="result-empty">Aucun résultat</div>';
+  } else {
+    resultats.slice(0, 25).forEach(({lieu, cat, style, marker}) => {
+      const item = document.createElement('div');
+      item.className = 'result-item';
+      const meta = [cat, lieu.adresse].filter(Boolean).join(' · ');
+      item.innerHTML = `
+        <div class="result-dot" style="background:${style.couleur}"></div>
+        <div class="result-text">
+          <div class="result-nom">${lieu.nom}</div>
+          <div class="result-meta">${meta}</div>
+        </div>`;
+      item.addEventListener('click', () => {
+        map.setView([lieu.lat, lieu.lon], 17);
+        if (isMobile()) {
+          openSheet(buildPopupHtml(lieu, cat, style));
+        } else {
+          L.popup({maxWidth: 260})
+            .setLatLng([lieu.lat, lieu.lon])
+            .setContent(buildPopupHtml(lieu, cat, style))
+            .openOn(map);
+        }
+        searchResults.classList.remove('visible');
+      });
+      searchResults.appendChild(item);
+    });
+    if (resultats.length > 25) {
+      const more = document.createElement('div');
+      more.className = 'result-empty';
+      more.textContent = `… ${resultats.length - 25} résultats supplémentaires`;
+      searchResults.appendChild(more);
+    }
+  }
+  searchResults.classList.add('visible');
+}
+
+searchInput.addEventListener('input', e => filtrerMarqueurs(e.target.value));
+
+searchInput.addEventListener('focus', () => {
+  if (searchInput.value.trim()) searchResults.classList.add('visible');
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchInput.focus();
+  quitterRecherche();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    searchInput.value = '';
+    quitterRecherche();
+    searchInput.blur();
+  }
+});
+
+map.on('click', () => searchResults.classList.remove('visible'));
+
+// ── Géolocalisation ──────────────────────────────────────────
+const gpsBtn      = document.getElementById('gps-toggle');
+let   gpsActif    = false;
+let   gpsWatchId  = null;
+let   gpsMarker   = null;
+let   gpsCercle   = null;
+
+function stopperGPS() {
+  if (gpsWatchId !== null) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+  }
+  if (gpsMarker)  { map.removeLayer(gpsMarker);  gpsMarker  = null; }
+  if (gpsCercle)  { map.removeLayer(gpsCercle);  gpsCercle  = null; }
+  gpsActif = false;
+  gpsBtn.classList.remove('active', 'error');
+  gpsBtn.title = 'Ma position';
+  gpsBtn.textContent = '📍';
+}
+
+function mettreAJourPosition(pos) {
+  const lat = pos.coords.latitude;
+  const lon = pos.coords.longitude;
+  const acc = pos.coords.accuracy;
+
+  // Icône position personnalisée
+  const iconePos = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:16px; height:16px; border-radius:50%;
+      background:#2980B9; border:3px solid #fff;
+      box-shadow:0 0 0 2px #2980B9;
+    "></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  });
+
+  if (gpsMarker) {
+    gpsMarker.setLatLng([lat, lon]);
+    gpsCercle.setLatLng([lat, lon]).setRadius(acc);
+  } else {
+    gpsMarker = L.marker([lat, lon], {icon: iconePos, zIndexOffset: 9999})
+      .bindPopup(`📍 Vous êtes ici<br><small>Précision : ${Math.round(acc)} m</small>`)
+      .addTo(map);
+    gpsCercle = L.circle([lat, lon], {
+      radius: acc,
+      color: '#2980B9',
+      fillColor: '#2980B9',
+      fillOpacity: 0.08,
+      weight: 1,
+    }).addTo(map);
+    map.setView([lat, lon], 15);
+  }
+}
+
+function erreurGPS(err) {
+  gpsBtn.classList.remove('active');
+  gpsBtn.classList.add('error');
+  gpsBtn.title = err.code === 1 ? 'Accès refusé' : 'Position indisponible';
+  gpsBtn.textContent = '⚠️';
+  setTimeout(() => {
+    gpsBtn.classList.remove('error');
+    gpsBtn.textContent = '📍';
+  }, 3000);
+}
+
+gpsBtn.addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    alert("La géolocalisation n'est pas supportée par ce navigateur.");
+    return;
+  }
+  if (gpsActif) {
+    stopperGPS();
+  } else {
+    gpsActif = true;
+    gpsBtn.classList.add('active');
+    gpsBtn.title = 'Désactiver GPS';
+    gpsBtn.textContent = '🔵';
+    gpsWatchId = navigator.geolocation.watchPosition(
+      mettreAJourPosition,
+      erreurGPS,
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
+    );
+  }
+});
+
+// ── Bouton légende mobile ─────────────────────────────────────
+document.getElementById('legend-toggle').addEventListener('click', () => {
+  sheet.classList.remove('open');
+  legend.classList.toggle('open');
+});
+
+// Fermer légende si clic sur la carte
+map.on('click', () => legend.classList.remove('open'));
+</script>
+</body>
+</html>
