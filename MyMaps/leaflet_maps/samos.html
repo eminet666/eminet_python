@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Samos, Grece</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    header {
+      background: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e0e0e0;
+      z-index: 1000;
+      flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    header .count {
+      font-size: 0.75rem;
+      color: #999;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    /* ── Barre de recherche ─────────────────────────────────── */
+    #search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 1;
+      max-width: 300px;
+      margin: 0 16px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      font-size: 0.8rem;
+      pointer-events: none;
+      color: #bbb;
+      line-height: 1;
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 6px 28px 6px 30px;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      font-size: 0.83rem;
+      font-family: inherit;
+      outline: none;
+      background: #f5f5f5;
+      color: #333;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      /* Masque le bouton natif "✕" des navigateurs sur type=search */
+      -webkit-appearance: none;
+    }
+    #search-input:focus {
+      border-color: #bbb;
+      background: #fff;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    }
+    #search-input::placeholder { color: #ccc; }
+    #search-input::-webkit-search-cancel-button { display: none; }
+
+    #search-clear {
+      position: absolute;
+      right: 9px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.7rem;
+      color: #bbb;
+      display: none;
+      padding: 2px 4px;
+      line-height: 1;
+      border-radius: 50%;
+    }
+    #search-clear:hover { color: #555; background: #eee; }
+
+    /* ── Dropdown résultats ─────────────────────────────────── */
+    #search-results {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 2000;
+    }
+    #search-results.visible { display: block; }
+
+    .result-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #f2f2f2;
+      transition: background 0.1s;
+    }
+    .result-item:last-child { border-bottom: none; }
+    .result-item:hover { background: #f7f7f7; }
+
+    .result-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .result-text { flex: 1; min-width: 0; }
+    .result-nom {
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: #222;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .result-meta { font-size: 0.7rem; color: #aaa; margin-top: 1px; }
+
+    .result-empty {
+      padding: 14px 12px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #bbb;
+    }
+
+    /* ── Carte ──────────────────────────────────────────────── */
+    #map { flex: 1; z-index: 1; }
+
+    /* ── Bouton GPS ─────────────────────────────────────────── */
+    #gps-toggle {
+      position: absolute;
+      bottom: 30px;
+      left: 10px;
+      z-index: 1000;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    #gps-toggle:hover  { box-shadow: 0 3px 12px rgba(0,0,0,0.2); }
+    #gps-toggle.active { background: #e8f5e9; border-color: #27AE60; }
+    #gps-toggle.error  { background: #fdecea; border-color: #e74c3c; }
+
+    /* ── Marqueurs ──────────────────────────────────────────── */
+    .marker-pin {
+      width: 32px;
+      height: 32px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .marker-pin .marker-icon {
+      transform: rotate(45deg);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    /* ── Légende DESKTOP ────────────────────────────────────── */
+    #legend {
+      position: absolute;
+      bottom: 30px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px 16px;
+      min-width: 165px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+
+    #legend h3 {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .legend-item:hover { background: #f5f5f5; }
+    .legend-item.hidden { opacity: 0.3; }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-label { font-size: 0.8rem; color: #333; flex: 1; }
+    .legend-count  { font-size: 0.7rem; color: #bbb; }
+
+    /* Bouton légende mobile — caché sur desktop */
+    #legend-toggle { display: none; }
+
+    /* ── Popup DESKTOP ──────────────────────────────────────── */
+    .leaflet-popup-content-wrapper {
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      color: #222;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .leaflet-popup-tip       { background: #ffffff; }
+    .leaflet-popup-close-button { color: #aaa !important; }
+
+    /* ── Bottom sheet MOBILE (caché par défaut) ─────────────── */
+    #bottom-sheet {
+      display: none; /* activé en JS sur mobile */
+    }
+
+    /* ── Contenu popup / bottom-sheet (partagé) ─────────────── */
+    .popup-content  { padding: 4px 2px; }
+    .popup-cat      { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; }
+    .popup-nom      { font-size: 1rem; font-weight: 600; color: #111; margin-bottom: 4px; }
+    .popup-note     { font-size: 0.85rem; color: #f0a500; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .popup-adresse  { font-size: 0.75rem; color: #888; margin-bottom: 4px; }
+    .popup-transport{ font-size: 0.75rem; color: #5d8aa8; margin-bottom: 4px; }
+    .popup-desc     { font-size: 0.8rem; color: #555; line-height: 1.4; }
+    .popup-photo    { margin-top: 8px; }
+    .popup-photo img { width: 100%; max-height: 160px; object-fit: cover; border-radius: 6px; display: block; }
+    .popup-url      { font-size: 0.75rem; margin-top: 6px; }
+    .popup-url a    { color: #2980B9; text-decoration: none; font-weight: 500; }
+    .popup-url a:hover { text-decoration: underline; }
+
+    /* ════════════════════════════════════════════════════════
+       MOBILE  (écrans ≤ 768px)
+       ════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* Header plus compact */
+      header { padding: 8px 14px; }
+      header h1 { font-size: 0.85rem; }
+
+      /* Barre de recherche pleine largeur sur mobile */
+      #search-box {
+        max-width: unset;
+        margin: 0 10px;
+      }
+      header .count { display: none; }
+
+      /* Résultats — position fixe sous le header sur mobile */
+      #search-results {
+        position: fixed;
+        top: 51px;
+        left: 8px;
+        right: 8px;
+        max-height: 50vh;
+      }
+
+      /* Marqueurs plus grands pour le doigt */
+      .marker-pin {
+        width: 42px;
+        height: 42px;
+        border-width: 3px;
+      }
+      .marker-pin .marker-icon { font-size: 18px; }
+
+      /* Légende cachée par défaut, ouvrable */
+      #legend {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        border-radius: 16px 16px 0 0;
+        padding: 16px 20px 24px;
+        min-width: unset;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      #legend.open { transform: translateY(0); }
+
+      #legend h3 {
+        font-size: 0.7rem;
+        text-align: center;
+        margin-bottom: 14px;
+      }
+
+      /* Drag handle au dessus de la légende */
+      #legend::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 14px;
+      }
+
+      .legend-item  { padding: 8px 6px; }
+      .legend-label { font-size: 0.9rem; }
+      .legend-count { font-size: 0.8rem; }
+      .legend-dot   { width: 12px; height: 12px; }
+
+      /* Bouton flottant pour ouvrir la légende */
+      #legend-toggle {
+        display: flex;
+        position: absolute;
+        bottom: 24px;
+        right: 16px;
+        z-index: 1001;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: box-shadow 0.15s;
+      }
+      #legend-toggle:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+      /* Bouton GPS mobile — empilé au-dessus du bouton légende */
+      #gps-toggle {
+        position: absolute;
+        bottom: 84px;
+        left: unset;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        font-size: 1.3rem;
+        z-index: 1001;
+      }
+
+
+      .leaflet-popup { display: none !important; }
+
+      /* Bottom sheet à la place */
+      #bottom-sheet {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1002;
+        background: #ffffff;
+        border-radius: 16px 16px 0 0;
+        padding: 20px 20px 32px;
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        max-height: 55vh;
+        overflow-y: auto;
+      }
+      #bottom-sheet.open { transform: translateY(0); }
+
+      #bottom-sheet::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: #ddd;
+        border-radius: 2px;
+        margin: 0 auto 16px;
+      }
+
+      #bottom-sheet .popup-nom     { font-size: 1.15rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-cat     { font-size: 0.7rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-note    { font-size: 1rem; margin-bottom: 8px; }
+      #bottom-sheet .popup-adresse { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-transport { font-size: 0.85rem; margin-bottom: 6px; }
+      #bottom-sheet .popup-desc    { font-size: 0.9rem; line-height: 1.5; }
+      #bottom-sheet .popup-photo img { max-height: 220px; }
+      #bottom-sheet .popup-url     { font-size: 0.9rem; margin-top: 12px; }
+      #bottom-sheet .popup-url a   { font-size: 1rem; padding: 8px 0; display: inline-block; }
+
+      /* Bouton fermer le bottom sheet */
+      #sheet-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: #f5f5f5;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🗺 Samos, Grece</h1>
+  <div id="search-box">
+    <span class="search-icon">🔍</span>
+    <input id="search-input" type="search" placeholder="Rechercher un lieu…" autocomplete="off" spellcheck="false">
+    <button id="search-clear" title="Effacer">✕</button>
+    <div id="search-results"></div>
+  </div>
+  <span class="count">43 lieux</span>
+</header>
+
+<div id="map"></div>
+
+<!-- Bouton GPS -->
+<button id="gps-toggle" title="Ma position">📍</button>
+
+<!-- Légende (desktop : flottante / mobile : bottom sheet) -->
+<div id="legend"><h3>Catégories</h3></div>
+
+<!-- Bouton mobile pour ouvrir la légende -->
+<button id="legend-toggle" title="Catégories">🗂</button>
+
+<!-- Bottom sheet mobile -->
+<div id="bottom-sheet">
+  <button id="sheet-close">✕</button>
+  <div id="sheet-content"></div>
+</div>
+
+<script>
+const DATA    = {
+  "Hôtel": [
+    {
+      "index": 1,
+      "categorie": "Hôtel",
+      "nom": "Aria Hotel Samos Town",
+      "adresse": "Ioanni Lekati 8, Samos, 83100, Grèce",
+      "note": "3",
+      "description": "1 nuit, 19-20 aout, 74€, Anne, +302273023619",
+      "transport": "",
+      "url": "https://www.ariahotels.gr/en/",
+      "photo": "./samos/samos_aria_hotel.jpg",
+      "lon": 26.978127,
+      "lat": 37.751804
+    },
+    {
+      "index": 2,
+      "categorie": "Hôtel",
+      "nom": "Cleopatra Studios",
+      "adresse": "IPP63+64, Ormos Marathokampou 831 02, Grèce",
+      "note": "3",
+      "description": "4 nuits, 20-24 aout, 228€, Etienne",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_cleopatra_studios.jpg",
+      "lon": 26.70275,
+      "lat": 37.710447
+    },
+    {
+      "index": 3,
+      "categorie": "Hôtel",
+      "nom": "Samos Rooms",
+      "adresse": "Πολυκράτη 101, Pithagorio 831 03, Grèce",
+      "note": "4",
+      "description": "3 nuits, 24-27 aout, 225€, Etienne (mail)",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_hotel_samosrooms.jpg",
+      "lon": 26.945405,
+      "lat": 37.691432
+    }
+  ],
+  "Aéroport": [
+    {
+      "index": 4,
+      "categorie": "Aéroport",
+      "nom": "Aeroport Samos",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_aeroport.jpg",
+      "lon": 26.914434,
+      "lat": 37.689262
+    }
+  ],
+  "Musée": [
+    {
+      "index": 5,
+      "categorie": "Musée",
+      "nom": "Musée archéologique",
+      "adresse": "Gimnasiarchou Κatevaini 24, Samos 831 00, Grèce",
+      "note": "5",
+      "description": "Un des plus important du pays, kouros de 4,5m, collection unique de chaudrons. \n8h30-15h30, fermé le mardi.",
+      "transport": "",
+      "url": "https://archaeologicalmuseums.gr/en/museum/5df34af3deca5e2d79e8c13b/archaeological-museum-of-samos",
+      "photo": "./samos/samos_musee_archeologique.jpg",
+      "lon": 26.978632,
+      "lat": 37.754567
+    },
+    {
+      "index": 38,
+      "categorie": "Musée",
+      "nom": "Musée Archéologique Pythagoreio",
+      "adresse": "",
+      "note": "",
+      "description": "Musée moderne et spacieux, 2 trésors numismatiques, statuaire riche.\n8h30-15h30, fermé le mardi",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_musee_pythagoeio.jpg",
+      "lon": 37.691245,
+      "lat": 26.940173
+    },
+    {
+      "index": 43,
+      "categorie": "Musée",
+      "nom": "Musée Paléotologique de l'Egée",
+      "adresse": "",
+      "note": "3",
+      "description": "Minéraux, squellete félin sauvage + musée folklorique \nOuvert : 10h-14h, fermé le lundi",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_musee_paleo.jpg",
+      "lon": 26.909975,
+      "lat": 37.722147
+    }
+  ],
+  "Village": [
+    {
+      "index": 6,
+      "categorie": "Village",
+      "nom": "Ano Vathy",
+      "adresse": "",
+      "note": "",
+      "description": "Quartier à l’aspect villageois, sans voiture, maisons à encorbellement, volets de couleurs.",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Vath%C3%BD_(S%C3%A1mos)",
+      "photo": "./samos/samos_quartier_ano_vathy.jpg",
+      "lon": 26.982713,
+      "lat": 37.749659
+    },
+    {
+      "index": 16,
+      "categorie": "Village",
+      "nom": "Village Vourliotes",
+      "adresse": "",
+      "note": "",
+      "description": "Village accroché aux flancs du mont Karvouni, mais devenu touristique, mieux le soir",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_village_vourliotes.jpg",
+      "lon": 26.847832,
+      "lat": 37.785314
+    },
+    {
+      "index": 17,
+      "categorie": "Village",
+      "nom": "Village Manolates",
+      "adresse": "",
+      "note": "",
+      "description": "Le plus beau village mais se laisse gagner par le tourisme",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_village_manolates.jpg",
+      "lon": 26.825844,
+      "lat": 37.785844
+    },
+    {
+      "index": 18,
+      "categorie": "Village",
+      "nom": "Village Agios Konstandions",
+      "adresse": "",
+      "note": "",
+      "description": "Authentique village pêcheurs en front de mer",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_village_agios_konstandinos.jpg",
+      "lon": 26.81671,
+      "lat": 37.808045
+    },
+    {
+      "index": 25,
+      "categorie": "Village",
+      "nom": "Village de Marathokampos",
+      "adresse": "",
+      "note": "",
+      "description": "Grosse bourgade à flanc de colline",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_village_marathokampos.jpg",
+      "lon": 26.689202,
+      "lat": 37.727736
+    },
+    {
+      "index": 26,
+      "categorie": "Village",
+      "nom": "Village de Ormos-Marathokampos",
+      "adresse": "",
+      "note": "",
+      "description": "lLa côte sud-ouest est la plus spectaculaire et la plus sauvage\n2km au nord, plages de sable fin de Kambos, sur x km avec hébergements, restos mais de moins en moins vers l’ouest",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_village_ormos.jpg",
+      "lon": 26.701166,
+      "lat": 37.71051
+    },
+    {
+      "index": 27,
+      "categorie": "Village",
+      "nom": "Village de Platanos",
+      "adresse": "",
+      "note": "",
+      "description": "Village de crête par route de lacets, peu touristique, très beau panorama sur nord et ouest",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_village_platanos.jpg",
+      "lon": 26.746794,
+      "lat": 37.739151
+    },
+    {
+      "index": 31,
+      "categorie": "Village",
+      "nom": "Village de  Kallithea",
+      "adresse": "",
+      "note": "",
+      "description": "Partie la plus sauvage de l’ile mais besoin d’une voiture, fin à 18km de Psili Ammos.\nLa route devient piste et passe très haut mais beaux panorama",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/samos/samos_village_kallithea.jpg",
+      "lon": 26.582842,
+      "lat": 37.733172
+    },
+    {
+      "index": 34,
+      "categorie": "Village",
+      "nom": "Village de Drakkei",
+      "adresse": "",
+      "note": "",
+      "description": "18km de Psili Ammos, petit village de montagne",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_village_drakei.jpg",
+      "lon": 26.61101,
+      "lat": 37.759078
+    },
+    {
+      "index": 37,
+      "categorie": "Village",
+      "nom": "Ville de Pythagoreio",
+      "adresse": "",
+      "note": "",
+      "description": "1600hab, aride, longues plages banales, centre touristique de l’ile, ex-Tigani, la poêle car il y fait chaud (parkings à l’entrée du village)",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_village_pythagoreio.jpg",
+      "lon": 26.943256,
+      "lat": 37.690574
+    }
+  ],
+  "Byzantin": [
+    {
+      "index": 7,
+      "categorie": "Byzantin",
+      "nom": "Monastère de  Zoodochos Pigis",
+      "adresse": "Samos 831 00, Grèce",
+      "note": "",
+      "description": "Vues exceptionnelles et baies turquoises de l'oratoire (photo) et du monument Ierolochiton.\nOuvert tlj 10:00–13:30, 17:00–19:30",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_monastere_zoodohos_pigis.jpg",
+      "lon": 27.02885,
+      "lat": 37.769283
+    },
+    {
+      "index": 19,
+      "categorie": "Byzantin",
+      "nom": "Monastère Vrondani",
+      "adresse": "",
+      "note": "",
+      "description": "Le plus beau village mais se laisse gagner par le tourisme",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_monastere_vrondani.jpg",
+      "lon": 26.855289,
+      "lat": 37.773396
+    }
+  ],
+  "Plage": [
+    {
+      "index": 8,
+      "categorie": "Plage",
+      "nom": "Plage de Kerveli",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_kerveli.jpg",
+      "lon": 27.036225,
+      "lat": 37.728407
+    },
+    {
+      "index": 9,
+      "categorie": "Plage",
+      "nom": "Plage de Possidonio",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_kerveli.jpg",
+      "lon": 27.057997,
+      "lat": 37.713011
+    },
+    {
+      "index": 10,
+      "categorie": "Plage",
+      "nom": "Plage de Klima",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_klima.jpg",
+      "lon": 27.045369,
+      "lat": 37.709715
+    },
+    {
+      "index": 11,
+      "categorie": "Plage",
+      "nom": "Plage de Kedros",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_kedros.jpg",
+      "lon": 26.92073,
+      "lat": 37.772194
+    },
+    {
+      "index": 12,
+      "categorie": "Plage",
+      "nom": "Plage de Tsamadou",
+      "adresse": "",
+      "note": "",
+      "description": "La plus belle",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_tsamadou.jpg",
+      "lon": 26.872735,
+      "lat": 37.785696
+    },
+    {
+      "index": 13,
+      "categorie": "Plage",
+      "nom": "Plage d'Avlakia",
+      "adresse": "",
+      "note": "",
+      "description": "La préférée du Michelin",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_avlakia.jpg",
+      "lon": 26.857087,
+      "lat": 37.798572
+    },
+    {
+      "index": 14,
+      "categorie": "Plage",
+      "nom": "Plage de Tasbou",
+      "adresse": "",
+      "note": "",
+      "description": "Crique rocheuse",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/samos/samos_plage_tsabou.jpg",
+      "lon": 26.856913,
+      "lat": 37.802208
+    },
+    {
+      "index": 15,
+      "categorie": "Plage",
+      "nom": "Plage de Lemonakia",
+      "adresse": "",
+      "note": "",
+      "description": "Crique rocheuse",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_lemonakia.jpg",
+      "lon": 26.876267,
+      "lat": 37.782569
+    },
+    {
+      "index": 21,
+      "categorie": "Plage",
+      "nom": "Plage Agios Nikolaos",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_agiosnikolaos.jpg",
+      "lon": 26.747361,
+      "lat": 37.811513
+    },
+    {
+      "index": 22,
+      "categorie": "Plage",
+      "nom": "Plage de Potami",
+      "adresse": "",
+      "note": "",
+      "description": "Une petite puis une grande plage (galets, sablets), une partie de la plage non aménagée",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_potami.jpg",
+      "lon": 26.666236,
+      "lat": 37.791054
+    },
+    {
+      "index": 24,
+      "categorie": "Plage",
+      "nom": "Plages de Seitani",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_mikro_seitani.jpg",
+      "lon": 26.646837,
+      "lat": 37.776824
+    },
+    {
+      "index": 28,
+      "categorie": "Plage",
+      "nom": "Plage de Kampos",
+      "adresse": "",
+      "note": "",
+      "description": "Plages tranquilles sur la route direction Kourneka : baiede Pefko",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_kampos.jpg",
+      "lon": 26.757959,
+      "lat": 37.688409
+    },
+    {
+      "index": 29,
+      "categorie": "Plage",
+      "nom": "Plage de Psili Ammos",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_psiliammos.jpg",
+      "lon": 26.644018,
+      "lat": 37.703109
+    },
+    {
+      "index": 32,
+      "categorie": "Plage",
+      "nom": "Plage de Mikali",
+      "adresse": "",
+      "note": "",
+      "description": "Plage de glaets mais très fréquentée",
+      "transport": "",
+      "url": "",
+      "photo": "../leaflet_maps/samos/samos_plage_mikali.jpg",
+      "lon": 26.996711,
+      "lat": 37.707346
+    },
+    {
+      "index": 35,
+      "categorie": "Plage",
+      "nom": "Plages d'Agios Isidoros",
+      "adresse": "",
+      "note": "",
+      "description": "2 criques jumelles et désertes, le routard promet un petit bout de paradis un peu plus loin.",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_agiosisidoros.jpg",
+      "lon": 26.591349,
+      "lat": 37.751522
+    },
+    {
+      "index": 36,
+      "categorie": "Plage",
+      "nom": "Plage de Varsamos",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_plage_varsamos.jpg",
+      "lon": 26.586519,
+      "lat": 37.749182
+    }
+  ],
+  "Eglise": [
+    {
+      "index": 20,
+      "categorie": "Eglise",
+      "nom": "Eglise Sainte Trinité",
+      "adresse": "",
+      "note": "",
+      "description": "A 35km de Vathy, 6000 habitants) peu d’intérêt mais église\t« Petit  Paris » église qui surplombe le port, beau panorama",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_eglise_karlovassi.jpg",
+      "lon": 26.684747,
+      "lat": 37.79255
+    },
+    {
+      "index": 33,
+      "categorie": "Eglise",
+      "nom": "Eglise de Makrini",
+      "adresse": "",
+      "note": "",
+      "description": "Petite église avec une grotte",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_eglise_makrini.jpg",
+      "lon": 26.602484,
+      "lat": 37.72926
+    },
+    {
+      "index": 42,
+      "categorie": "Eglise",
+      "nom": "Eglise Panagia Spiliani",
+      "adresse": "",
+      "note": "",
+      "description": "Encore plus haut, dans une grotte rafraichissante",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_eglise_spiliani.jpg",
+      "lon": 26.93692,
+      "lat": 37.695702
+    }
+  ],
+  "A faire": [
+    {
+      "index": 23,
+      "categorie": "A faire",
+      "nom": "Chutes d'eau de Potami",
+      "adresse": "",
+      "note": "",
+      "description": "Sentier fléché sur la gauche de la plage … s’il reste de l’eau en aout ?\nSur le chemin, église de la métamorphose, la plus ancienne de l’ile XIe, sous la mousse !",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_waterfalls_potami.jpg",
+      "lon": 26.66737,
+      "lat": 37.788262
+    },
+    {
+      "index": 30,
+      "categorie": "A faire",
+      "nom": "Grotte de Pythagore",
+      "adresse": "Marathokampos 831 02, Grèce",
+      "note": "5",
+      "description": "4km à la sortie de Kambos, à l’ombre en fin de journée, site à couper le souffle ! Ouvert tlj de 7h à 20h.\nNotre dame des Quarante marches, à l’entrée de la grotte, belle vue. Beau aussi vue d’en bas et un café !",
+      "transport": "",
+      "url": "https://en.wikipedia.org/wiki/Cave_of_Pythagoras",
+      "photo": "./samos/samos_grotte_pythagore.jpg",
+      "lon": 26.658811,
+      "lat": 37.727744
+    },
+    {
+      "index": 39,
+      "categorie": "A faire",
+      "nom": "Tour de Lycurge",
+      "adresse": "",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./samos/samos_tour_lycurge.jpg",
+      "lon": 26.939588,
+      "lat": 37.68849
+    }
+  ],
+  "Antique": [
+    {
+      "index": 40,
+      "categorie": "Antique",
+      "nom": "Heraion",
+      "adresse": "Pythagoreio 831 03, Grèce",
+      "note": "4",
+      "description": "A 6km de pithagorio, billet groupé, sanctuaire d’Héra, née à Samos, le + important mais reste peu. Ouverture : 8h30-15h30, fermé le mardi",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/H%C3%A9raion_de_Samos",
+      "photo": "./samos/samos_site_heraion.jpg",
+      "lon": 26.888012,
+      "lat": 37.673458
+    },
+    {
+      "index": 41,
+      "categorie": "Antique",
+      "nom": "Tunnel d'Eupalilos",
+      "adresse": "",
+      "note": "4",
+      "description": "A 1,5km à pieds le matin tôt, 8h30-15h, une des premières œuvres hydraulique de l’antiquité",
+      "transport": "",
+      "url": "https://fr.wikipedia.org/wiki/Tunnel_d%27Eupalinos",
+      "photo": "../leaflet_maps/samos/samos_site_tunnel.jpg",
+      "lon": 26.930112,
+      "lat": 37.694603
+    }
+  ]
+};
+const STYLES  = {"Hôtel": {"couleur": "#3B82F6"}, "Aéroport": {"couleur": "#3B82F6"}, "Musée": {"couleur": "#E84545"}, "Village": {"couleur": "#7C3AED"}, "Byzantin": {"couleur": "#9333EA"}, "Plage": {"couleur": "#06B6D4"}, "Eglise": {"couleur": "#A855F7"}, "A faire": {"couleur": "#F97316"}, "Antique": {"couleur": "#92400E"}};
+const layers  = {};
+const hidden  = new Set();
+const allMarkers = [];   // { marker, lieu, cat, style } — pour la recherche
+const isMobile = () => window.innerWidth <= 768;
+
+// ── Carte ────────────────────────────────────────────────────
+const map = L.map('map', {
+  center: [37.491930, 27.074894],
+  zoom: 13,
+  zoomControl: true,
+  tap: true,
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  maxZoom: 19,
+}).addTo(map);
+
+// ── Icônes ───────────────────────────────────────────────────
+function creerIcone(style, num) {
+  const sz = isMobile() ? 42 : 32;
+  const fs = isMobile() ? 13 : 11;
+  return L.divIcon({
+    className: '',
+    html: `<div class="marker-pin" style="background:${style.couleur};width:${sz}px;height:${sz}px">
+             <span class="marker-icon" style="font-size:${fs}px;font-weight:700;color:#fff;font-family:monospace;transform:rotate(45deg);">${num}</span>
+           </div>`,
+    iconSize:    [sz, sz],
+    iconAnchor:  [sz/2, sz],
+    popupAnchor: [0, -(sz+4)],
+  });
+}
+
+// ── Contenu popup ─────────────────────────────────────────────
+function buildPopupHtml(lieu, cat, style) {
+  let html = `<div class="popup-content">
+    <div class="popup-cat" style="color:${style.couleur}">${cat}</div>
+    <div class="popup-nom">${lieu.nom}</div>`;
+  if (lieu.note) {
+    const n = Math.min(5, Math.max(1, parseInt(lieu.note) || 0));
+    html += `<div class="popup-note">${'★'.repeat(n) + '☆'.repeat(5-n)}</div>`;
+  }
+  if (lieu.adresse)     html += `<div class="popup-adresse">📮 ${lieu.adresse}</div>`;
+  if (lieu.transport)   html += `<div class="popup-transport">🚇 ${lieu.transport}</div>`;
+  if (lieu.description) html += `<div class="popup-desc">${lieu.description}</div>`;
+  if (lieu.photo)       html += `<div class="popup-photo"><img src="${lieu.photo}" alt="${lieu.nom}" loading="lazy"></div>`;
+  if (lieu.url)         html += `<div class="popup-url"><a href="${lieu.url}" target="_blank">🔗 Site</a></div>`;
+  html += `</div>`;
+  return html;
+}
+
+// ── Bottom sheet mobile ───────────────────────────────────────
+const sheet        = document.getElementById('bottom-sheet');
+const sheetContent = document.getElementById('sheet-content');
+const sheetClose   = document.getElementById('sheet-close');
+
+function openSheet(html) {
+  sheetContent.innerHTML = html;
+  sheet.classList.add('open');
+  // Fermer la légende si ouverte
+  document.getElementById('legend').classList.remove('open');
+}
+
+sheetClose.addEventListener('click', () => sheet.classList.remove('open'));
+map.on('click', () => sheet.classList.remove('open'));
+
+// ── Marqueurs ────────────────────────────────────────────────
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style  = STYLES[cat] || {couleur: '#95A5A6'};
+  const groupe = L.layerGroup().addTo(map);
+  layers[cat]  = groupe;
+
+  lieux.forEach(lieu => {
+    const marker = L.marker([lieu.lat, lieu.lon], {icon: creerIcone(style, lieu.index)});
+
+    marker.on('click', () => {
+      if (isMobile()) {
+        openSheet(buildPopupHtml(lieu, cat, style));
+      } else {
+        L.popup({maxWidth: 260})
+          .setLatLng(marker.getLatLng())
+          .setContent(buildPopupHtml(lieu, cat, style))
+          .openOn(map);
+      }
+    });
+
+    groupe.addLayer(marker);
+    allMarkers.push({marker, lieu, cat, style});
+  });
+});
+
+// ── Légende interactive ───────────────────────────────────────
+const legend = document.getElementById('legend');
+Object.entries(DATA).forEach(([cat, lieux]) => {
+  const style = STYLES[cat] || {couleur: '#95A5A6'};
+  const item  = document.createElement('div');
+  item.className   = 'legend-item';
+  item.dataset.cat = cat;
+  item.innerHTML   = `
+    <div class="legend-dot" style="background:${style.couleur}"></div>
+    <span class="legend-label">${cat}</span>
+    <span class="legend-count">${lieux.length}</span>`;
+
+  item.addEventListener('click', () => {
+    if (hidden.has(cat)) {
+      map.addLayer(layers[cat]);
+      hidden.delete(cat);
+      item.classList.remove('hidden');
+    } else {
+      map.removeLayer(layers[cat]);
+      hidden.add(cat);
+      item.classList.add('hidden');
+    }
+  });
+  legend.appendChild(item);
+});
+
+// ── Barre de recherche ────────────────────────────────────────
+const searchInput   = document.getElementById('search-input');
+const searchClear   = document.getElementById('search-clear');
+const searchResults = document.getElementById('search-results');
+const searchLayer   = L.layerGroup().addTo(map);
+let   enRecherche   = false;
+
+function quitterRecherche() {
+  searchLayer.clearLayers();
+  enRecherche = false;
+  // Réinjecter chaque marqueur dans son groupe de catégorie
+  allMarkers.forEach(({marker, cat}) => layers[cat].addLayer(marker));
+  // Restaurer la visibilité selon l'état de la légende
+  Object.entries(layers).forEach(([cat, groupe]) => {
+    if (!hidden.has(cat)) map.addLayer(groupe);
+    else map.removeLayer(groupe);
+  });
+  searchResults.classList.remove('visible');
+  searchResults.innerHTML = '';
+  searchClear.style.display = 'none';
+}
+
+function filtrerMarqueurs(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) { quitterRecherche(); return; }
+
+  searchClear.style.display = 'block';
+
+  // Première frappe : retirer tous les groupes de catégories de la carte
+  if (!enRecherche) {
+    Object.values(layers).forEach(g => map.removeLayer(g));
+    enRecherche = true;
+  }
+  searchLayer.clearLayers();
+
+  const resultats = [];
+  allMarkers.forEach(entry => {
+    const {lieu, cat} = entry;
+    const haystack = [lieu.nom, lieu.adresse, lieu.description, cat]
+      .join(' ').toLowerCase();
+    if (haystack.includes(q)) {
+      searchLayer.addLayer(entry.marker);
+      resultats.push(entry);
+    }
+  });
+
+  // Construire le dropdown
+  searchResults.innerHTML = '';
+  if (resultats.length === 0) {
+    searchResults.innerHTML = '<div class="result-empty">Aucun résultat</div>';
+  } else {
+    resultats.slice(0, 25).forEach(({lieu, cat, style, marker}) => {
+      const item = document.createElement('div');
+      item.className = 'result-item';
+      const meta = [cat, lieu.adresse].filter(Boolean).join(' · ');
+      item.innerHTML = `
+        <div class="result-dot" style="background:${style.couleur}"></div>
+        <div class="result-text">
+          <div class="result-nom">${lieu.nom}</div>
+          <div class="result-meta">${meta}</div>
+        </div>`;
+      item.addEventListener('click', () => {
+        map.setView([lieu.lat, lieu.lon], 17);
+        if (isMobile()) {
+          openSheet(buildPopupHtml(lieu, cat, style));
+        } else {
+          L.popup({maxWidth: 260})
+            .setLatLng([lieu.lat, lieu.lon])
+            .setContent(buildPopupHtml(lieu, cat, style))
+            .openOn(map);
+        }
+        searchResults.classList.remove('visible');
+      });
+      searchResults.appendChild(item);
+    });
+    if (resultats.length > 25) {
+      const more = document.createElement('div');
+      more.className = 'result-empty';
+      more.textContent = `… ${resultats.length - 25} résultats supplémentaires`;
+      searchResults.appendChild(more);
+    }
+  }
+  searchResults.classList.add('visible');
+}
+
+searchInput.addEventListener('input', e => filtrerMarqueurs(e.target.value));
+
+searchInput.addEventListener('focus', () => {
+  if (searchInput.value.trim()) searchResults.classList.add('visible');
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchInput.focus();
+  quitterRecherche();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    searchInput.value = '';
+    quitterRecherche();
+    searchInput.blur();
+  }
+});
+
+map.on('click', () => searchResults.classList.remove('visible'));
+
+// ── Géolocalisation ──────────────────────────────────────────
+const gpsBtn      = document.getElementById('gps-toggle');
+let   gpsActif    = false;
+let   gpsWatchId  = null;
+let   gpsMarker   = null;
+let   gpsCercle   = null;
+
+function stopperGPS() {
+  if (gpsWatchId !== null) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+  }
+  if (gpsMarker)  { map.removeLayer(gpsMarker);  gpsMarker  = null; }
+  if (gpsCercle)  { map.removeLayer(gpsCercle);  gpsCercle  = null; }
+  gpsActif = false;
+  gpsBtn.classList.remove('active', 'error');
+  gpsBtn.title = 'Ma position';
+  gpsBtn.textContent = '📍';
+}
+
+function mettreAJourPosition(pos) {
+  const lat = pos.coords.latitude;
+  const lon = pos.coords.longitude;
+  const acc = pos.coords.accuracy;
+
+  // Icône position personnalisée
+  const iconePos = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:16px; height:16px; border-radius:50%;
+      background:#2980B9; border:3px solid #fff;
+      box-shadow:0 0 0 2px #2980B9;
+    "></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  });
+
+  if (gpsMarker) {
+    gpsMarker.setLatLng([lat, lon]);
+    gpsCercle.setLatLng([lat, lon]).setRadius(acc);
+  } else {
+    gpsMarker = L.marker([lat, lon], {icon: iconePos, zIndexOffset: 9999})
+      .bindPopup(`📍 Vous êtes ici<br><small>Précision : ${Math.round(acc)} m</small>`)
+      .addTo(map);
+    gpsCercle = L.circle([lat, lon], {
+      radius: acc,
+      color: '#2980B9',
+      fillColor: '#2980B9',
+      fillOpacity: 0.08,
+      weight: 1,
+    }).addTo(map);
+    map.setView([lat, lon], 15);
+  }
+}
+
+function erreurGPS(err) {
+  gpsBtn.classList.remove('active');
+  gpsBtn.classList.add('error');
+  gpsBtn.title = err.code === 1 ? 'Accès refusé' : 'Position indisponible';
+  gpsBtn.textContent = '⚠️';
+  setTimeout(() => {
+    gpsBtn.classList.remove('error');
+    gpsBtn.textContent = '📍';
+  }, 3000);
+}
+
+gpsBtn.addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    alert("La géolocalisation n'est pas supportée par ce navigateur.");
+    return;
+  }
+  if (gpsActif) {
+    stopperGPS();
+  } else {
+    gpsActif = true;
+    gpsBtn.classList.add('active');
+    gpsBtn.title = 'Désactiver GPS';
+    gpsBtn.textContent = '🔵';
+    gpsWatchId = navigator.geolocation.watchPosition(
+      mettreAJourPosition,
+      erreurGPS,
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 10000 }
+    );
+  }
+});
+
+// ── Bouton légende mobile ─────────────────────────────────────
+document.getElementById('legend-toggle').addEventListener('click', () => {
+  sheet.classList.remove('open');
+  legend.classList.toggle('open');
+});
+
+// Fermer légende si clic sur la carte
+map.on('click', () => legend.classList.remove('open'));
+</script>
+</body>
+</html>

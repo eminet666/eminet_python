@@ -5,5 +5,52 @@ categorie;nom;adresse;note;description;transport;url;lon;lat;photo
 Hôtel;Aria Hotel Samos Town;Ioanni Lekati 8, Samos, 83100, Grèce;3;1 nuit, 19-20 aout, 74€, Anne, +302273023619;;https://www.ariahotels.gr/en/;26.978127;37.751804;./samos/samos_aria_hotel.jpg
 Hôtel;Cleopatra Studios;IPP63+64, Ormos Marathokampou 831 02, Grèce;3;4 nuits, 20-24 aout, 228€, Etienne;;;26.702750;37.710447;./samos/samos_cleopatra_studios.jpg
 Hôtel;Samos Rooms;Πολυκράτη 101, Pithagorio 831 03, Grèce;4;3 nuits, 24-27 aout, 225€, Etienne (mail);;;26.945405;37.691432;./samos/samos_hotel_samosrooms.jpg
-;Aeroport Samos;;;;;;26.914434;37.689262;../leaflet_maps/samos/samos_aeroport.jpg
+Aéroport;Aeroport Samos;;;;;;26.914434;37.689262;./samos/samos_aeroport.jpg
+Musée;Musée archéologique;Gimnasiarchou Κatevaini 24, Samos 831 00, Grèce;5;"Un des plus important du pays, kouros de 4,5m, collection unique de chaudrons. 
+8h30-15h30, fermé le mardi.";;https://archaeologicalmuseums.gr/en/museum/5df34af3deca5e2d79e8c13b/archaeological-museum-of-samos;26.978632;37.754567;./samos/samos_musee_archeologique.jpg
+Village;Ano Vathy;;;Quartier à l’aspect villageois, sans voiture, maisons à encorbellement, volets de couleurs.;;https://fr.wikipedia.org/wiki/Vath%C3%BD_(S%C3%A1mos);26.982713;37.749659;./samos/samos_quartier_ano_vathy.jpg
+Byzantin;Monastère de  Zoodochos Pigis;Samos 831 00, Grèce;;"Vues exceptionnelles et baies turquoises de l'oratoire (photo) et du monument Ierolochiton.
+Ouvert tlj 10:00–13:30, 17:00–19:30";;;27.028850;37.769283;./samos/samos_monastere_zoodohos_pigis.jpg
+Plage;Plage de Kerveli;;;;;;27.036225;37.728407;./samos/samos_plage_kerveli.jpg
+Plage;Plage de Possidonio;;;;;;27.057997;37.713011;./samos/samos_plage_kerveli.jpg
+Plage;Plage de Klima;;;;;;27.045369;37.709715;./samos/samos_plage_klima.jpg
+Plage;Plage de Kedros;;;;;;26.920730;37.772194;./samos/samos_plage_kedros.jpg
+Plage;Plage de Tsamadou;;;La plus belle;;;26.872735;37.785696;./samos/samos_plage_tsamadou.jpg
+Plage;Plage d'Avlakia;;;La préférée du Michelin;;;26.857087;37.798572;./samos/samos_plage_avlakia.jpg
+Plage;Plage de Tasbou;;;Crique rocheuse;;;26.856913;37.802208;../leaflet_maps/samos/samos_plage_tsabou.jpg
+Plage;Plage de Lemonakia;;;Crique rocheuse;;;26.876267;37.782569;./samos/samos_plage_lemonakia.jpg
+Village;Village Vourliotes;;;Village accroché aux flancs du mont Karvouni, mais devenu touristique, mieux le soir;;;26.847832;37.785314;./samos/samos_village_vourliotes.jpg
+Village;Village Manolates;;;Le plus beau village mais se laisse gagner par le tourisme;;;26.825844;37.785844;./samos/samos_village_manolates.jpg
+Village;Village Agios Konstandions;;;Authentique village pêcheurs en front de mer;;;26.816710;37.808045;./samos/samos_village_agios_konstandinos.jpg
+Byzantin;Monastère Vrondani;;;Le plus beau village mais se laisse gagner par le tourisme;;;26.855289;37.773396;./samos/samos_monastere_vrondani.jpg
+Eglise;Eglise Sainte Trinité;;;A 35km de Vathy, 6000 habitants) peu d’intérêt mais église	« Petit  Paris » église qui surplombe le port, beau panorama;;;26.684747;37.792550;./samos/samos_eglise_karlovassi.jpg
+Plage;Plage Agios Nikolaos;;;;;;26.747361;37.811513;./samos/samos_plage_agiosnikolaos.jpg
+Plage;Plage de Potami;;;Une petite puis une grande plage (galets, sablets), une partie de la plage non aménagée;;;26.666236;37.791054;./samos/samos_plage_potami.jpg
+A faire;Chutes d'eau de Potami;;;"Sentier fléché sur la gauche de la plage … s’il reste de l’eau en aout ?
+Sur le chemin, église de la métamorphose, la plus ancienne de l’ile XIe, sous la mousse !";;;26.667370;37.788262;./samos/samos_waterfalls_potami.jpg
+Plage;Plages de Seitani;;;;;;26.646837;37.776824;./samos/samos_plage_mikro_seitani.jpg
+Village;Village de Marathokampos;;;Grosse bourgade à flanc de colline;;;26.689202;37.727736;./samos/samos_village_marathokampos.jpg
+Village;Village de Ormos-Marathokampos;;;"lLa côte sud-ouest est la plus spectaculaire et la plus sauvage
+2km au nord, plages de sable fin de Kambos, sur x km avec hébergements, restos mais de moins en moins vers l’ouest";;;26.701166;37.710510;./samos/samos_village_ormos.jpg
+Village;Village de Platanos;;;Village de crête par route de lacets, peu touristique, très beau panorama sur nord et ouest;;;26.746794;37.739151;./samos/samos_village_platanos.jpg
+Plage;Plage de Kampos;;;Plages tranquilles sur la route direction Kourneka : baiede Pefko;;;26.757959;37.688409;./samos/samos_plage_kampos.jpg
+Plage;Plage de Psili Ammos;;;;;;26.644018;37.703109;./samos/samos_plage_psiliammos.jpg
+A faire;Grotte de Pythagore;Marathokampos 831 02, Grèce;5;"4km à la sortie de Kambos, à l’ombre en fin de journée, site à couper le souffle ! Ouvert tlj de 7h à 20h.
+Notre dame des Quarante marches, à l’entrée de la grotte, belle vue. Beau aussi vue d’en bas et un café !";;https://en.wikipedia.org/wiki/Cave_of_Pythagoras;26.658811;37.727744;./samos/samos_grotte_pythagore.jpg
+Village;Village de  Kallithea;;;"Partie la plus sauvage de l’ile mais besoin d’une voiture, fin à 18km de Psili Ammos.
+La route devient piste et passe très haut mais beaux panorama";;;26.582842;37.733172;../leaflet_maps/samos/samos_village_kallithea.jpg
+Plage;Plage de Mikali;;;Plage de glaets mais très fréquentée;;;26.996711;37.707346;../leaflet_maps/samos/samos_plage_mikali.jpg
+Eglise;Eglise de Makrini;;;Petite église avec une grotte;;;26.602484;37.729260;./samos/samos_eglise_makrini.jpg
+Village;Village de Drakkei;;;18km de Psili Ammos, petit village de montagne;;;26.611010;37.759078;./samos/samos_village_drakei.jpg
+Plage;Plages d'Agios Isidoros;;;2 criques jumelles et désertes, le routard promet un petit bout de paradis un peu plus loin.;;;26.591349;37.751522;./samos/samos_plage_agiosisidoros.jpg
+Plage;Plage de Varsamos;;;;;;26.586519;37.749182;./samos/samos_plage_varsamos.jpg
+Village;Ville de Pythagoreio;;;1600hab, aride, longues plages banales, centre touristique de l’ile, ex-Tigani, la poêle car il y fait chaud (parkings à l’entrée du village);;;26.943256;37.690574;./samos/samos_village_pythagoreio.jpg
+Musée;Musée Archéologique Pythagoreio;;;"Musée moderne et spacieux, 2 trésors numismatiques, statuaire riche.
+8h30-15h30, fermé le mardi";;;37.691245;26.940173;./samos/samos_musee_pythagoeio.jpg
+A faire;Tour de Lycurge;;;;;;26.939588;37.688490;./samos/samos_tour_lycurge.jpg
+Antique;Heraion;Pythagoreio 831 03, Grèce;4;A 6km de pithagorio, billet groupé, sanctuaire d’Héra, née à Samos, le + important mais reste peu. Ouverture : 8h30-15h30, fermé le mardi;;https://fr.wikipedia.org/wiki/H%C3%A9raion_de_Samos;26.888012;37.673458;./samos/samos_site_heraion.jpg
+Antique;Tunnel d'Eupalilos;;4;A 1,5km à pieds le matin tôt, 8h30-15h, une des premières œuvres hydraulique de l’antiquité;;https://fr.wikipedia.org/wiki/Tunnel_d%27Eupalinos;26.930112;37.694603;../leaflet_maps/samos/samos_site_tunnel.jpg
+Eglise;Eglise Panagia Spiliani;;;Encore plus haut, dans une grotte rafraichissante;;;26.936920;37.695702;./samos/samos_eglise_spiliani.jpg
+Musée;Musée Paléotologique de l'Egée;;3;"Minéraux, squellete félin sauvage + musée folklorique 
+Ouvert : 10h-14h, fermé le lundi";;;26.909975;37.722147;./samos/samos_musee_paleo.jpg
 ;Nouveau lieu;;;;;;;;
