@@ -455,7 +455,7 @@
     <button id="search-clear" title="Effacer">✕</button>
     <div id="search-results"></div>
   </div>
-  <span class="count">52 lieux</span>
+  <span class="count">53 lieux</span>
 </header>
 
 <div id="map"></div>
@@ -847,7 +847,7 @@ const DATA    = {
       "nom": "Village de Vessa",
       "adresse": "",
       "note": "",
-      "description": "Magnifique village au charme indéniable, peu de touriste, taverne Fotia Lemoni à l’entrée du village",
+      "description": "Un autre village intéressant.",
       "transport": "",
       "url": "",
       "photo": "./chios/chios_village_vessa.jpg",
@@ -1172,9 +1172,24 @@ const DATA    = {
       "lon": 25.85719,
       "lat": 38.503602
     }
+  ],
+  "Aéroport": [
+    {
+      "index": 53,
+      "categorie": "Aéroport",
+      "nom": "Location voiture",
+      "adresse": "9 Kanari Str, Chios, Greece, 82100",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_voiture.jpg",
+      "lon": 26.137226,
+      "lat": 38.372451
+    }
   ]
 };
-const STYLES  = {"Hôtel": {"couleur": "#3B82F6"}, "Hotel": {"couleur": "#95A5A6"}, "Musée": {"couleur": "#E84545"}, "Quartier": {"couleur": "#0E7490"}, "Moyen-Age": {"couleur": "#065F46"}, "Byzantin": {"couleur": "#9333EA"}, "Village": {"couleur": "#7C3AED"}, "Plage": {"couleur": "#06B6D4"}, "A faire": {"couleur": "#F97316"}, "Eglise": {"couleur": "#A855F7"}};
+const STYLES  = {"Hôtel": {"couleur": "#3B82F6"}, "Hotel": {"couleur": "#95A5A6"}, "Musée": {"couleur": "#E84545"}, "Quartier": {"couleur": "#0E7490"}, "Moyen-Age": {"couleur": "#065F46"}, "Byzantin": {"couleur": "#9333EA"}, "Village": {"couleur": "#7C3AED"}, "Plage": {"couleur": "#06B6D4"}, "A faire": {"couleur": "#F97316"}, "Eglise": {"couleur": "#A855F7"}, "Aéroport": {"couleur": "#3B82F6"}};
 const layers  = {};
 const hidden  = new Set();
 const allMarkers = [];   // { marker, lieu, cat, style } — pour la recherche
@@ -1182,7 +1197,7 @@ const isMobile = () => window.innerWidth <= 768;
 
 // ── Carte ────────────────────────────────────────────────────
 const map = L.map('map', {
-  center: [38.356502, 25.985470],
+  center: [38.356803, 25.988334],
   zoom: 13,
   zoomControl: true,
   tap: true,
