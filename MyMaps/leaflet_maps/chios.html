@@ -531,19 +531,32 @@ const DATA    = {
       "lat": 38.189069
     }
   ],
-  "Hotel": [
+  "Aéroport": [
     {
       "index": 5,
-      "categorie": "Hotel",
+      "categorie": "Aéroport",
       "nom": "Aeroport Chios",
       "adresse": "",
       "note": "",
       "description": "Aegean, 14:05 Paris - 21:25 Chios",
       "transport": "",
       "url": "",
-      "photo": "",
+      "photo": "./chios/chios_aeroport.jpg",
       "lon": 26.142598,
       "lat": 38.345357
+    },
+    {
+      "index": 53,
+      "categorie": "Aéroport",
+      "nom": "Location voiture",
+      "adresse": "Neorion 25, Chios 821 00, Grèce",
+      "note": "",
+      "description": "",
+      "transport": "",
+      "url": "",
+      "photo": "./chios/chios_voiture.jpg",
+      "lon": 26.138555,
+      "lat": 38.372848
     }
   ],
   "Musée": [
@@ -571,7 +584,7 @@ const DATA    = {
       "description": "",
       "transport": "",
       "url": "https://fr.wikipedia.org/wiki/Chios_(ville)",
-      "photo": "",
+      "photo": "./chios/chios_port_kastro.jpg",
       "lon": 26.137311,
       "lat": 38.37363
     },
@@ -707,7 +720,7 @@ const DATA    = {
       "description": "Port de pêche avec tavernes",
       "transport": "",
       "url": "",
-      "photo": "../leaflet_maps/chios/chios_village_pantoukios.jpg",
+      "photo": "./chios/chios_village_pantoukios.jpg",
       "lon": 26.135289,
       "lat": 38.463637
     },
@@ -720,7 +733,7 @@ const DATA    = {
       "description": "Autre port, assez animé avec café et tavernes",
       "transport": "",
       "url": "",
-      "photo": "../leaflet_maps/chios/chios_village_lankada.jpg",
+      "photo": "./chios/chios_village_lankada.jpg",
       "lon": 26.123997,
       "lat": 38.477355
     },
@@ -746,7 +759,7 @@ const DATA    = {
       "description": "Petit port avec une petite plage",
       "transport": "",
       "url": "",
-      "photo": "../leaflet_maps/chios/chios_village_nagos.jpg",
+      "photo": "./chios/chios_village_nagos.jpg",
       "lon": 26.083046,
       "lat": 38.55904
     },
@@ -811,7 +824,7 @@ const DATA    = {
       "description": "Village médieval en pierre de taille avec les cultures autour, très calme, venir plutôt fin de journée, 2 cafés",
       "transport": "",
       "url": "",
-      "photo": "../leaflet_maps/chios/chios_village_olimpi.jpg",
+      "photo": "./chios/chios_village_olimpi.jpg",
       "lon": 25.942464,
       "lat": 38.247691
     },
@@ -837,7 +850,7 @@ const DATA    = {
       "description": "Station balnéaire ratée mais point de départ de la route pour les belles plages de la côte ouest",
       "transport": "",
       "url": "",
-      "photo": "../leaflet_maps/chios/chios_village_limenas.jpg",
+      "photo": "./chios/chios_village_limenas.jpg",
       "lon": 25.931078,
       "lat": 38.287299
     },
@@ -865,7 +878,7 @@ const DATA    = {
       "description": "Plage de petits galets, peu d'ombre\nAttention, ossibilité qu’il y ait des abeilles",
       "transport": "",
       "url": "",
-      "photo": "../leaflet_maps/chios/chios_plage_Elinda.jpg",
+      "photo": "./chios/chios_plage_Elinda.jpg",
       "lon": 25.99021,
       "lat": 38.391614
     },
@@ -1073,7 +1086,7 @@ const DATA    = {
       "description": "1km plus loin que les grottes d'Olimpi, petite église avec qq tables pour mique-niquer, au-dessu d’un petite plage",
       "transport": "",
       "url": "",
-      "photo": "../leaflet_maps/chios/chios_plage_agia_dinami.jpg",
+      "photo": "./chios/chios_plage_agia_dinami.jpg",
       "lon": 25.912616,
       "lat": 38.212446
     },
@@ -1125,7 +1138,7 @@ const DATA    = {
       "description": "Plage en contrebas de Vessa, large baie protégée, plage de sable familiale, transats gratuits",
       "transport": "",
       "url": "",
-      "photo": "../leaflet_maps/chios/chios_plage_lithi.jpg",
+      "photo": "./chios/chios_plage_lithi.jpg",
       "lon": 25.991435,
       "lat": 38.340662
     }
@@ -1172,24 +1185,9 @@ const DATA    = {
       "lon": 25.85719,
       "lat": 38.503602
     }
-  ],
-  "Aéroport": [
-    {
-      "index": 53,
-      "categorie": "Aéroport",
-      "nom": "Location voiture",
-      "adresse": "Neorion 25, Chios 821 00, Grèce",
-      "note": "",
-      "description": "+302271026115",
-      "transport": "",
-      "url": "",
-      "photo": "./chios/chios_voiture.jpg",
-      "lon": 26.138555,
-      "lat": 38.372848
-    }
   ]
 };
-const STYLES  = {"Hôtel": {"couleur": "#3B82F6"}, "Hotel": {"couleur": "#95A5A6"}, "Musée": {"couleur": "#E84545"}, "Quartier": {"couleur": "#0E7490"}, "Moyen-Age": {"couleur": "#065F46"}, "Byzantin": {"couleur": "#9333EA"}, "Village": {"couleur": "#7C3AED"}, "Plage": {"couleur": "#06B6D4"}, "A faire": {"couleur": "#F97316"}, "Eglise": {"couleur": "#A855F7"}, "Aéroport": {"couleur": "#3B82F6"}};
+const STYLES  = {"Hôtel": {"couleur": "#3B82F6"}, "Aéroport": {"couleur": "#3B82F6"}, "Musée": {"couleur": "#E84545"}, "Quartier": {"couleur": "#0E7490"}, "Moyen-Age": {"couleur": "#065F46"}, "Byzantin": {"couleur": "#9333EA"}, "Village": {"couleur": "#7C3AED"}, "Plage": {"couleur": "#06B6D4"}, "A faire": {"couleur": "#F97316"}, "Eglise": {"couleur": "#A855F7"}};
 const layers  = {};
 const hidden  = new Set();
 const allMarkers = [];   // { marker, lieu, cat, style } — pour la recherche

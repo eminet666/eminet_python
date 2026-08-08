@@ -17,7 +17,7 @@ Plage;Plage de Klima;;;;;;27.045369;37.709715;./samos/samos_plage_klima.jpg
 Plage;Plage de Kedros;;;;;;26.920730;37.772194;./samos/samos_plage_kedros.jpg
 Plage;Plage de Tsamadou;;;La plus belle;;;26.872735;37.785696;./samos/samos_plage_tsamadou.jpg
 Plage;Plage d'Avlakia;;;La préférée du Michelin;;;26.857087;37.798572;./samos/samos_plage_avlakia.jpg
-Plage;Plage de Tasbou;;;Crique rocheuse;;;26.856913;37.802208;../leaflet_maps/samos/samos_plage_tsabou.jpg
+Plage;Plage de Tasbou;;;Crique rocheuse;;;26.856913;37.802208;./samos/samos_plage_tsabou.jpg
 Plage;Plage de Lemonakia;;;Crique rocheuse;;;26.876267;37.782569;./samos/samos_plage_lemonakia.jpg
 Village;Village Vourliotes;;;Village accroché aux flancs du mont Karvouni, mais devenu touristique, mieux le soir;;;26.847832;37.785314;./samos/samos_village_vourliotes.jpg
 Village;Village Manolates;;;Le plus beau village mais se laisse gagner par le tourisme;;;26.825844;37.785844;./samos/samos_village_manolates.jpg
@@ -38,18 +38,17 @@ Plage;Plage de Psili Ammos;;;;;;26.644018;37.703109;./samos/samos_plage_psiliamm
 A faire;Grotte de Pythagore;Marathokampos 831 02, Grèce;5;"4km à la sortie de Kambos, à l’ombre en fin de journée, site à couper le souffle ! Ouvert tlj de 7h à 20h.
 Notre dame des Quarante marches, à l’entrée de la grotte, belle vue. Beau aussi vue d’en bas et un café !";;https://en.wikipedia.org/wiki/Cave_of_Pythagoras;26.658811;37.727744;./samos/samos_grotte_pythagore.jpg
 Village;Village de  Kallithea;;;"Partie la plus sauvage de l’ile mais besoin d’une voiture, fin à 18km de Psili Ammos.
-La route devient piste et passe très haut mais beaux panorama";;;26.582842;37.733172;../leaflet_maps/samos/samos_village_kallithea.jpg
-Plage;Plage de Mikali;;;Plage de glaets mais très fréquentée;;;26.996711;37.707346;../leaflet_maps/samos/samos_plage_mikali.jpg
+La route devient piste et passe très haut mais beaux panorama";;;26.582842;37.733172;./samos/samos_village_kallithea.jpg
+Plage;Plage de Mikali;;;Plage de glaets mais très fréquentée;;;26.996711;37.707346;./samos/samos_plage_mikali.jpg
 Eglise;Eglise de Makrini;;;Petite église avec une grotte;;;26.602484;37.729260;./samos/samos_eglise_makrini.jpg
 Village;Village de Drakkei;;;18km de Psili Ammos, petit village de montagne;;;26.611010;37.759078;./samos/samos_village_drakei.jpg
 Plage;Plages d'Agios Isidoros;;;2 criques jumelles et désertes, le routard promet un petit bout de paradis un peu plus loin.;;;26.591349;37.751522;./samos/samos_plage_agiosisidoros.jpg
 Plage;Plage de Varsamos;;;;;;26.586519;37.749182;./samos/samos_plage_varsamos.jpg
 Village;Ville de Pythagoreio;;;1600hab, aride, longues plages banales, centre touristique de l’ile, ex-Tigani, la poêle car il y fait chaud (parkings à l’entrée du village);;;26.943256;37.690574;./samos/samos_village_pythagoreio.jpg
-Musée;Musée Archéologique Pythagoreio;;;"Musée moderne et spacieux, 2 trésors numismatiques, statuaire riche.
-8h30-15h30, fermé le mardi";;;37.691245;26.940173;./samos/samos_musee_pythagoeio.jpg
+Musée;Musée Archéologique Pythagoreio;;;;;;26.940173;37.691245;./samos/samos_musee_pythagoeio.jpg
 A faire;Tour de Lycurge;;;;;;26.939588;37.688490;./samos/samos_tour_lycurge.jpg
 Antique;Heraion;Pythagoreio 831 03, Grèce;4;A 6km de pithagorio, billet groupé, sanctuaire d’Héra, née à Samos, le + important mais reste peu. Ouverture : 8h30-15h30, fermé le mardi;;https://fr.wikipedia.org/wiki/H%C3%A9raion_de_Samos;26.888012;37.673458;./samos/samos_site_heraion.jpg
-Antique;Tunnel d'Eupalilos;;4;A 1,5km à pieds le matin tôt, 8h30-15h, une des premières œuvres hydraulique de l’antiquité;;https://fr.wikipedia.org/wiki/Tunnel_d%27Eupalinos;26.930112;37.694603;../leaflet_maps/samos/samos_site_tunnel.jpg
+Antique;Tunnel d'Eupalilos;;4;A 1,5km à pieds le matin tôt, 8h30-15h, une des premières œuvres hydraulique de l’antiquité;;https://fr.wikipedia.org/wiki/Tunnel_d%27Eupalinos;26.930112;37.694603;./samos/samos_site_tunnel.jpg
 Eglise;Eglise Panagia Spiliani;;;Encore plus haut, dans une grotte rafraichissante;;;26.936920;37.695702;./samos/samos_eglise_spiliani.jpg
 Musée;Musée Paléotologique de l'Egée;;3;"Minéraux, squellete félin sauvage + musée folklorique 
 Ouvert : 10h-14h, fermé le lundi";;;26.909975;37.722147;./samos/samos_musee_paleo.jpg
